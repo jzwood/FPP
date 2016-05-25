@@ -180,7 +180,7 @@
                 // world.defaultContactMaterial.contactEquationStiffness = 1e9;
                 // world.defaultContactMaterial.contactEquationRelaxation = 4;
 
-                solver.iterations = 7;
+                solver.iterations = 5;//7
                 solver.tolerance = 0.1;
                 var split = true;
                 if(split)
@@ -192,17 +192,25 @@
                 world.broadphase = new CANNON.NaiveBroadphase();
 
                 // Create a slippery material (friction coefficient = 0.0)
-                physicsMaterial = new CANNON.Material("basicMaterial");
-                var physicsContactMaterial = new CANNON.ContactMaterial(physicsMaterial,
-                                                                        physicsMaterial
-                                                                        );
-                // We must add the contact materials to the world
-                world.addContactMaterial(physicsContactMaterial);
+                var groundMaterial = new CANNON.Material("groundMaterial");
+
+								// Adjust constraint equation parameters for ground/ground contact
+								var ground_ground_cm = new CANNON.ContactMaterial(groundMaterial, groundMaterial, {
+										friction: 0.4,
+										restitution: 0.3,
+										contactEquationStiffness: 1e8,
+										contactEquationRelaxation: 3,
+										frictionEquationStiffness: 1e8,
+										frictionEquationRegularizationTime: 3,
+								});
+
+								// Add contact material to the world
+								world.addContactMaterial(ground_ground_cm);
 
                 // Create a sphere
                 var mass = 5, radius = 1.3;
                 sphereShape = new CANNON.Sphere(radius);
-                sphereBody = new CANNON.Body({ mass: mass });
+                sphereBody = new CANNON.Body({ mass: mass, material: groundMaterial });
                 sphereBody.addShape(sphereShape);
                 sphereBody.position.set(0,5,0);
                 sphereBody.linearDamping = 0.9;
