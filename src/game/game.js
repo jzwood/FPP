@@ -152,13 +152,13 @@ function initCannon() {
     // Create a plane
 		var pos = {'x': 0, 'y': -20, 'z': 0}
 		var rot = {'rx':0, 'ry': Math.PI/8, 'rz': 0}
-		var vecDir = {'i':0, 'j': 1, 'k': -0.1}
-		physicsWall(pos, vecDir, 50, 'test.jpg')
+		var vecDir = {'i':0, 'j': 1, 'k': 0}
+		physicsWall(pos, vecDir, 50, 'test.jpg', true)
 }
 
 //square starts set facing towards z-hat
-function physicsWall(p, vTo, scale, img_path) {
-
+function physicsWall(p, vTo, scale, img_path, isTwoSided) {
+	isTwoSided = isTwoSided || false
 	//normalizes the incoming direction vector
 	v = {};
 	Object.keys(vTo).map(function(value, index) {
@@ -167,7 +167,7 @@ function physicsWall(p, vTo, scale, img_path) {
 
 	/* WALL A. -- MAKING INVISIBLE WALL THAT RESPONDS TO PHYSICS */
     var wall = new CANNON.Body({
-        mass: 0
+        mass: 0 //makes it a solid immovable structure
     }),
     // wall vertices
 		os = 0.5,//offset
@@ -203,7 +203,7 @@ function physicsWall(p, vTo, scale, img_path) {
 			// geometry.applyMatrix(new THREE.Matrix4().makeRotationZ(r.rz))
 
 			material = new THREE.MeshPhongMaterial({
-					map: img, side: THREE.DoubleSide
+					map: img, side: isTwoSided ? THREE.DoubleSide : THREE.SingleSide
 			});
 
 			mesh = new THREE.Mesh(geometry, material);
