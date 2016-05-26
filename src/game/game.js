@@ -4,6 +4,8 @@ var sphereShape, sphereBody, world, physicsMaterial, walls = [],
     boxes = [],
     boxMeshes = [];
 
+var loader
+
 var camera, scene, renderer;
 var geometry, material, mesh;
 var controls, time = Date.now();
@@ -53,7 +55,7 @@ if (havePointerLock) {
     document.addEventListener('webkitpointerlockerror', pointerlockerror, false);
 
     instructions.addEventListener('click', function(event) {
-				sphereBody.position.set(0, 5, 0);
+        sphereBody.position.set(0, 5, 0);
         instructions.style.display = 'none';
 
         // Ask the browser to lock the pointer
@@ -99,6 +101,7 @@ init();
 animate();
 
 function initCannon() {
+		loader = new THREE.TextureLoader()
     // Setup our world
     world = new CANNON.World();
     world.quatNormalizeSkip = 0;
@@ -139,8 +142,8 @@ function initCannon() {
     // Create a sphere
     var mass = 5,
         radius = 1.3;
-		    sphereShape = new CANNON.Sphere(radius);
-		    sphereBody = new CANNON.Body({
+    sphereShape = new CANNON.Sphere(radius);
+    sphereBody = new CANNON.Body({
         mass: mass,
         material: groundMaterial
     });
@@ -149,81 +152,91 @@ function initCannon() {
     sphereBody.linearDamping = 0.9;
     world.addBody(sphereBody);
 
-    // Create a plane
-		var pos = {'x': 0, 'y': -20, 'z': 0}
-		var rot = {'rx':0, 'ry': Math.PI/8, 'rz': 0}
-		var vecDir = {'i':0, 'j': 1, 'k': 0}
-		physicsWall(pos, vecDir, 50, 'test.jpg', true)
+    // Create a textured quad that is fixed in space and obeys physics
+    var pos = {
+            'x': 0,
+            'y': -20,
+            'z': 10
+        },
+        vecDir = {
+            'i': 0,
+            'j': 1,
+            'k': 0
+        },
+        quadDimension = 50,
+        image_path = './test.jpg',
+        doubeSided = true
+
+    physicsWall(pos, vecDir, quadDimension, image_path, doubeSided)
 }
 
 //square starts set facing towards z-hat
-function physicsWall(p, vTo, scale, img_path, isTwoSided) {
-	isTwoSided = isTwoSided || false
-	//normalizes the incoming direction vector
-	v = {};
-	Object.keys(vTo).map(function(value, index) {
-	   v[value] = vTo[value] / Math.sqrt(vTo.i * vTo.i + vTo.j * vTo.j + vTo.k * vTo.k)
-	})
+function physicsWall(p, vTo, dim, img_path, isTwoSided) {
+    isTwoSided = isTwoSided || false
+        //normalizes the incoming direction vector
+    var v = {},
+        magnitude = vTo.i * vTo.i + vTo.j * vTo.j + vTo.k * vTo.k, //actually = (magnitude^2)
+        epsilon = 0.001
+    if (Math.abs(magnitude - 1) > epsilon) { //if magnitude not equal to 1 the vector needs to be normalized
+        magnitude = Math.sqrt(magnitude)
+        Object.keys(vTo).map(function(value, index) {
+            v[value] = vTo[value] / magnitude
+        })
+    } else {
+        v = vTo
+    }
 
-	/* WALL A. -- MAKING INVISIBLE WALL THAT RESPONDS TO PHYSICS */
+    /* WALL A. -- MAKING INVISIBLE WALL THAT RESPONDS TO PHYSICS */
     var wall = new CANNON.Body({
-        mass: 0 //makes it a solid immovable structure
-    }),
-    // wall vertices
-		os = 0.5,//offset
-    vertices = [
-        0, 0, os, // vertex 0
-        1, 0, os, // vertex 1
-        0, 1, os, // vertex 2
-				1, 1, os //	vertex 3
-    ].map(function(num) {
-		  return scale * (num - os)
-		});
+            mass: 0 //makes it a solid immovable structure
+        }),
+        // wall vertices
+        os = 0.5, //offset
+        vertices = [
+            0, 0, os, // vertex 0
+            1, 0, os, // vertex 1
+            0, 1, os, // vertex 2
+            1, 1, os //	vertex 3
+        ].map(function(num) {
+            return dim * (num - os)
+        });
 
-    var trimesh_1 = new CANNON.Trimesh(vertices, [0,1,2]),
-		trimesh_2 = new CANNON.Trimesh(vertices, [1,3,2])
-		wall.addShape(trimesh_1)
-		wall.addShape(trimesh_2)
+    var tri_a = new CANNON.Trimesh(vertices, [0, 1, 2]),
+        tri_b = new CANNON.Trimesh(vertices, [1, 3, 2])
+    wall.addShape(tri_a)
+    wall.addShape(tri_b)
 
-		wall.position.set(p.x, p.y, p.z)
-		// wall.quaternion.setFromAxisAngle(new CANNON.Vec3(1,0,0), Math.PI/2)
-		//wall.quaternion.setFromEuler(r.rx + Math.PI/2,r.ry,r.rz, 'XYZ')
-		wall.quaternion.setFromVectors(new CANNON.Vec3(0,0,1), new CANNON.Vec3(v.i, v.j, v.k))
+    wall.position.set(p.x, p.y, p.z)
+    wall.quaternion.setFromVectors(new CANNON.Vec3(0, 0, 1), new CANNON.Vec3(v.i, v.j, v.k))
 
-		world.addBody(wall)//added the invisible physics obeying wall
-		/* WALL A. END */
-		/* WALL B. -- MAKING TEXTURED WALL THAT MATCHES WALL A. */
-		var loader = new THREE.TextureLoader();
-		loader.load(img_path, function ( img ) {
-			// floor
-			geometry = new THREE.PlaneGeometry(scale, scale, 1, 1);
-			//geometry.applyMatrix(new THREE.Matrix4().makeRotationFromEuler(new THREE.Euler(r.rx - Math.PI / 2, - r.ry, r.rz), 'XYZ'))
-			geometry.applyMatrix(new THREE.Matrix4().makeRotationFromQuaternion(new THREE.Quaternion().setFromUnitVectors( new THREE.Vector3(0,0,1), new THREE.Vector3(v.i, v.j, v.k) )))
-			// geometry.applyMatrix(new THREE.Matrix4().makeRotationX(r.rx - Math.PI / 2))
-			// geometry.applyMatrix(new THREE.Matrix4().makeRotationZ(r.rz))
+    world.addBody(wall) //added the invisible physics obeying wall
+        /* WALL A. END */
+        /* WALL B. -- MAKING TEXTURED WALL THAT MATCHES WALL A. */
+    loader.load(img_path, function(img) {
+            // floor
+            geometry = new THREE.PlaneGeometry(dim, dim, 1, 1)
+            geometry.applyMatrix(new THREE.Matrix4().makeRotationFromQuaternion(new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 0, 1), new THREE.Vector3(v.i, v.j, v.k))))
 
-			material = new THREE.MeshPhongMaterial({
-					map: img, side: isTwoSided ? THREE.DoubleSide : THREE.SingleSide
-			});
+            material = new THREE.MeshPhongMaterial({
+                map: img,
+                side: isTwoSided ? THREE.DoubleSide : THREE.SingleSide
+            });
 
-			mesh = new THREE.Mesh(geometry, material);
-			mesh.castShadow = true
-			mesh.receiveShadow = true
+            mesh = new THREE.Mesh(geometry, material)
+            mesh.castShadow = true
+            mesh.receiveShadow = true
 
-			mesh.position.set(p.x, p.y, p.z)
-			scene.add(mesh)//added the visible wall
+            mesh.position.set(p.x, p.y, p.z)
+            scene.add(mesh) //added the visible wall
+                /* WALL B. END */
 
-			var m2 = mesh.clone()
-			m2.position.set(0, 50, 0)
-			scene.add(m2)
-
-			},
-			function ( xhr ) { // Function called when download progresses
-				console.log( (xhr.loaded / xhr.total * 100) + '% loaded' );
-			},
-			function ( xhr ) { // Function called when download errors
-				console.log( xhr, 'Texture Load Error Occurred' );
-			});
+        },
+        function(xhr) { // Function called when download progresses
+            console.log((xhr.loaded / xhr.total * 100) + '% loaded')
+        },
+        function(xhr) { // Function called when download errors
+            console.log(xhr, 'Texture Load Error Occurred')
+        });
 }
 
 function init() {
@@ -233,27 +246,27 @@ function init() {
     scene = new THREE.Scene();
     scene.fog = new THREE.Fog(0x000000, 0, 500);
 
-    var light = new THREE.AmbientLight(0x6B6B6B	); // soft white light
+    var light = new THREE.AmbientLight(0x6B6B6B); // soft white light
     scene.add(light);
 
-		light = new THREE.SpotLight( 0xffffff );
-		light.position.set( 10, 30, 20 );
-		light.target.position.set( 0, 0, 0 );
-		if(true){
-				light.castShadow = true;
+    light = new THREE.SpotLight(0xffffff);
+    light.position.set(10, 30, 20);
+    light.target.position.set(0, 0, 0);
+    if (true) {
+        light.castShadow = true;
 
-				light.shadowCameraNear = 20;
-				light.shadowCameraFar = 50;//camera.far;
-				light.shadowCameraFov = 40;
+        light.shadowCameraNear = 20;
+        light.shadowCameraFar = 50; //camera.far;
+        light.shadowCameraFov = 40;
 
-				light.shadowMapBias = 0.1;
-				light.shadowMapDarkness = 0.7;
-				light.shadowMapWidth = 2*512;
-				light.shadowMapHeight = 2*512;
+        light.shadowMapBias = 0.1;
+        light.shadowMapDarkness = 0.7;
+        light.shadowMapWidth = 2 * 512;
+        light.shadowMapHeight = 2 * 512;
 
-				light.shadowCameraVisible = true;
-		}
-		scene.add( light );
+        light.shadowCameraVisible = true;
+    }
+    scene.add(light);
 
     controls = new PointerLockControls(camera, sphereBody);
     scene.add(controls.getObject());
