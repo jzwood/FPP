@@ -53,6 +53,7 @@ if (havePointerLock) {
     document.addEventListener('webkitpointerlockerror', pointerlockerror, false);
 
     instructions.addEventListener('click', function(event) {
+				sphereBody.position.set(0, 5, 0);
         instructions.style.display = 'none';
 
         // Ask the browser to lock the pointer
@@ -150,12 +151,19 @@ function initCannon() {
 
     // Create a plane
 		var pos = {'x': 0, 'y': -20, 'z': 0}
-		var rot = {'rx':0, 'ry': 0, 'rz': 0}
-		physicsWall(pos, rot, 100, 'test.jpg')
+		var rot = {'rx':0, 'ry': Math.PI/8, 'rz': 0}
+		var vecDir = {'i':0, 'j': 1, 'k': -0.1}
+		physicsWall(pos, vecDir, 50, 'test.jpg')
 }
 
 //square starts set facing towards z-hat
-function physicsWall(p, r, scale, img_path) {
+function physicsWall(p, vTo, scale, img_path) {
+
+	//normalizes the incoming direction vector
+	v = {};
+	Object.keys(vTo).map(function(value, index) {
+	   v[value] = vTo[value] / Math.sqrt(vTo.i * vTo.i + vTo.j * vTo.j + vTo.k * vTo.k)
+	})
 
 	/* WALL A. -- MAKING INVISIBLE WALL THAT RESPONDS TO PHYSICS */
     var wall = new CANNON.Body({
@@ -178,8 +186,9 @@ function physicsWall(p, r, scale, img_path) {
 		wall.addShape(trimesh_2)
 
 		wall.position.set(p.x, p.y, p.z)
-		// wall.quaternion.setFromAxisAngle(new CANNON.Vec3(1,0,0), r.rx + Math.PI/2)
-		wall.quaternion.setFromEuler(r.rx + Math.PI/2,r.ry,r.rz, 'XYZ')
+		// wall.quaternion.setFromAxisAngle(new CANNON.Vec3(1,0,0), Math.PI/2)
+		//wall.quaternion.setFromEuler(r.rx + Math.PI/2,r.ry,r.rz, 'XYZ')
+		wall.quaternion.setFromVectors(new CANNON.Vec3(0,0,1), new CANNON.Vec3(v.i, v.j, v.k))
 
 		world.addBody(wall)//added the invisible physics obeying wall
 		/* WALL A. END */
@@ -187,8 +196,9 @@ function physicsWall(p, r, scale, img_path) {
 		var loader = new THREE.TextureLoader();
 		loader.load(img_path, function ( img ) {
 			// floor
-			geometry = new THREE.PlaneGeometry(scale, scale);
-			geometry.applyMatrix(new THREE.Matrix4().makeRotationFromEuler(new THREE.Vector3(r.rx - Math.PI / 2, r.ry, r.rz), 'XYZ'))
+			geometry = new THREE.PlaneGeometry(scale, scale, 1, 1);
+			//geometry.applyMatrix(new THREE.Matrix4().makeRotationFromEuler(new THREE.Euler(r.rx - Math.PI / 2, - r.ry, r.rz), 'XYZ'))
+			geometry.applyMatrix(new THREE.Matrix4().makeRotationFromQuaternion(new THREE.Quaternion().setFromUnitVectors( new THREE.Vector3(0,0,1), new THREE.Vector3(v.i, v.j, v.k) )))
 			// geometry.applyMatrix(new THREE.Matrix4().makeRotationX(r.rx - Math.PI / 2))
 			// geometry.applyMatrix(new THREE.Matrix4().makeRotationZ(r.rz))
 
