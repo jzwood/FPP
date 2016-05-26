@@ -149,34 +149,37 @@ function initCannon() {
     world.addBody(sphereBody);
 
     // Create a plane
-		physicsWall(0,-50,0, new CANNON.Vec3(1,0,0),Math.PI/2, 100, 'test.jpg')
+		var pos = {'x': 0, 'y': -20, 'z': 0}
+		var rot = {'rx':0, 'ry': 0, 'rz': 0}
+		physicsWall(pos, rot, 100, 'test.jpg')
 }
 
 //square starts set facing towards z-hat
-function physicsWall(x, y, z, axis, rot, scale, img_path) {
+function physicsWall(p, r, scale, img_path) {
 
 	/* WALL A. -- MAKING INVISIBLE WALL THAT RESPONDS TO PHYSICS */
     var wall = new CANNON.Body({
         mass: 0
-    })
+    }),
     // wall vertices
-		var os = 0.5;//offset
-    var vertices = [
-        0, 0, 0 + os, // vertex 0
-        1, 0, 0 + os, // vertex 1
-        0, 1, 0 + os, // vertex 2
-				1, 1, 0 + os //	vertex 3
+		os = 0.5,//offset
+    vertices = [
+        0, 0, os, // vertex 0
+        1, 0, os, // vertex 1
+        0, 1, os, // vertex 2
+				1, 1, os //	vertex 3
     ].map(function(num) {
 		  return scale * (num - os)
 		});
 
-    var trimeshShape1 = new CANNON.Trimesh(vertices, [0,1,2])
-		var trimeshShape2 = new CANNON.Trimesh(vertices, [1,3,2])
-		wall.addShape(trimeshShape1)
-		wall.addShape(trimeshShape2)
+    var trimesh_1 = new CANNON.Trimesh(vertices, [0,1,2]),
+		trimesh_2 = new CANNON.Trimesh(vertices, [1,3,2])
+		wall.addShape(trimesh_1)
+		wall.addShape(trimesh_2)
 
-		wall.position.set(x,y,z)
-		wall.quaternion.setFromAxisAngle(axis, rot)
+		wall.position.set(p.x, p.y, p.z)
+		// wall.quaternion.setFromAxisAngle(new CANNON.Vec3(1,0,0), r.rx + Math.PI/2)
+		wall.quaternion.setFromEuler(r.rx + Math.PI/2,r.ry,r.rz, 'XYZ')
 
 		world.addBody(wall)//added the invisible physics obeying wall
 		/* WALL A. END */
@@ -185,22 +188,24 @@ function physicsWall(x, y, z, axis, rot, scale, img_path) {
 		loader.load(img_path, function ( img ) {
 			// floor
 			geometry = new THREE.PlaneGeometry(scale, scale);
-			geometry.applyMatrix(new THREE.Matrix4().makeRotationX(-Math.PI / 2));
+			geometry.applyMatrix(new THREE.Matrix4().makeRotationFromEuler(new THREE.Vector3(r.rx - Math.PI / 2, r.ry, r.rz), 'XYZ'))
+			// geometry.applyMatrix(new THREE.Matrix4().makeRotationX(r.rx - Math.PI / 2))
+			// geometry.applyMatrix(new THREE.Matrix4().makeRotationZ(r.rz))
 
 			material = new THREE.MeshPhongMaterial({
 					map: img, side: THREE.DoubleSide
 			});
 
 			mesh = new THREE.Mesh(geometry, material);
-			mesh.castShadow = true;
-			mesh.receiveShadow = true;
+			mesh.castShadow = true
+			mesh.receiveShadow = true
 
-			mesh.position.set(x, y, z);
-			scene.add(mesh);//added the visible wall
+			mesh.position.set(p.x, p.y, p.z)
+			scene.add(mesh)//added the visible wall
 
 			var m2 = mesh.clone()
-			m2.position.set(0, 50, 0);
-			scene.add(m2);
+			m2.position.set(0, 50, 0)
+			scene.add(m2)
 
 			},
 			function ( xhr ) { // Function called when download progresses
