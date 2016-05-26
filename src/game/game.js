@@ -149,22 +149,25 @@ function initCannon() {
     world.addBody(sphereBody);
 
     // Create a plane
-		physicsWall(0,-50,0, new CANNON.Vec3(1,0,0),-Math.PI/2, 300, 0)
+		physicsWall(0,-50,0, new CANNON.Vec3(1,0,0),Math.PI/2, 100, 'test.jpg')
 }
 
 //square starts set facing towards z-hat
 function physicsWall(x, y, z, axis, rot, scale, img_path) {
+
+	/* WALL A. -- MAKING INVISIBLE WALL THAT RESPONDS TO PHYSICS */
     var wall = new CANNON.Body({
         mass: 0
     })
-    // How to make a mesh with a single triangle
+    // wall vertices
+		var os = 0.5;//offset
     var vertices = [
-        0, 0, 0, // vertex 0
-        1, 0, 0, // vertex 1
-        0, 1, 0, // vertex 2
-				1, 1, 0  //	vertex 3
+        0, 0, 0 + os, // vertex 0
+        1, 0, 0 + os, // vertex 1
+        0, 1, 0 + os, // vertex 2
+				1, 1, 0 + os //	vertex 3
     ].map(function(num) {
-		  return scale * num
+		  return scale * (num - os)
 		});
 
     var trimeshShape1 = new CANNON.Trimesh(vertices, [0,1,2])
@@ -175,7 +178,37 @@ function physicsWall(x, y, z, axis, rot, scale, img_path) {
 		wall.position.set(x,y,z)
 		wall.quaternion.setFromAxisAngle(axis, rot)
 
-		world.addBody(wall)
+		world.addBody(wall)//added the invisible physics obeying wall
+		/* WALL A. END */
+		/* WALL B. -- MAKING TEXTURED WALL THAT MATCHES WALL A. */
+		var loader = new THREE.TextureLoader();
+		loader.load(img_path, function ( img ) {
+			// floor
+			geometry = new THREE.PlaneGeometry(scale, scale);
+			geometry.applyMatrix(new THREE.Matrix4().makeRotationX(-Math.PI / 2));
+
+			material = new THREE.MeshPhongMaterial({
+					map: img, side: THREE.DoubleSide
+			});
+
+			mesh = new THREE.Mesh(geometry, material);
+			mesh.castShadow = true;
+			mesh.receiveShadow = true;
+
+			mesh.position.set(x, y, z);
+			scene.add(mesh);//added the visible wall
+
+			var m2 = mesh.clone()
+			m2.position.set(0, 50, 0);
+			scene.add(m2);
+
+			},
+			function ( xhr ) { // Function called when download progresses
+				console.log( (xhr.loaded / xhr.total * 100) + '% loaded' );
+			},
+			function ( xhr ) { // Function called when download errors
+				console.log( xhr, 'Texture Load Error Occurred' );
+			});
 }
 
 function init() {
@@ -209,42 +242,6 @@ function init() {
 
     controls = new PointerLockControls(camera, sphereBody);
     scene.add(controls.getObject());
-
-
-		///////////////////
-		var loader = new THREE.TextureLoader();
-		loader.load('test.jpg', function ( img ) {
-			// floor
-	    geometry = new THREE.PlaneGeometry(100, 100, 1, 1);
-	    geometry.applyMatrix(new THREE.Matrix4().makeRotationX(-Math.PI / 2));
-
-			material = new THREE.MeshPhongMaterial({
-					map: img, side: THREE.DoubleSide
-			});
-
-			mesh = new THREE.Mesh(geometry, material);
-			mesh.castShadow = true;
-			mesh.receiveShadow = true;
-
-			mesh.position.set(0, 50, 0);
-			scene.add(mesh);
-
-			var m2 = mesh.clone()
-			m2.position.set(0, -50, 0);
-			scene.add(m2);
-
-      },
-      function ( xhr ) { // Function called when download progresses
-        console.log( (xhr.loaded / xhr.total * 100) + '% loaded' );
-      },
-      function ( xhr ) { // Function called when download errors
-        console.log( xhr, 'Texture Load Error Occurred' );
-      });
-
-
-
-
-
 
 
     renderer = new THREE.WebGLRenderer();
