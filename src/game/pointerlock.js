@@ -1,6 +1,3 @@
-//	FPP (First Person Puzzle) game object
-var FPP = FPP || {};
-
 FPP.POINTERLOCK = (function(window, document, undefined) {
 
 	var pl = new function(){
@@ -11,7 +8,7 @@ FPP.POINTERLOCK = (function(window, document, undefined) {
 
 	pl.init = function() {
 
-		if (havePointerLock) {
+		if (pl.havePointerLock) {
 
 			var element = document.body;
 
@@ -19,13 +16,13 @@ FPP.POINTERLOCK = (function(window, document, undefined) {
 
 				if (document.pointerLockElement === element || document.mozPointerLockElement === element || document.webkitPointerLockElement === element) {
 
-					controls.enabled = true;
+					FPP.BUILDSCENE.controls.enabled = true;
 
 					pl.blocker.style.display = 'none';
 
 				} else {
 
-					controls.enabled = false;
+					FPP.BUILDSCENE.controls.enabled = false;
 
 					pl.blocker.style.display = '-webkit-box';
 					pl.blocker.style.display = '-moz-box';

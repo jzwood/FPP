@@ -1,38 +1,32 @@
-FPP.ANIMATE = (function(){
+FPP.ANIMATE = (function(window, document, undefined) {
 
-	var run = new function(){
+	var run = new function() {
 		this.dt = 1 / 60
 		this.frame = 0
-		this.ctrls = FPP.BUILDSCENE.controls
-		this.draw = FPP.LCS.renderer
 		this.time = Date.now()
-		this.sc = FPP.LCS.scene
-		this.cam = FPP.LCS.camera
 	}
 
+	run.animate = function(){
+		requestAnimationFrame(run.animate)
+		if (FPP.BUILDSCENE.controls.enabled) {
+			FPP.GEOMETRY.world.step(run.dt)
 
-	var animate = function() {
+			// Update box positions
+			// for (var i = 0; i < boxes.length; i++) {
+			//     boxMeshes[i].position.copy(boxes[i].position);
+			//     boxMeshes[i].quaternion.copy(boxes[i].quaternion);
+			// }
+		}
 
-	    requestAnimationFrame(animate)
-	    if (run.ctrls.enabled) {
-	        FPP.GEOMETRY.world.step(run.dt);
-
-	        // Update box positions
-	        // for (var i = 0; i < boxes.length; i++) {
-	        //     boxMeshes[i].position.copy(boxes[i].position);
-	        //     boxMeshes[i].quaternion.copy(boxes[i].quaternion);
-	        // }
-	    }
-
-	    run.ctrls.update(Date.now() - run.time)
-	    run.draw.render(run.scene, run.cam)
-	    run.time = Date.now()
-
+		FPP.BUILDSCENE.controls.update(Date.now() - run.time)
+		FPP.LCS.renderer.render(FPP.LCS.scene, FPP.LCS.camera)
+		run.time = Date.now()
 	}
 
-	run.start = function(){
+	run.start = function() {
 		run.animate()
 	}
 
+	return run
 
-})
+})(window, document)

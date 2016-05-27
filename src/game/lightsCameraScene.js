@@ -1,3 +1,6 @@
+//	FPP (First Person Puzzle) game object
+var FPP = FPP || {};
+
 FPP.LCS = (function(window, document, undefined) {
 
 	var lcs = new function() {
@@ -39,11 +42,11 @@ FPP.LCS = (function(window, document, undefined) {
 		lcs.renderer.setClearColor(lcs.scene.fog.color, 1)
 	}
 
-	lcs.init() {
+	lcs.init = function(){
 
 		lcs.initLights()
 		lcs.initRenderer()
-		document.body.appendChild(renderer.domElement)
+		document.body.appendChild(lcs.renderer.domElement)
 
 		window.addEventListener('resize', lcs.onWindowResize, false)
 	}
