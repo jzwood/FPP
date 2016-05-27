@@ -14,27 +14,6 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 			frictionEquationStiffness: 1e8,
 			frictionEquationRegularizationTime: 3,
 		})
-		//player cannon bounding shape
-		this.player = new function(){
-			var mass = 5,
-					radius = 1.3,
-					sphereShape = new CANNON.Sphere(radius)
-
-			this.sphereBody = new CANNON.Body({
-					mass: mass,
-					material: models.groundMaterial
-			})
-
-			this.sphereBody.addShape(sphereShape);
-			this.sphereBody.position.set(0, 5, 0);
-			this.sphereBody.linearDamping = 0.9;
-			models.world.addBody(this.sphereBody);
-		}
-
-
-		models.controls = new PointerLockControls(FPP.LCS.camera, models.player.sphereBody)
-		FPP.LCS.scene.add(models.controls.getObject())
-	}
 
 	models.makePhyicsTile = function(p, vTo, dim, img_path, isTwoSided) {
 	  isTwoSided = isTwoSided || false
@@ -79,15 +58,15 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 	      /* WALL B. -- MAKING TEXTURED WALL THAT MATCHES WALL A. */
 	  models.loader.load(img_path, function(img) {
 	          // floor
-	          geometry = new THREE.PlaneGeometry(dim, dim, 1, 1)
+	          var geometry = new THREE.PlaneGeometry(dim, dim, 1, 1)
 	          geometry.applyMatrix(new THREE.Matrix4().makeRotationFromQuaternion(new THREE.Quaternion().copy(wall.quaternion)))
 	          //geometry.applyMatrix(new THREE.Matrix4().makeRotationFromQuaternion(new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 0, 1), new THREE.Vector3(v.i, v.j, v.k))))
-	          material = new THREE.MeshPhongMaterial({
+	          var material = new THREE.MeshPhongMaterial({
 	              map: img,
 	              side: isTwoSided ? THREE.DoubleSide : THREE.SingleSide
 	          })
 
-	          mesh = new THREE.Mesh(geometry, material)
+	          var mesh = new THREE.Mesh(geometry, material)
 	          mesh.castShadow = true
 	          mesh.receiveShadow = true
 
