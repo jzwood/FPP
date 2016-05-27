@@ -14,8 +14,7 @@ FPP.BUILDSCENE = (function(window, document, undefined) {
 				'k': 0
 			},
 			quadDimension: 20,
-			image_path: './test.jpg',
-			doubeSided: false
+			image_path: './test.jpg'
 		}
 	}
 
@@ -39,7 +38,7 @@ FPP.BUILDSCENE = (function(window, document, undefined) {
 	structures.build = function() {
 		var fs = structures.floor
 		FPP.GEOMETRY.makePhyicsTile(fs.pos, fs.vecDir,
-			fs.quadDimension, fs.image_path, fs.doubeSided)
+			fs.quadDimension, fs.image_path)
 
 		structures.controls = new PointerLockControls(FPP.LCS.camera, structures.player.sphereBody)
 		FPP.LCS.scene.add(structures.controls.getObject())

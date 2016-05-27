@@ -13,8 +13,7 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 
 	}
 
-	models.makePhyicsTile = function(p, vTo, dim, img_path, isTwoSided) {
-		isTwoSided = isTwoSided || false
+	models.makePhyicsTile = function(p, vTo, dim, img_path) {
 		//normalizes the incoming direction vector
 		var v = {},
 		magnitude = vTo.i * vTo.i + vTo.j * vTo.j + vTo.k * vTo.k, //actually = (magnitude^2)
@@ -61,7 +60,7 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 			//geometry.applyMatrix(new THREE.Matrix4().makeRotationFromQuaternion(new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 0, 1), new THREE.Vector3(v.i, v.j, v.k))))
 			var material = new THREE.MeshPhongMaterial({
 				map: img,
-				side: isTwoSided ? THREE.DoubleSide : THREE.SingleSide
+				side: THREE.DoubleSide
 			})
 
 			var mesh = new THREE.Mesh(geometry, material)
@@ -101,7 +100,6 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 
 		models.world.addContactMaterial(models.ground_ground_cm)
 
-		THREE.Material.side = THREE.DoubleSide
 	}
 
 	return models
