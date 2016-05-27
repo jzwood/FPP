@@ -215,12 +215,12 @@ function physicsWall(p, vTo, dim, img_path, isTwoSided) {
     loader.load(img_path, function(img) {
             // floor
             geometry = new THREE.PlaneGeometry(dim, dim, 1, 1)
-            geometry.applyMatrix(new THREE.Matrix4().makeRotationFromQuaternion(new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 0, 1), new THREE.Vector3(v.i, v.j, v.k))))
-
+            geometry.applyMatrix(new THREE.Matrix4().makeRotationFromQuaternion(new THREE.Quaternion().copy(wall.quaternion)))
+						//geometry.applyMatrix(new THREE.Matrix4().makeRotationFromQuaternion(new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 0, 1), new THREE.Vector3(v.i, v.j, v.k))))
             material = new THREE.MeshPhongMaterial({
                 map: img,
                 side: isTwoSided ? THREE.DoubleSide : THREE.SingleSide
-            });
+            })
 
             mesh = new THREE.Mesh(geometry, material)
             mesh.castShadow = true
@@ -249,7 +249,7 @@ function init() {
     var light = new THREE.AmbientLight(0x6B6B6B); // soft white light
     scene.add(light);
 
-    light = new THREE.SpotLight(0xffffff);
+    light = new THREE.SpotLight(0xffffff)
     light.position.set(10, 30, 20);
     light.target.position.set(0, 0, 0);
     if (true) {
@@ -291,7 +291,10 @@ function onWindowResize() {
 
 var dt = 1 / 60;
 
+var frame = 0;
+
 function animate() {
+
     requestAnimationFrame(animate);
     if (controls.enabled) {
         world.step(dt);

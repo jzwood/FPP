@@ -70,7 +70,8 @@
 
             case 37: // left
             case 65: // a
-                moveLeft = true; break;
+                moveLeft = true;
+								break;
 
             case 40: // down
             case 83: // s
