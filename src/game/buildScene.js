@@ -6,16 +6,16 @@ FPP.BUILDSCENE = (function(window, document, undefined) {
 			pos: {
 				'x': 0,
 				'y': -20,
-				'z': 10
+				'z': 0
 			},
 			vecDir: {
 				'i': 0,
 				'j': 1,
 				'k': 0
 			},
-			quadDimension: 50,
+			quadDimension: 20,
 			image_path: './test.jpg',
-			doubeSided: true
+			doubeSided: false
 		}
 	}
 

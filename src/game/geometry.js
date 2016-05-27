@@ -4,6 +4,13 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 		this.loader = new THREE.TextureLoader()
 		this.world = new CANNON.World()
 		this.solver = new CANNON.GSSolver()
+
+		this.solver.iterations = 5; //7
+		this.solver.tolerance = 0.1;
+
+		var split = true
+		this.world.solver = split ? new CANNON.SplitSolver(this.solver) : this.solver
+
 	}
 
 	models.makePhyicsTile = function(p, vTo, dim, img_path, isTwoSided) {
@@ -76,9 +83,9 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 
 	models.init = function(){
 		//initializing contact material here
-		this.groundMaterial = new CANNON.Material("groundMaterial")
+		models.groundMaterial = new CANNON.Material("groundMaterial")
 		// Adjust constraint equation parameters for ground/ground contact
-		this.ground_ground_cm = new CANNON.ContactMaterial(this.groundMaterial, this.groundMaterial, {
+		models.ground_ground_cm = new CANNON.ContactMaterial(this.groundMaterial, this.groundMaterial, {
 			friction: 0.4,
 			restitution: 0.3,
 			contactEquationStiffness: 1e8,
@@ -86,6 +93,15 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 			frictionEquationStiffness: 1e8,
 			frictionEquationRegularizationTime: 3,
 		})
+		models.world.quatNormalizeSkip = 0;
+		models.world.quatNormalizeFast = false;
+
+		models.world.gravity.set(0, -20, 0);
+		models.world.broadphase = new CANNON.NaiveBroadphase()
+
+		models.world.addContactMaterial(models.ground_ground_cm)
+
+		THREE.Material.side = THREE.DoubleSide
 	}
 
 	return models
