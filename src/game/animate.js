@@ -11,25 +11,35 @@ FPP.ANIMATE = (function(window, document, undefined) {
 		this.time = Date.now()
 	}
 
-	// run.animate = function(){
-	// 	requestAnimationFrame(run.animate)
-	// 	if (FPP.BUILDSCENE.controls.enabled) {
-	// 		FPP.GEOMETRY.world.step(run.dt)
-	//
-	// 		// Update box positions
-	// 		// for (var i = 0; i < boxes.length; i++) {
-	// 		//     boxMeshes[i].position.copy(boxes[i].position);
-	// 		//     boxMeshes[i].quaternion.copy(boxes[i].quaternion);
-	// 		// }
-	// 	}
-	//
-	// 	FPP.BUILDSCENE.controls.update(Date.now() - run.time)
-	// 	FPP.LCS.renderer.render(FPP.LCS.scene, FPP.LCS.camera)
-	// 	run.time = Date.now()
-	// }
+	run.animate = function(){
+		requestAnimationFrame(run.animate)
+		if (FPP.BUILDSCENE.controls.enabled) {
+			FPP.GEOMETRY.world.step(run.dt)
+		}
+
+		FPP.BUILDSCENE.controls.update(Date.now() - run.time)
+		//Hack A start
+		FPP.LCS.scene.traverse(function(o){
+				if(o instanceof THREE.Mesh && o.frustumCulled){
+						o.frustumCulled = false;
+						o.hadCullingEnabled = true;
+				}
+		});
+		//Hack A end
+		FPP.LCS.renderer.render(FPP.LCS.scene, FPP.LCS.camera)
+		//Hack B start
+		FPP.LCS.scene.traverse(function(o){
+				if(o instanceof THREE.Mesh && o.hadCullingEnabled){
+						o.frustumCulled = true;
+						delete o.hadCullingEnabled;
+				}
+		});
+		//Hack B end
+		run.time = Date.now()
+	}
 
 	run.start = function() {
-		animate()
+		run.animate()
 	}
 
 	return run
