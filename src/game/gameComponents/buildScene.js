@@ -9,9 +9,9 @@ FPP.BUILDSCENE = (function(window, document, undefined) {
 				'z': 0
 			},
 			vecDir: {
-				'i': 0.5,
+				'i': 0.2,
 				'j': 1,
-				'k': -1
+				'k': -0.1
 			},
 			quadDimension: 20,
 			image_path: './assets/images/test.jpg'
