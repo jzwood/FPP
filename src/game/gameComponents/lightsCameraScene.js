@@ -42,7 +42,7 @@ FPP.LCS = (function(window, document, undefined) {
 		lcs.renderer.setClearColor(lcs.scene.fog.color, 1)
 	}
 
-	lcs.init = function(){
+	lcs.init = function() {
 
 		lcs.initLights()
 		lcs.initRenderer()
@@ -51,10 +51,10 @@ FPP.LCS = (function(window, document, undefined) {
 		window.addEventListener('resize', lcs.onWindowResize, false)
 	}
 
-	lcs.onWindowResize = function(){
-			lcs.camera.aspect = window.innerWidth / window.innerHeight
-			lcs.camera.updateProjectionMatrix()
-			lcs.renderer.setSize(window.innerWidth, window.innerHeight)
+	lcs.onWindowResize = function() {
+		lcs.camera.aspect = window.innerWidth / window.innerHeight
+		lcs.camera.updateProjectionMatrix()
+		lcs.renderer.setSize(window.innerWidth, window.innerHeight)
 	}
 
 	return lcs

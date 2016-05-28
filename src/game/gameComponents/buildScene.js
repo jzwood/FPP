@@ -9,12 +9,12 @@ FPP.BUILDSCENE = (function(window, document, undefined) {
 				'z': 0
 			},
 			vecDir: {
-				'i': 0,
+				'i': 0.5,
 				'j': 1,
-				'k': 0
+				'k': -1
 			},
 			quadDimension: 20,
-			image_path: './test.jpg'
+			image_path: './assets/images/test.jpg'
 		}
 	}
 
@@ -40,10 +40,10 @@ FPP.BUILDSCENE = (function(window, document, undefined) {
 		FPP.GEOMETRY.makePhyicsTile(fs.pos, fs.vecDir,
 			fs.quadDimension, fs.image_path)
 
-		structures.controls = new PointerLockControls(FPP.LCS.camera, structures.player.sphereBody)
-		FPP.LCS.scene.add(structures.controls.getObject())
-	}
+			structures.controls = new PointerLockControls(FPP.LCS.camera, structures.player.sphereBody)
+			FPP.LCS.scene.add(structures.controls.getObject())
+		}
 
-	return structures
+		return structures
 
-})(window, document)
+	})(window, document)

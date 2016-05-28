@@ -80,7 +80,7 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 		});
 	}
 
-	models.init = function(){
+	models.init = function() {
 		//initializing contact material here
 		models.groundMaterial = new CANNON.Material("groundMaterial")
 		// Adjust constraint equation parameters for ground/ground contact

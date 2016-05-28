@@ -1,6 +1,6 @@
 FPP.POINTERLOCK = (function(window, document, undefined) {
 
-	var pl = new function(){
+	var pl = new function() {
 		this.blocker = document.getElementById('blocker')
 		this.instructions = document.getElementById('instructions')
 		this.havePointerLock = 'pointerLockElement' in document || 'mozPointerLockElement' in document || 'webkitPointerLockElement' in document
