@@ -3,6 +3,7 @@ the spot light shadows causes a "glDrawElements: range out of bounds for buffer"
 The clever hack used below to fix this issue is credited to Mantrax @
 https://github.com/mrdoob/three.js/issues/5293
 */
+
 FPP.ANIMATE = (function(window, document, undefined) {
 
 	var run = new function() {

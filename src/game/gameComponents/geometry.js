@@ -13,34 +13,39 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 
 	}
 
-	models.makePhyicsTile = function(p, vTo, dim, img_path) {
+	/*
+	this is one of the the most important method of the game. It makes textered
+	quads that obey physics rules.
+	*/
+	models.makePhyicsTile = function(p, v_norm, width, height, img_path, stretch, wrap_w, wrap_h) {
 		//normalizes the incoming direction vector
 		var v = {},
-		magnitude = vTo.i * vTo.i + vTo.j * vTo.j + vTo.k * vTo.k, //actually = (magnitude^2)
+		magnitude = v_norm.i * v_norm.i + v_norm.j * v_norm.j + v_norm.k * v_norm.k, //actually = (magnitude^2)
 		epsilon = 0.001
 		if (Math.abs(magnitude - 1) > epsilon) { //if magnitude not equal to 1 the vector needs to be normalized
 			magnitude = Math.sqrt(magnitude)
-			Object.keys(vTo).map(function(value, index) {
-				v[value] = vTo[value] / magnitude
+			Object.keys(v_norm).map(function(value, index) {
+				v[value] = v_norm[value] / magnitude
 			})
 		} else {
-			v = vTo
+			v = v_norm
 		}
 
 		/* WALL A. -- MAKING INVISIBLE WALL THAT RESPONDS TO PHYSICS */
 		var wall = new CANNON.Body({
 			mass: 0 //makes it a solid immovable structure
 		}),
+		w = 0.5 * width, h = 0.5 * height,
 		// wall vertices
-		os = 0.5, //offset
 		vertices = [
-			0, 0, os, // vertex 0
-			1, 0, os, // vertex 1
-			0, 1, os, // vertex 2
-			1, 1, os //	vertex 3
-		].map(function(num) {
-			return dim * (num - os)
-		});
+			-w, -h, 0, // vertex 0
+			w, -h, 0, // vertex 1
+			-w, h, 0, // vertex 2
+			w, h, 0 //	vertex 3
+		]
+		// .map(function(num) {
+		// 	return (num - os)
+		// });
 
 		var tri_a = new CANNON.Trimesh(vertices, [0, 1, 2]),
 		tri_b = new CANNON.Trimesh(vertices, [1, 3, 2])
@@ -54,8 +59,16 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 		/* WALL A. END */
 		/* WALL B. -- MAKING TEXTURED WALL THAT MATCHES WALL A. */
 		models.loader.load(img_path, function(img) {
+			if(stretch !== true){
+				wrap_w = wrap_w || 1
+				wrap_h = wrap_h || 1
+				img.wrapS = THREE.RepeatWrapping
+				img.wrapT = THREE.RepeatWrapping
+				img.anisotropy = 1
+				img.repeat.set(wrap_w, wrap_h)
+			}
 			// floor
-			var geometry = new THREE.PlaneGeometry(dim, dim, 1, 1)
+			var geometry = new THREE.PlaneGeometry(width, height, 1, 1)
 			geometry.applyMatrix(new THREE.Matrix4().makeRotationFromQuaternion(new THREE.Quaternion().copy(wall.quaternion)))
 			//geometry.applyMatrix(new THREE.Matrix4().makeRotationFromQuaternion(new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 0, 1), new THREE.Vector3(v.i, v.j, v.k))))
 			var material = new THREE.MeshPhongMaterial({
