@@ -12,9 +12,9 @@ FPP.BUILDSCENE = (function(window, document, undefined) {
 		this.tile_1 = {
 			pos: {'x': 0,'y': 0,'z': 20},
 			normal: {'i': 0,'j': -1,'k': -20},
-			width: 20, height: 5,
+			width: 20, height: 10,
 			image_path: './assets/images/checker2.png',
-			stretch: false, ww: 4, wh: 1
+			stretch: false, ww: 2, wh: 1
 		}
 	}
 
@@ -33,6 +33,7 @@ FPP.BUILDSCENE = (function(window, document, undefined) {
 		var axisHelper = new THREE.AxisHelper( 50 )
 		FPP.LCS.scene.add( axisHelper )
 
+		//default start gravity and orientation
 		FPP.GEOMETRY.world.gravity.set(-20,0,0)
 		FPP.LCS.camera.up.set(1,0,0)
 		FPP.LCS.camera.lookAt(new THREE.Vector3(0,0,1))

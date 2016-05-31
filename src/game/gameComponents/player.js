@@ -3,7 +3,7 @@ FPP.PLAYER = (function(window, document, undefined) {
 	var player = new function(){
 
 		var mass = 5,
-		radius = 1.3,
+		radius = 2,
 		sphereShape = new CANNON.Sphere(radius)
 
 		this.sphereBody = new CANNON.Body({

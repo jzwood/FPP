@@ -12,6 +12,9 @@ FPP.ANIMATE = (function(window, document, undefined) {
 		this.time = Date.now()
 	}
 
+
+	console.log(FPP.PLAYER.sphereBody.position)
+
 	run.animate = function() {
 		requestAnimationFrame(run.animate)
 		if (FPP.PLAYER.controls.enabled) {
@@ -46,30 +49,3 @@ FPP.ANIMATE = (function(window, document, undefined) {
 	return run
 
 })(window, document)
-
-function animate() {
-	requestAnimationFrame(animate)
-	if (FPP.BUILDSCENE.controls.enabled) {
-		FPP.GEOMETRY.world.step(FPP.ANIMATE.dt)
-	}
-
-	FPP.BUILDSCENE.controls.update(Date.now() - FPP.ANIMATE.time)
-	//Hack A start
-	FPP.LCS.scene.traverse(function(o) {
-		if (o instanceof THREE.Mesh && o.frustumCulled) {
-			o.frustumCulled = false;
-			o.hadCullingEnabled = true;
-		}
-	});
-	//Hack A end
-	FPP.LCS.renderer.render(FPP.LCS.scene, FPP.LCS.camera)
-	//Hack B start
-	FPP.LCS.scene.traverse(function(o) {
-		if (o instanceof THREE.Mesh && o.hadCullingEnabled) {
-			o.frustumCulled = true;
-			delete o.hadCullingEnabled;
-		}
-	});
-	//Hack B end
-	FPP.ANIMATE.time = Date.now()
-}
