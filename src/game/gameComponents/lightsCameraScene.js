@@ -5,6 +5,8 @@ FPP.LCS = (function(window, document, undefined) {
 
 	var lcs = new function() {
 		this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
+		this.camera.up.set(0,0,1)
+		this.camera.lookAt(new THREE.Vector3(0,0,1))
 		this.scene = new THREE.Scene()
 		this.renderer = new THREE.WebGLRenderer()
 	}
