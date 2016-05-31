@@ -5,8 +5,6 @@ FPP.LCS = (function(window, document, undefined) {
 
 	var lcs = new function() {
 		this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
-		this.camera.up.set(0,0,1)
-		this.camera.lookAt(new THREE.Vector3(0,0,1))
 		this.scene = new THREE.Scene()
 		this.renderer = new THREE.WebGLRenderer()
 	}
@@ -22,14 +20,14 @@ FPP.LCS = (function(window, document, undefined) {
 		if (true) {
 			spot_light.castShadow = true
 
-			spot_light.shadowCameraNear = 20
-			spot_light.shadowCameraFar = 50 //camera.far;
-			spot_light.shadowCameraFov = 40
+			spot_light.shadow.camera.near = 20
+			spot_light.shadow.camera.far = 50 //camera.far;
+			spot_light.shadow.camera.fov = 40
 
 			spot_light.shadowMapBias = 0.1
 			spot_light.shadowMapDarkness = 0.7
-			spot_light.shadowMapWidth = 2 * 512
-			spot_light.shadowMapHeight = 2 * 512
+			spot_light.shadow.mapSize.width = 2 * 512
+			spot_light.shadow.mapSize.height = 2 * 512
 
 			//spot_light.shadowCameraVisible = true
 		}
@@ -38,7 +36,7 @@ FPP.LCS = (function(window, document, undefined) {
 
 	lcs.initRenderer = function() {
 		lcs.scene.fog = new THREE.Fog(0x000000, 0, 500)
-		lcs.renderer.shadowMapEnabled = true
+		lcs.renderer.shadowMap.enabled = true
 		lcs.renderer.shadowMapSoft = true
 		lcs.renderer.setSize(window.innerWidth, window.innerHeight)
 		lcs.renderer.setClearColor(lcs.scene.fog.color, 1)

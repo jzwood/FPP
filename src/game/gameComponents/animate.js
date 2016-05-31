@@ -20,21 +20,21 @@ FPP.ANIMATE = (function(window, document, undefined) {
 
 		FPP.PLAYER.controls.update(Date.now() - run.time)
 		//Hack A start
-		FPP.LCS.scene.traverse(function(o) {
-			if (o instanceof THREE.Mesh && o.frustumCulled) {
-				o.frustumCulled = false;
-				o.hadCullingEnabled = true;
-			}
-		});
+		// FPP.LCS.scene.traverse(function(o) {
+		// 	if (o instanceof THREE.Mesh && o.frustumCulled) {
+		// 		o.frustumCulled = false;
+		// 		o.hadCullingEnabled = true;
+		// 	}
+		// });
 		//Hack A end
 		FPP.LCS.renderer.render(FPP.LCS.scene, FPP.LCS.camera)
 		//Hack B start
-		FPP.LCS.scene.traverse(function(o) {
-			if (o instanceof THREE.Mesh && o.hadCullingEnabled) {
-				o.frustumCulled = true;
-				delete o.hadCullingEnabled;
-			}
-		});
+		// FPP.LCS.scene.traverse(function(o) {
+		// 	if (o instanceof THREE.Mesh && o.hadCullingEnabled) {
+		// 		o.frustumCulled = true;
+		// 		delete o.hadCullingEnabled;
+		// 	}
+		// });
 		//Hack B end
 		run.time = Date.now()
 	}
