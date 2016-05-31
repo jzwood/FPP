@@ -13,7 +13,7 @@
     pitchObject.add( camera );
 
     var yawObject = new THREE.Object3D();
-    yawObject.position.y = 2;
+    yawObject.position.y = eyeYPos;
     yawObject.add( pitchObject );
 
     var quat = new THREE.Quaternion();
@@ -52,9 +52,14 @@
 
         var movementX = event.movementX || event.mozMovementX || event.webkitMovementX || 0;
         var movementY = event.movementY || event.mozMovementY || event.webkitMovementY || 0;
+				var movementZ = event.movementZ || event.mozMovementZ || event.webkitMovementZ || 0;
 
-        yawObject.rotation.y -= movementX * 0.002;
-        pitchObject.rotation.x -= movementY * 0.002;
+				var mx = movementX  * 0.002;
+				var my = movementY * 0.002;
+				var mz = movementZ * 0.002;
+
+        yawObject.rotation.y -= mx
+        pitchObject.rotation.x -= my
 
         pitchObject.rotation.x = Math.max( - PI_2, Math.min( PI_2, pitchObject.rotation.x ) );
     };

@@ -29,7 +29,7 @@ FPP.LCS = (function(window, document, undefined) {
 			spot_light.shadowMapWidth = 2 * 512
 			spot_light.shadowMapHeight = 2 * 512
 
-			spot_light.shadowCameraVisible = true
+			//spot_light.shadowCameraVisible = true
 		}
 		lcs.scene.add(spot_light)
 	}

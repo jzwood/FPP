@@ -16,13 +16,13 @@ FPP.POINTERLOCK = (function(window, document, undefined) {
 
 				if (document.pointerLockElement === element || document.mozPointerLockElement === element || document.webkitPointerLockElement === element) {
 
-					FPP.BUILDSCENE.controls.enabled = true;
+					FPP.PLAYER.controls.enabled = true;
 
 					pl.blocker.style.display = 'none';
 
 				} else {
 
-					FPP.BUILDSCENE.controls.enabled = false;
+					FPP.PLAYER.controls.enabled = false;
 
 					pl.blocker.style.display = '-webkit-box';
 					pl.blocker.style.display = '-moz-box';

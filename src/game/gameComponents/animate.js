@@ -14,11 +14,11 @@ FPP.ANIMATE = (function(window, document, undefined) {
 
 	run.animate = function() {
 		requestAnimationFrame(run.animate)
-		if (FPP.BUILDSCENE.controls.enabled) {
+		if (FPP.PLAYER.controls.enabled) {
 			FPP.GEOMETRY.world.step(run.dt)
 		}
 
-		FPP.BUILDSCENE.controls.update(Date.now() - run.time)
+		FPP.PLAYER.controls.update(Date.now() - run.time)
 		//Hack A start
 		FPP.LCS.scene.traverse(function(o) {
 			if (o instanceof THREE.Mesh && o.frustumCulled) {
