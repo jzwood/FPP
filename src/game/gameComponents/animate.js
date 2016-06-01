@@ -12,9 +12,6 @@ FPP.ANIMATE = (function(window, document, undefined) {
 		this.time = Date.now()
 	}
 
-
-	console.log(FPP.PLAYER.sphereBody.position)
-
 	run.animate = function() {
 		requestAnimationFrame(run.animate)
 		if (FPP.PLAYER.controls.enabled) {

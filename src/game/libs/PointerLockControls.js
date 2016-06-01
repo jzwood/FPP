@@ -13,6 +13,7 @@
 
     var yawObject = new THREE.Object3D();
     yawObject.add( pitchObject );
+
     var quat = new THREE.Quaternion();
 
     var moveForward = false;
@@ -23,7 +24,7 @@
     var canJump = false;
 
     var contactNormal = new CANNON.Vec3(); // Normal in the contact, pointing *out* of whatever the player touched
-    var upAxis = new CANNON.Vec3(1,0,0);
+    var upAxis = new CANNON.Vec3(0,1,0);
     cannonBody.addEventListener("collide",function(e){
         var contact = e.contact;
 
@@ -49,16 +50,11 @@
 
         var movementX = event.movementX || event.mozMovementX || event.webkitMovementX || 0;
         var movementY = event.movementY || event.mozMovementY || event.webkitMovementY || 0;
-				var movementZ = event.movementZ || event.mozMovementZ || event.webkitMovementZ || 0;
 
-				var mx = movementX  * 0.002;
-				var my = movementY * 0.002;
-				var mz = movementZ * 0.002;
+        yawObject.rotation.y -= movementX * 0.002;
+        pitchObject.rotation.x -= movementY * 0.002;
 
-        yawObject.rotation.x -= mx
-        pitchObject.rotation.y -= my
-
-        pitchObject.rotation.y = Math.max( - PI_2, Math.min( PI_2, pitchObject.rotation.y ) );
+        pitchObject.rotation.x = Math.max( - PI_2, Math.min( PI_2, pitchObject.rotation.x ) );
     };
 
     var onKeyDown = function ( event ) {
@@ -72,8 +68,7 @@
 
             case 37: // left
             case 65: // a
-                moveLeft = true;
-								break;
+                moveLeft = true; break;
 
             case 40: // down
             case 83: // s
@@ -87,7 +82,7 @@
 
             case 32: // space
                 if ( canJump === true ){
-                    velocity.x = jumpVelocity;
+                    velocity.y = jumpVelocity;
                 }
                 canJump = false;
                 break;
@@ -150,30 +145,30 @@
         inputVelocity.set(0,0,0);
 
         if ( moveForward ){
-            inputVelocity.z = velocityFactor * delta;
+            inputVelocity.z = -velocityFactor * delta;
         }
         if ( moveBackward ){
-            inputVelocity.z = -velocityFactor * delta;
+            inputVelocity.z = velocityFactor * delta;
         }
 
         if ( moveLeft ){
-            inputVelocity.y = -velocityFactor * delta;
+            inputVelocity.x = -velocityFactor * delta;
         }
         if ( moveRight ){
-            inputVelocity.y = velocityFactor * delta;
+            inputVelocity.x = velocityFactor * delta;
         }
 
         // Convert velocity to world coordinates
-        euler.y = pitchObject.rotation.y;
-        euler.x = yawObject.rotation.x;
+        euler.x = pitchObject.rotation.x;
+        euler.y = yawObject.rotation.y;
         euler.order = "XYZ";
         quat.setFromEuler(euler);
         inputVelocity.applyQuaternion(quat);
         //quat.multiplyVector3(inputVelocity);
 
         // Add to the object
+        velocity.x += inputVelocity.x;
         velocity.z += inputVelocity.z;
-        velocity.y += inputVelocity.y;
 
         yawObject.position.copy(cannonBody.position);
     };
