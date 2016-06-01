@@ -10,10 +10,11 @@ FPP.BUILDSCENE = (function(window, document, undefined) {
 		// Create a textured quad that is fixed in space and obeys physics
 		this.tile_1 = {
 			'specs':{
-				translate: new THREE.Vector3(0, 0, 0),
-				normal: new THREE.Vector3(0, 1, 0),
-				width: 10, height: 40,
-				image_path: './assets/images/checker2.png'
+				'translate': new THREE.Vector3(0, 0, 0),
+				'normal': new THREE.Vector3(0, 1, 0),
+				'ry': Math.PI/2,
+				'width': 10, 'height': 40,
+				'image_path': './assets/images/checker2.png'
 			},
 			'options' : {
 				'solid':true, 'stretch':false, 'wrap_w':5, 'wrap_h':20

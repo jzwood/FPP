@@ -29,10 +29,12 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 	}
 
 	/* MAKES TEXTURED WALL THAT MATCHES WALL */
-	models.texturedTile = function(p, v, ry, width, height, img_path, options){
-		// options = {solid:boolean, stretch:boolean, wrap_w:integer, wrap_h:integer}
-		models.loader.load(img_path, function(img) {
-			if(options.stretch !== true){
+	models.textTile2 = function(specs, options) {
+		models.loader.load(specs.image_path, function(img) {
+
+			var w = 0.5 * specs.width, h = 0.5 * specs.height
+
+			if (options.stretch !== true) {
 				var wrap_w = options.wrap_w || 1,
 				wrap_h = options.wrap_h || 1
 				img.wrapS = THREE.RepeatWrapping
@@ -40,74 +42,14 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 				img.anisotropy = 1
 				img.repeat.set(wrap_w, wrap_h)
 			}
-			var geometry = new THREE.PlaneGeometry(width, height, 1, 1)
-			//geometry.applyMatrix(new THREE.Matrix4().makeRotationFromQuaternion(new THREE.Quaternion().copy(wall.quaternion)))
-			// geometry.rotateZ(ry)
-			geometry.applyMatrix(new THREE.Matrix4().makeRotationFromQuaternion(new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 0, 1), v)))
-
-			// if(options.solid){
-			// 	models.physicsTile(p, v, geometry.quaternion, width, height)
-			// }
-
-			var material = new THREE.MeshPhongMaterial({
-				map: img,
-				side: THREE.DoubleSide //when the game is done CHANGE THIS TO FrontSide !!!!!!!
-			})
-
-			var mesh = new THREE.Mesh(geometry, material)
-			mesh.castShadow = true
-			mesh.receiveShadow = true
-
-			mesh.position.set(p.x, p.y, p.z)
-			FPP.LCS.scene.add(mesh)
-		},
-		function(xhr) { // Function called when download progresses
-			console.log((xhr.loaded / xhr.total * 100) + '% loaded')
-		},
-		function(xhr) { // Function called when download errors
-			console.log(xhr, 'Texture Load Error Occurred')
-		})
-	}
-
-	models.textTile2 = function(specs, options) {
-		models.loader.load(specs.image_path, function(img) {
-
-			var w = 0.5 * specs.width, h = 0.5 * specs.height
-
-			//rotate the tile by theta radians
-			// if(false){
-			// 	var wp = w * Math.cos(ry) - h * Math.sin(ry), // this is simply rotating points
-			// 	hp = w * Math.sin(ry) + h * Math.cos(ry) // around y-axis by theta
-			// 	w = wp; h = hp
-			// }
-
-			// if (options.stretch !== true) {
-			// 	var wrap_w = options.wrap_w || 1,
-			// 	wrap_h = options.wrap_h || 1
-			// 	img.wrapS = THREE.RepeatWrapping
-			// 	img.wrapT = THREE.RepeatWrapping
-			// 	img.anisotropy = 1
-			// 	img.repeat.set(wrap_w, wrap_h)
-			// }
 
 			//this pain-stakingly specifies the vertices of our quad
-
-			// wall vertices
-			/*
-			var	vertices = [
-					-w, -h, 0, // vertex 0
-					w, -h, 0, // vertex 1
-					-w, h, 0, // vertex 2
-					w, h, 0 //	vertex 3
-			]
-			var v = vertices,
-			*/
 			var geom = new THREE.Geometry()
 			geom.vertices = [  // array of Vector3 giving vertex coordinates
-				new THREE.Vector3( w, 0, h ),    // vertex number 0
-				new THREE.Vector3( w, 0, -h),   // vertex number 1
-				new THREE.Vector3( -w, 0, -h),  // vertex number 2
-				new THREE.Vector3( -w, 0, h)   // vertex number 3
+				new THREE.Vector3( w, h, 0 ),    // vertex number 0
+				new THREE.Vector3( w, -h, 0),   // vertex number 1
+				new THREE.Vector3( -w, -h, 0),  // vertex number 2
+				new THREE.Vector3( -w, h, 0)   // vertex number 3
 			]
 			geom.faces = [
 				new THREE.Face3( 3, 2, 1),  // bottom face is a quad
@@ -129,20 +71,8 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 			geom.uvsNeedUpdate = true
 			geom.buffersNeedUpdate = true
 
-			// var v1 = new THREE.Vector3(v[0], v[1], v[2]),
-			// v2 = new THREE.Vector3(v[3], v[4], v[5]),
-			// v3 = new THREE.Vector3(v[6], v[7], v[8]),
-			// v4 = new THREE.Vector3(v[9], v[10], v[11])
-			// geom.vertices.push(v1,v2,v3,v4)
-			// console.log(geom.vertices)
-			// geom.faces.push(new THREE.Face3(0, 1, 2))
-			// geom.faces.push(new THREE.Face3(1, 3, 2))
-			// geom.computeFaceNormals()
-			//
-			// var geometry = new THREE.PlaneGeometry()
-			// console.log(geom,geometry)
-
-			geom.applyMatrix(new THREE.Matrix4().makeRotationFromQuaternion(new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 0, 1), specs.normal)) )
+			// geom.applyMatrix(new THREE.Matrix4().makeRotationZ(specs.ry))
+			geom.applyMatrix(new THREE.Matrix4().makeRotationFromQuaternion(new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 0, 1), specs.normal)).makeRotationX(specs.ry) )
 			//.makeTranslation ( x, y, z )
 
 			var material = new THREE.MeshPhongMaterial({
@@ -178,25 +108,25 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 		w = 0.5 * width, h = 0.5 * height
 
 		//rotate the tile by theta radians
-		if(ry){
-			var wp = w * Math.cos(ry) - h * Math.sin(ry), //this is simply rotating points
-			hp = w * Math.sin(ry) + h * Math.cos(ry) // around y-axis by theta
-			w = wp; h = hp
-		}
+		// if(ry){
+		// 	var wp = w * Math.cos(ry) - h * Math.sin(ry), //this is simply rotating points
+		// 	hp = w * Math.sin(ry) + h * Math.cos(ry) // around y-axis by theta
+		// 	w = wp; h = hp
+		// }
 
 		// wall vertices
 		var	vertices = [
-				-w, -h, 0, // vertex 0
-				w, -h, 0, // vertex 1
-				-w, h, 0, // vertex 2
-				w, h, 0 //	vertex 3
+				-w, 0, -h, // vertex 0
+				w, 0, -h, // vertex 1
+				-w, 0, h, // vertex 2
+				w, 0, h //	vertex 3
 		],
 
 		//the two tri meshes that comprise the rectangle
 		tri_a = new CANNON.Trimesh(vertices, [0, 1, 2]),
 		tri_b = new CANNON.Trimesh(vertices, [1, 3, 2])
 		wall.addShape(tri_a); wall.addShape(tri_b)
-		wall.quaternion.setFromVectors(new CANNON.Vec3(0, 0, 1), new CANNON.Vec3(v.x, v.y, v.z))
+		wall.quaternion.setFromVectors(new CANNON.Vec3(0, 1, 0), new CANNON.Vec3(v.x, v.y, v.z))
 		wall.position.set(p.x, p.y, p.z)
 		models.world.addBody(wall)
 
