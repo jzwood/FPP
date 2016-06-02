@@ -235,8 +235,8 @@
                 scene.add( ambient );
 
                 light = new THREE.SpotLight( 0xffffff );
-                light.position.set( 10, 30, 20 );
-                light.target.position.set( 0, 0, 0 );
+                light.position.set( 1, 0, 0 );
+                light.target.position.set( 0, -1, 0 );
                 if(true){
                     light.castShadow = true;
 
@@ -251,7 +251,7 @@
 
                     //light.shadowCameraVisible = true;
                 }
-                scene.add( light );
+                //scene.add( light );
 
 
 

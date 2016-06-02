@@ -14,7 +14,7 @@ FPP.LCS = (function(window, document, undefined) {
 		lcs.scene.add(amb_light)
 
 		var spot_light = new THREE.SpotLight(0xffffff)
-		spot_light.position.set(10, 30, 20)
+		spot_light.position.set(0, -1, 0)
 		spot_light.target.position.set(0, 0, 0)
 
 		if (true) {
