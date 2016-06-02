@@ -115,8 +115,6 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 				side: THREE.FrontSide //when the game is done CHANGE THIS TO FrontSide !!!!!!!
 			})
 
-			console.log(img)
-
 			var mesh = new THREE.Mesh(geom, material)
 			mesh.castShadow = true
 			mesh.receiveShadow = true

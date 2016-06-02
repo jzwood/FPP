@@ -13,25 +13,28 @@ FPP.LCS = (function(window, document, undefined) {
 		var amb_light = new THREE.AmbientLight(0x6B6B6B) // soft white light
 		lcs.scene.add(amb_light)
 
-		var spot_light = new THREE.SpotLight(0xffffff)
-		spot_light.position.set(0, -1, 0)
-		spot_light.target.position.set(0, 0, 0)
+		var light = new THREE.PointLight( 0xffffff, 1, 100 );
+		light.position.set( 0,0,0);
+		lcs.scene.add( light );
+		// var spot_light = new THREE.SpotLight(0xffffff)
+		// spot_light.position.set(0, -1, 0)
+		// spot_light.target.position.set(0, 0, 0)
+		//
+		// if (true) {
+		// 	spot_light.castShadow = true
+		//
+		// 	spot_light.shadow.camera.near = 20
+		// 	spot_light.shadow.camera.far = 50 //camera.far;
+		// 	spot_light.shadow.camera.fov = 40
+		//
+		// 	spot_light.shadowMapBias = 0.1
+		// 	spot_light.shadowMapDarkness = 0.7
+		// 	spot_light.shadow.mapSize.width = 2 * 512
+		// 	spot_light.shadow.mapSize.height = 2 * 512
 
-		if (true) {
-			spot_light.castShadow = true
-
-			spot_light.shadow.camera.near = 20
-			spot_light.shadow.camera.far = 50 //camera.far;
-			spot_light.shadow.camera.fov = 40
-
-			spot_light.shadowMapBias = 0.1
-			spot_light.shadowMapDarkness = 0.7
-			spot_light.shadow.mapSize.width = 2 * 512
-			spot_light.shadow.mapSize.height = 2 * 512
-
-			//spot_light.shadowCameraVisible = true
-		}
-		lcs.scene.add(spot_light)
+		// spot_light.shadowCameraVisible = true
+		//}
+		//lcs.scene.add(spot_light)
 	}
 
 	lcs.initRenderer = function() {

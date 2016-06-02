@@ -9,15 +9,15 @@ FPP.BUILDSCENE = (function(window, document, undefined) {
 		FPP.LCS.scene.add( sphere )
 
 		// Create a textured quad that is fixed in space and obeys physics
-		this.floor = { 'specs':{ 'translate': new THREE.Vector3(0, -10, 0), 'rx':0,'ry':0,'rz':0,'width':30,'height': 60, 'image_path': './assets/images/checker2.png' }, 'options' : { 'solid':true, 'stretch':false, 'wrap_w':10, 'wrap_h':20 } }
+		this.floor = { 'specs':{ 'translate': new THREE.Vector3(0, -10, 0), 'rx':0,'ry':0,'rz':0,'width':30,'height': 60, 'image_path': './assets/images/floor3.jpg' }, 'options' : { 'solid':true, 'stretch':false, 'wrap_w':10, 'wrap_h':20 } }
 
-		this.wleft = { 'specs':{ 'translate': new THREE.Vector3(15, -2.5, 0), 'rx':0,'ry':0,'rz':Math.PI/2,'width':15,'height':60, 'image_path': './assets/images/checker2.png' }, 'options' : { 'solid':true, 'stretch':false, 'wrap_w':5, 'wrap_h':20 } }
+		this.wleft = { 'specs':{ 'translate': new THREE.Vector3(15, -2.5, 0), 'rx':0,'ry':0,'rz':Math.PI/2,'width':15,'height':60, 'image_path': './assets/images/floor4HD.jpg' }, 'options' : { 'solid':true, 'stretch':false, 'wrap_w':5, 'wrap_h':20 } }
 
-		this.wright = { 'specs':{ 'translate': new THREE.Vector3(-15, -2.5, 0), 'rx':0,'ry':0,'rz':-Math.PI/2,'width':15,'height':60, 'image_path': './assets/images/checker2.png' }, 'options' : { 'solid':true, 'stretch':false, 'wrap_w':5, 'wrap_h':20 } }
+		this.wright = { 'specs':{ 'translate': new THREE.Vector3(-15, -2.5, 0), 'rx':0,'ry':0,'rz':-Math.PI/2,'width':15,'height':60, 'image_path': './assets/images/floor4HD.jpg' }, 'options' : { 'solid':true, 'stretch':false, 'wrap_w':5, 'wrap_h':20 } }
 
-		this.ceil = { 'specs':{ 'translate': new THREE.Vector3(0, 5, 0), 'rx':0,'ry':0,'rz':Math.PI,'width':30,'height': 60, 'image_path': './assets/images/checker2.png' }, 'options' : { 'solid':true, 'stretch':false, 'wrap_w':10, 'wrap_h':20 } }
+		this.ceil = { 'specs':{ 'translate': new THREE.Vector3(0, 5, 0), 'rx':0,'ry':0,'rz':Math.PI,'width':30,'height': 60, 'image_path': './assets/images/floor4.jpg' }, 'options' : { 'solid':true, 'stretch':false, 'wrap_w':10, 'wrap_h':20 } }
 
-		
+
 	}
 
 
