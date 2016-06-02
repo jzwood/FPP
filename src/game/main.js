@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	FPP.POINTERLOCK.init()
 	FPP.GEOMETRY.init()
 	FPP.BUILDSCENE.build()
+	FPP.SKYBOX.init()
 	FPP.PLAYER.init()
 	FPP.ANIMATE.start()
 })

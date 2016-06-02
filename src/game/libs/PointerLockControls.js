@@ -12,6 +12,7 @@
     pitchObject.add( camera );
 
     var yawObject = new THREE.Object3D();
+		yawObject.position.y = 3;
     yawObject.add( pitchObject );
 
     var quat = new THREE.Quaternion();

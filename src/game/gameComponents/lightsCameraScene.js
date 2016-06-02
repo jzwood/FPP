@@ -4,7 +4,7 @@ var FPP = FPP || {};
 FPP.LCS = (function(window, document, undefined) {
 
 	var lcs = new function() {
-		this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
+		this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000)
 		this.scene = new THREE.Scene()
 		this.renderer = new THREE.WebGLRenderer()
 	}
@@ -38,11 +38,11 @@ FPP.LCS = (function(window, document, undefined) {
 	}
 
 	lcs.initRenderer = function() {
-		lcs.scene.fog = new THREE.Fog(0x000000, 0, 500)
+		//lcs.scene.fog = new THREE.Fog(0x000000, 0, 500)
 		lcs.renderer.shadowMap.enabled = true
 		lcs.renderer.shadowMapSoft = true
 		lcs.renderer.setSize(window.innerWidth, window.innerHeight)
-		lcs.renderer.setClearColor(lcs.scene.fog.color, 1)
+		//lcs.renderer.setClearColor(lcs.scene.fog.color, 1)
 	}
 
 	lcs.init = function() {

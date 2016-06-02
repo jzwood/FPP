@@ -14,14 +14,6 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 	}
 
 	/*
-	this is one of the the most important method of the game. It makes textered
-	quads that obey physics rules.
-	*/
-	models.makeTile = function(specifications,options) {
-		models.textTile(specifications,options)
-	}
-
-	/*
 	MAKES INVISIBLE WALL THAT RESPONDS TO PHYSICS
 	v must be normalized normal vector to plane
 	*/
@@ -52,7 +44,7 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 	}
 
 	/* MAKES TEXTURED WALL THAT MATCHES WALL */
-	models.textTile = function(specs, options) {
+	models.makeTile = function(specs, options) {
 		models.loader.load(specs.image_path, function(img) {
 
 			var w = 0.5 * specs.width, h = 0.5 * specs.height
@@ -128,6 +120,19 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 		function(xhr) { // Function called when download errors
 			console.log(xhr, 'Texture Load Error Occurred')
 		})
+	}
+
+	models.makePressureButton = function(specs){
+		var geometry = new THREE.CylinderGeometry( 3, 5, 0.1, 8 , 1, false),
+		material = new THREE.MeshBasicMaterial( {color: 0x003300} ),
+		cylinder = new THREE.Mesh( geometry, material )
+		var p = specs.pos
+		cylinder.position.set(p.x,p.y,p.z)
+		FPP.LCS.scene.add(cylinder)
+
+		var helper = new THREE.WireframeHelper( cylinder );
+		helper.material.color.set( 0xffffff );
+		FPP.LCS.scene.add( helper );
 	}
 
 	models.init = function() {
