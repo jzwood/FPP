@@ -96,7 +96,7 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 
 			// var geom = new THREE.PlaneGeometry(specs.width, specs.height, 1, 1)
 
-			var quat = new THREE.Quaternion().setFromEuler(new THREE.Euler(specs.rx, specs.ry, specs.rz, 'XYZ'))
+			var quat = new THREE.Quaternion().setFromEuler(new THREE.Euler(specs.rx, specs.ry, specs.rz, 'XZY'))
 			geom.applyMatrix(new THREE.Matrix4().makeRotationFromQuaternion(quat))
 
 			var p = specs.translate

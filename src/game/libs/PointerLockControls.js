@@ -13,6 +13,7 @@
 
     var yawObject = new THREE.Object3D();
 		yawObject.position.y = 3;
+		yawObject.rotation.y = Math.PI;//initialize looking in +z dir
     yawObject.add( pitchObject );
 
     var quat = new THREE.Quaternion();

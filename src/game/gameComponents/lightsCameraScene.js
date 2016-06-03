@@ -10,11 +10,12 @@ FPP.LCS = (function(window, document, undefined) {
 	}
 
 	lcs.initLights = function() {
-		var amb_light = new THREE.AmbientLight(0x6B6B6B) // soft white light
+		// var amb_light = new THREE.AmbientLight(0x6B6B6B) // soft white light
+		var amb_light = new THREE.AmbientLight(0x242424)
 		lcs.scene.add(amb_light)
 
 		var light = new THREE.PointLight( 0xffffff, 1, 100 );
-		light.position.set( 0,0,0);
+		light.position.set( 0,-3,0);
 		lcs.scene.add( light );
 		// var spot_light = new THREE.SpotLight(0xffffff)
 		// spot_light.position.set(0, -1, 0)
