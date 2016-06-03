@@ -108,7 +108,7 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 
 			var material = new THREE.MeshPhongMaterial({
 				map: img,
-				side: THREE.FrontSide //when the game is done CHANGE THIS TO FrontSide !!!!!!!
+				side: options.doubleside ? THREE.DoubleSide : THREE.FrontSide
 			})
 
 			var mesh = new THREE.Mesh(geom, material)
