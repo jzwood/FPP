@@ -9,6 +9,7 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 		this.solver.tolerance = 0.1;
 
 		this.buttonMeshes = []
+		this.doorMeshes = []
 
 		var split = true
 		this.world.solver = split ? new CANNON.SplitSolver(this.solver) : this.solver
@@ -112,11 +113,21 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 			})
 
 			var mesh = new THREE.Mesh(geom, material)
+
 			mesh.castShadow = true
 			mesh.receiveShadow = true
 
 			mesh.position.set(p.x, p.y, p.z)
 			FPP.LCS.scene.add(mesh)
+
+			//we want to keep track of doors
+			if(specs.id){
+				mesh.name = specs.id
+				mesh.originalY = mesh.position.y
+				mesh.raise = specs.height
+				models.doorMeshes.push(mesh)
+			}
+
 		},
 		function(xhr) { // Function called when download progresses
 			console.log((xhr.loaded / xhr.total * 100) + '% loaded')
@@ -124,6 +135,40 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 		function(xhr) { // Function called when download errors
 			console.log(xhr, 'Texture Load Error Occurred')
 		})
+	}
+
+	models.updateDoors = function(id,up){
+		var dm = models.doorMeshes
+		for(var i=0, m = dm.length; i < m; i++){
+			if(dm[i].name === id){
+				if(up){
+					console.log("door up",id)
+					clearInterval(models.doorMovement)
+					models.doorMovement = setInterval(function(){
+		        if(dm[i].position.y >= dm[i].originalY + dm[i].raise){
+							dm[i].position.y = dm[i].originalY + dm[i].raise
+		          clearInterval(models.doorMovement)
+		        }else{
+							dm[i].position.y += 0.1
+		        }
+		      }, 15)
+					//do up code here
+				}else{
+					//do down code here
+					console.log("door down",id)
+					clearInterval(models.doorMovement)
+					models.doorMovement = setInterval(function(){
+						if(dm[i].position.y < dm[i].originalY){
+							dm[i].position.y = dm[i].originalY
+							clearInterval(models.doorMovement)
+						}else{
+							dm[i].position.y -= 0.1
+						}
+					}, 15)
+				}
+				return false // no more iteration needed after we've found the button
+			}
+		}
 	}
 
 	models.updateButtons = function() {
@@ -139,15 +184,15 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 				if (bm[i].material.color.r !== 0) {
 					//green means you're standing on button
 					bm[i].material.color = new THREE.Color("#009500")
-					// bm[i].material.color.r = 0
-					// bm[i].material.color.g = 149
 					bm[i].material.needsUpdate = true
+					models.updateDoors(bm[i].name, true)//open door
 				}
 			} else {
-				if (bm[i].material.color.g !== 0) {
+				if (bm[i].material.color.r === 0) {
 					//red means you're not standing on button
 					bm[i].material.color = new THREE.Color("#BBBAA3")
 					bm[i].material.needsUpdate = true
+					models.updateDoors(bm[i].name, false)//close door
 				}
 			}
 		}
@@ -166,6 +211,8 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 		cylinder = new THREE.Mesh(geometry, material)
 		var p = specs.translate.clone()
 		cylinder.position.set(p.x, p.y, p.z)
+		cylinder.name = specs.id || ''
+
 		FPP.LCS.scene.add(cylinder)
 		var edges = new THREE.EdgesHelper(cylinder, 0x919191)
 		FPP.LCS.scene.add(edges)
