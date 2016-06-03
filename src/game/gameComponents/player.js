@@ -11,7 +11,7 @@ FPP.PLAYER = (function(window, document, undefined) {
 			material: FPP.GEOMETRY.groundMaterial
 		})
 		this.sphereBody.addShape(sphereShape)
-		this.sphereBody.position.set(0, -8, 0)
+		this.sphereBody.position.set(0, -7, 0)
 		this.sphereBody.linearDamping = 0.9
 	}
 

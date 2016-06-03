@@ -17,7 +17,7 @@ FPP.BUILDSCENE = (function(window, document, undefined) {
 
 		this.ceil = { 'specs':{ 'translate': new THREE.Vector3(0, -1, 0), 'rx':0,'ry':0,'rz':Math.PI,'width':30,'height': 60, 'image_path': './assets/images/floor4.jpg' }, 'options' : { 'solid':false, 'stretch':false, 'wrap_w':10, 'wrap_h':20 } }
 
-		this.btn1 = {'specs': { 'pos' : new THREE.Vector3(0,-10,0) }}
+		this.btn1 = {'specs': { 'translate' : new THREE.Vector3(0,0.1-10,0), 'path' : './assets/images/btn1.png' }}
 
 	}
 
