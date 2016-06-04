@@ -172,6 +172,8 @@
         velocity.x += inputVelocity.x;
         velocity.z += inputVelocity.z;
 
+				FPP.PLAYER.p2.record(velocity.x, velocity.y)
+
         yawObject.position.copy(cannonBody.position);
     };
 };

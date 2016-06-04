@@ -5,6 +5,9 @@ FPP.SKYBOX = (function(window, document, undefined) {
 		this.path = './assets/images/space4.jpg'
 	}
 
+	sky.update = function(){
+		if(sky.mesh)sky.mesh.rotateY(0.001)//ship slowly rotates in space
+	}
 
 	sky.init = function(){
 			FPP.GEOMETRY.loader.load(sky.path, function(img) {
@@ -13,8 +16,8 @@ FPP.SKYBOX = (function(window, document, undefined) {
 					side: THREE.BackSide
 				})
 
-				var mesh = new THREE.Mesh(sky.geo, material)
-				FPP.LCS.scene.add(mesh)
+				sky.mesh = new THREE.Mesh(sky.geo, material)
+				FPP.LCS.scene.add(sky.mesh)
 			},
 			function(xhr) { // Function called when download progresses
 				console.log((xhr.loaded / xhr.total * 100) + '% loaded')

@@ -48,7 +48,7 @@ FPP.POINTERLOCK = (function(window, document, undefined) {
 			document.addEventListener('webkitpointerlockerror', pointerlockerror, false);
 
 			pl.instructions.addEventListener('click', function(event) {
-				//sphereBody.position.set(0, 5, 0);
+				//firstPerson.position.set(0, 5, 0);
 				pl.instructions.style.display = 'none';
 
 				// Ask the browser to lock the pointer

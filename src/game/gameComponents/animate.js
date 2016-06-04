@@ -16,9 +16,11 @@ FPP.ANIMATE = (function(window, document, undefined) {
 		requestAnimationFrame(run.animate)
 		if (FPP.PLAYER.controls.enabled) {
 			FPP.GEOMETRY.world.step(run.dt)
+			FPP.PLAYER.p2.update() //updates second person during playback
 		}
 
 		FPP.GEOMETRY.updateButtons()
+		FPP.SKYBOX.update()
 
 		FPP.PLAYER.controls.update(Date.now() - run.time)
 		FPP.LCS.renderer.render(FPP.LCS.scene, FPP.LCS.camera)

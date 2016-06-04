@@ -137,12 +137,13 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 		})
 	}
 
+	//moves door up when you stand on button, down when you walk off
 	models.updateDoors = function(id,up){
 		var dm = models.doorMeshes
 		for(var i=0, m = dm.length; i < m; i++){
 			if(dm[i].name === id){
 				if(up){
-					console.log("door up",id)
+					// console.log("door up",id)
 					clearInterval(models.doorMovement)
 					models.doorMovement = setInterval(function(){
 		        if(dm[i].position.y >= dm[i].originalY + dm[i].raise){
@@ -152,10 +153,8 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 							dm[i].position.y += 0.1
 		        }
 		      }, 15)
-					//do up code here
 				}else{
-					//do down code here
-					console.log("door down",id)
+					// console.log("door down",id)
 					clearInterval(models.doorMovement)
 					models.doorMovement = setInterval(function(){
 						if(dm[i].position.y < dm[i].originalY){
@@ -176,7 +175,7 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 		minDist = 3
 		for (var i = 0, m = bm.length; i < m; i++) {
 			var pb = bm[i].position,
-			pp = FPP.PLAYER.sphereBody.position
+			pp = FPP.PLAYER.firstPerson.position
 			if (Math.sqrt(
 					(pb.x - pp.x) * (pb.x - pp.x) +
 					(pb.y - pp.y) * (pb.y - pp.y) +
