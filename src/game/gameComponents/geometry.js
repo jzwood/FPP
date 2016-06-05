@@ -10,6 +10,12 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 
 		this.buttonMeshes = []
 		this.doorMeshes = []
+		this.doorBodies = []
+
+		//group numbers are consecutive powers of 2
+		this.group = function(num) {
+			return Math.pow(2, num - 1);
+		}
 
 		var split = true
 		this.world.solver = split ? new CANNON.SplitSolver(this.solver) : this.solver
@@ -20,7 +26,7 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 	MAKES INVISIBLE WALL THAT RESPONDS TO PHYSICS
 	v must be normalized normal vector to plane
 	*/
-	models.physicsTile = function(p, width, height, quat) {
+	models.physicsTile = function(p, width, height, quat, isDoor) {
 		var wall = new CANNON.Body({
 			mass: 0 //makes it a solid immovable structure
 		}),
@@ -29,7 +35,8 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 		h = 0.5 * height
 
 		// wall vertices
-		var vertices = [-w, 0, -h, // vertex 0
+		var vertices = [
+			-w, 0, -h, // vertex 0
 			w, 0, -h, // vertex 1
 			-w, 0, h, // vertex 2
 			w, 0, h //	vertex 3
@@ -40,10 +47,18 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 		tri_b = new CANNON.Trimesh(vertices, [1, 3, 2])
 		wall.addShape(tri_a);
 		wall.addShape(tri_b)
+
+		wall.collisionFilterMask = this.group(1) | this.group(2) | this.group(3) //collides with first 3 groups (111)
+
 		if (quat) wall.quaternion.copy(quat)
 		// wall.quaternion.setFromVectors(new CANNON.Vec3(0, 1, 0), new CANNON.Vec3(v.x, v.y, v.z))
 		wall.position.set(p.x, p.y, p.z)
 		models.world.addBody(wall)
+
+		//we want to keep track of doors
+		if (isDoor) {
+			models.doorBodies.push(wall)
+		}
 
 	}
 
@@ -102,7 +117,7 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 
 			var p = specs.translate
 			if (options.solid) {
-				models.physicsTile(p, specs.width, specs.height, quat)
+				models.physicsTile(p, specs.width, specs.height, quat, specs.id)
 			}
 
 			// geom.applyMatrix(new THREE.Matrix4().makeRotationFromQuaternion(new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 0, 1), specs.normal)))
@@ -121,7 +136,7 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 			FPP.LCS.scene.add(mesh)
 
 			//we want to keep track of doors
-			if(specs.id){
+			if (specs.id) {
 				mesh.name = specs.id
 				mesh.originalY = mesh.position.y
 				mesh.raise = specs.height
@@ -138,30 +153,32 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 	}
 
 	//moves door up when you stand on button, down when you walk off
-	models.updateDoors = function(id,up){
+	models.updateDoors = function(id, up) {
 		var dm = models.doorMeshes
-		for(var i=0, m = dm.length; i < m; i++){
-			if(dm[i].name === id){
-				if(up){
+		for (var i = 0, m = dm.length; i < m; i++) {
+			if (dm[i].name === id) {
+				if (up) {
 					// console.log("door up",id)
 					clearInterval(models.doorMovement)
-					models.doorMovement = setInterval(function(){
-		        if(dm[i].position.y >= dm[i].originalY + dm[i].raise){
+					models.doorMovement = setInterval(function() {
+						if (dm[i].position.y >= dm[i].originalY + dm[i].raise) {
 							dm[i].position.y = dm[i].originalY + dm[i].raise
-		          clearInterval(models.doorMovement)
-		        }else{
+							clearInterval(models.doorMovement)
+						} else {
 							dm[i].position.y += 0.1
-		        }
-		      }, 15)
-				}else{
+							models.doorBodies[i].position.y = dm[i].position.y
+						}
+					}, 15)
+				} else {
 					// console.log("door down",id)
 					clearInterval(models.doorMovement)
-					models.doorMovement = setInterval(function(){
-						if(dm[i].position.y < dm[i].originalY){
+					models.doorMovement = setInterval(function() {
+						if (dm[i].position.y < dm[i].originalY) {
 							dm[i].position.y = dm[i].originalY
 							clearInterval(models.doorMovement)
-						}else{
+						} else {
 							dm[i].position.y -= 0.1
+							models.doorBodies[i].position.y = dm[i].position.y
 						}
 					}, 15)
 				}
@@ -175,100 +192,110 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 		minDist = 3
 		for (var i = 0, m = bm.length; i < m; i++) {
 			var pb = bm[i].position,
-			pp = FPP.PLAYER.firstPerson.position
-			if (Math.sqrt(
-					(pb.x - pp.x) * (pb.x - pp.x) +
-					(pb.y - pp.y) * (pb.y - pp.y) +
-					(pb.z - pp.z) * (pb.z - pp.z)) < minDist) {
-				if (bm[i].material.color.r !== 0) {
-					//green means you're standing on button
-					bm[i].material.color = new THREE.Color("#009500")
-					bm[i].material.needsUpdate = true
-					models.updateDoors(bm[i].name, true)//open door
-				}
-			} else {
-				if (bm[i].material.color.r === 0) {
-					//red means you're not standing on button
-					bm[i].material.color = new THREE.Color("#BBBAA3")
-					bm[i].material.needsUpdate = true
-					models.updateDoors(bm[i].name, false)//close door
+			pp = FPP.PLAYER.firstPerson.position,
+			p2p = FPP.PLAYER.p2.position
+
+			var distToPlayer = Math.sqrt(
+			        (pb.x - pp.x) * (pb.x - pp.x) +
+			        (pb.y - pp.y) * (pb.y - pp.y) +
+			        (pb.z - pp.z) * (pb.z - pp.z)),
+			    distToP2 = Math.sqrt(
+			        (pb.x - p2p.x) * (pb.x - p2p.x) +
+			        (pb.y - p2p.y) * (pb.y - p2p.y) +
+			        (pb.z - p2p.z) * (pb.z - p2p.z))
+
+			if (distToPlayer < minDist || distToP2 < minDist) {
+						if (bm[i].material.color.r !== 0) {
+							//green means you're standing on button
+							bm[i].material.color = new THREE.Color("#009500")
+							bm[i].material.needsUpdate = true
+							models.updateDoors(bm[i].name, true) //open door
+						}
+					} else {
+						if (bm[i].material.color.r === 0) {
+							//red means you're not standing on button
+							bm[i].material.color = new THREE.Color("#BBBAA3")
+							bm[i].material.needsUpdate = true
+							models.updateDoors(bm[i].name, false) //close door
+						}
+					}
 				}
 			}
-		}
-	}
 
-	models.makePressureButton = function(specs) {
+			models.makePressureButton = function(specs) {
 
-		//make THREE cylinder with solid color and edges colored
-		var tRad = 2.75,
-		bRad = 3,
-		height = 0.1
-		var geometry = new THREE.CylinderGeometry(tRad, bRad, height, 20, 1, false),
-		material = new THREE.MeshPhongMaterial({
-			color: 0x009500
-		}),
-		cylinder = new THREE.Mesh(geometry, material)
-		var p = specs.translate.clone()
-		cylinder.position.set(p.x, p.y, p.z)
-		cylinder.name = specs.id || ''
+				//make THREE cylinder with solid color and edges colored
+				var tRad = 2.75,
+				bRad = 3,
+				height = 0.1
+				var geometry = new THREE.CylinderGeometry(tRad, bRad, height, 60, 1, false),
+				material = new THREE.MeshPhongMaterial({
+					color: 0x009500
+				}),
+				cylinder = new THREE.Mesh(geometry, material)
+				var p = specs.translate.clone()
+				cylinder.position.set(p.x, p.y, p.z)
+				cylinder.name = specs.id || ''
 
-		FPP.LCS.scene.add(cylinder)
-		var edges = new THREE.EdgesHelper(cylinder, 0x919191)
-		FPP.LCS.scene.add(edges)
+				cylinder.collisionFilterMask = this.group(1) | this.group(2) | this.group(3) //collides with first 3 groups (111)
 
-		//add physical substance to button
-		specs.translate.y += 2 * height //we want physical part of button to be a little higher than it actually is for emphasis
-		models.physicsTile(specs.translate, tRad, tRad)
+				FPP.LCS.scene.add(cylinder)
+				// var edges = new THREE.EdgesHelper(cylinder, 0x919191)
+				// FPP.LCS.scene.add(edges)
 
-		//add texture to top of button
-		models.loader.load(specs.path, function(img) {
-			var mat = new THREE.MeshPhongMaterial({
-				map: img,
-				side: THREE.FrontSide
-			}),
-			dim = 0.9 * 2 * tRad,
-			geo = new THREE.PlaneGeometry(dim, dim),
-			mesh = new THREE.Mesh(geo, mat)
+				//add physical substance to button
+				specs.translate.y += 1 * height //we want physical part of button to be a little higher than it actually is for emphasis
+				models.physicsTile(specs.translate, tRad, tRad)
 
-			mesh.position.set(p.x, p.y + 1.01 * height / 2, p.z)
-			mesh.rotation.x -= Math.PI / 2
-			mesh.material.transparent = true
+				//add texture to top of button
+				models.loader.load(specs.path, function(img) {
+					var mat = new THREE.MeshPhongMaterial({
+						map: img,
+						side: THREE.FrontSide
+					}),
+					dim = 0.9 * 2 * tRad,
+					geo = new THREE.PlaneGeometry(dim, dim),
+					mesh = new THREE.Mesh(geo, mat)
 
-			FPP.LCS.scene.add(mesh)
+					mesh.position.set(p.x, p.y + 1.01 * height / 2, p.z)
+					mesh.rotation.x -= Math.PI / 2
+					mesh.material.transparent = true
 
-			//keep track of all buttons
-			models.buttonMeshes.push(cylinder)
-		},
-		function(xhr) { // Function called when download progresses
-			console.log((xhr.loaded / xhr.total * 100) + '% loaded')
-		},
-		function(xhr) { // Function called when download errors
-			console.log(xhr, 'Texture \"' + specs.path + '\" Load Error Occurred')
-		})
-	}
+					FPP.LCS.scene.add(mesh)
 
-	models.init = function() {
-		//initializing contact material here
-		models.groundMaterial = new CANNON.Material("groundMaterial")
-		// Adjust constraint equation parameters for ground/ground contact
-		models.ground_ground_cm = new CANNON.ContactMaterial(this.groundMaterial, this.groundMaterial, {
-			friction: 0.4,
-			restitution: 0.3,
-			contactEquationStiffness: 1e8,
-			contactEquationRelaxation: 3,
-			frictionEquationStiffness: 1e8,
-			frictionEquationRegularizationTime: 3,
-		})
-		models.world.quatNormalizeSkip = 0;
-		models.world.quatNormalizeFast = false;
+					//keep track of all buttons
+					models.buttonMeshes.push(cylinder)
+				},
+				function(xhr) { // Function called when download progresses
+					console.log((xhr.loaded / xhr.total * 100) + '% loaded')
+				},
+				function(xhr) { // Function called when download errors
+					console.log(xhr, 'Texture \"' + specs.path + '\" Load Error Occurred')
+				})
+			}
 
-		models.world.gravity.set(0, -20, 0);
-		models.world.broadphase = new CANNON.NaiveBroadphase()
+			models.init = function() {
+				//initializing contact material here
+				models.groundMaterial = new CANNON.Material("groundMaterial")
+				// Adjust constraint equation parameters for ground/ground contact
+				models.ground_ground_cm = new CANNON.ContactMaterial(this.groundMaterial, this.groundMaterial, {
+					friction: 0.4,
+					restitution: 0.3,
+					contactEquationStiffness: 1e8,
+					contactEquationRelaxation: 3,
+					frictionEquationStiffness: 1e8,
+					frictionEquationRegularizationTime: 3,
+				})
+				models.world.quatNormalizeSkip = 0;
+				models.world.quatNormalizeFast = false;
 
-		models.world.addContactMaterial(models.ground_ground_cm)
+				models.world.gravity.set(0, -20, 0);
+				models.world.broadphase = new CANNON.NaiveBroadphase()
 
-	}
+				models.world.addContactMaterial(models.ground_ground_cm)
 
-	return models
+			}
 
-})(window, document)
+			return models
+
+		})(window, document)

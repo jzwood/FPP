@@ -1,3 +1,5 @@
+/*@import url(https://fonts.googleapis.com/css?family=Biryani:400,600);*/
+
 html,
 body {
 	width: 100%;
@@ -9,6 +11,24 @@ body {
 	margin: 0;
 	overflow: hidden;
 	font-family: arial;
+}
+
+canvas {
+    width: 100%;
+    height: 100%
+}
+
+#clock {
+	display: block;
+	position: absolute;
+	top: 0.75em;
+	left: 0.75em;
+	padding: 0 0.25em 0 0.25em;
+	color: #000000;
+	/*font-family: 'Biryani', sans-serif;*/
+	font-size: 18pt;
+	background-color: white;
+	border-radius: 10px;
 }
 
 #blocker {

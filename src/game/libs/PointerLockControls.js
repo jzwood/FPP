@@ -2,7 +2,7 @@
  * @author mrdoob / http://mrdoob.com/
  * @author schteppe / https://github.com/schteppe
  */
- var PointerLockControls = function ( camera, cannonBody ) {
+ var PointerLockControls = function ( camera, cannonBody, secondPerson ) {
 
     var velocityFactor = 0.2;
     var jumpVelocity = 20;
@@ -172,7 +172,7 @@
         velocity.x += inputVelocity.x;
         velocity.z += inputVelocity.z;
 
-				FPP.PLAYER.p2.record(velocity.x, velocity.y)
+				secondPerson.record(velocity.x, velocity.z);
 
         yawObject.position.copy(cannonBody.position);
     };
