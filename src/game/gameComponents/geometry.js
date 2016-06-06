@@ -5,8 +5,8 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 		this.world = new CANNON.World()
 		this.solver = new CANNON.GSSolver()
 
-		this.solver.iterations = 5; //7
-		this.solver.tolerance = 0.1;
+		this.solver.iterations = 5 //7
+		this.solver.tolerance = 0.1
 
 		this.buttonMeshes = []
 		this.doorMeshes = []
@@ -14,7 +14,7 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 
 		//group numbers are consecutive powers of 2
 		this.group = function(num) {
-			return Math.pow(2, num - 1);
+			return Math.pow(2, num - 1)
 		}
 
 		var split = true

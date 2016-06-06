@@ -16,6 +16,7 @@ FPP.PLAYER = (function(window, document, undefined) {
 		this.firstPerson.rewinding = false
 
 		this.p2 = new CANNON.Body({ mass: mass, material: FPP.GEOMETRY.groundMaterial })
+		this.p2.startPos = new CANNON.Vec3(0,0,0)
 		this.p2.addShape(sphereShape)
 		this.p2.position.y = -10 //far from the button to start (0,0,0) is too close at beginning
 		this.p2.collisionFilterGroup = group(3)
@@ -37,12 +38,13 @@ FPP.PLAYER = (function(window, document, undefined) {
 		FPP.LCS.scene.add(edges)
 	}
 
-	player.formatTime = function(){
+	player.formatTime = function(isGreen){
 		var sec = player.time * player.dt,
-		now = ~~sec % 60 + ':' + ~~((10 * sec) % 10)
+		now = ~~sec % 60 + ':' + ~~((10 * sec) % 10),
+		col = isGreen ? 'green' : 'red'
 		if (player.timer){
 			var max = player.timer * player.dt
-			player.clock.innerHTML = now + " <span style='color:red'>" + ~~max %  60 + ':' + ~~((10 * max) % 10) + "</span>"
+			player.clock.innerHTML = now + " <span style=\'color:" + col + "\'>" + ~~max %  60 + ':' + ~~((10 * max) % 10) + "</span>"
 		}else{
 			player.clock.innerHTML = now
 		}
@@ -54,7 +56,9 @@ FPP.PLAYER = (function(window, document, undefined) {
 		player.time = 0
 		player.p2.recording = true
 		player.p2.playback = false
-		player.p2.startPos = player.firstPerson.position.clone()
+		player.p2.startPos.copy(player.firstPerson.position)
+		document.getElementById('rewind').style.display = "block"
+
 	}
 
 	//executed click
@@ -64,10 +68,15 @@ FPP.PLAYER = (function(window, document, undefined) {
 		player.p2.recording = false
 		player.p2.playback = true
 		player.p2.timeLog.reverse()
-		var p = player.p2.startPos.clone()
-		player.p2.position.set(p.x, p.y, p.z)
-		player.firstPerson.position.set(p.x, p.y, p.z)//change this eventually to be facing behind p2 on playback start
+		player.firstPerson.position.copy(player.p2.startPos)
+		player.p2.position.copy(player.p2.startPos)
+		player.placeholder.position.copy(player.p2.startPos)
+		//player.firstPerson.position.copy(player.p2.startPos)//change this eventually to be facing behind p2 on playback start
 		player.firstPerson.rewinding = true
+		document.getElementById('blocker').style.display = "block"
+		document.getElementById('instructions').style.display = "none"
+		document.getElementById('rewind').style.display = "none"
+
 	}
 
 	document.addEventListener('click', function(e){
@@ -78,13 +87,13 @@ FPP.PLAYER = (function(window, document, undefined) {
 	})
 
 	//used by PointerLockControls.js
-	player.p2.record = function(vx,vy, vz) {
+	player.p2.record = function(vx, vy, vz) {
 		if(player.p2.recording && player.controls.enabled){
 			console.log('recording')
 			player.time++
 			player.formatTime()
 			player.p2.timeLog.push(vx, vy, vz)
-			if(player.time % 10 === 0){ // 1 in 10 frames is saved for sped up reversal
+			if(player.time % 2 === 0){ // sped up reversal
 				player.firstPerson.posLog.push(player.firstPerson.position.clone())
 			}
 		}
@@ -93,11 +102,12 @@ FPP.PLAYER = (function(window, document, undefined) {
 	player.rewind = function(){
 		if(player.firstPerson.posLog.length){
 			player.firstPerson.position.copy(player.firstPerson.posLog.pop())
-			player.time -= 10
+			player.time -= 2
 			player.formatTime()
 		}else{
 			player.firstPerson.rewinding = false
 			player.time = 0
+			document.getElementById('blocker').style.display = "none"
 		}
 	}
 
@@ -108,9 +118,9 @@ FPP.PLAYER = (function(window, document, undefined) {
 		}else if(player.p2.playback){
 			//console.log('updating')
 			player.time++
-			player.formatTime()
 			player.placeholder.visible = true
 			if(player.p2.timeLog.length){
+				player.formatTime()
 				player.p2.velocity.x = player.p2.timeLog.pop()
 				player.p2.velocity.y = player.p2.timeLog.pop()
 				player.p2.velocity.z = player.p2.timeLog.pop()
@@ -123,9 +133,9 @@ FPP.PLAYER = (function(window, document, undefined) {
 				player.p2.position.y = -10
 				player.p2.playback = false
 				player.p2.recording = false
+				player.formatTime(true)
 				player.time = 0
 				player.timer = 0
-				//player.formatTime()
 			}
 		}
 	}
