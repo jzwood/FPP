@@ -20,6 +20,8 @@ FPP.PLAYER = (function(window, document, undefined) {
 		this.p2.position.y = -10 //far from the button to start (0,0,0) is too close at beginning
 		this.p2.collisionFilterGroup = group(3)
 		this.p2.timeLog = []
+		this.p2.playback = false
+		this.p2.recording = false
 		this.timer = 0
 
 		this.time = 0
@@ -71,7 +73,7 @@ FPP.PLAYER = (function(window, document, undefined) {
 	document.addEventListener('click', function(e){
 		if(player.controls.enabled && !player.firstPerson.rewinding){
 			if(player.p2.recording) player.p2.startPlayback()
-			else player.p2.startRecord()
+			else if(!player.p2.playback) player.p2.startRecord()
 		}
 	})
 
@@ -82,7 +84,9 @@ FPP.PLAYER = (function(window, document, undefined) {
 			player.time++
 			player.formatTime()
 			player.p2.timeLog.push(vx, vy, vz)
-			if(player.time % 10 === 0) player.firstPerson.posLog.push(player.firstPerson.position.clone())
+			if(player.time % 10 === 0){ // 1 in 10 frames is saved for sped up reversal
+				player.firstPerson.posLog.push(player.firstPerson.position.clone())
+			}
 		}
 	}
 
@@ -110,6 +114,7 @@ FPP.PLAYER = (function(window, document, undefined) {
 				player.p2.velocity.x = player.p2.timeLog.pop()
 				player.p2.velocity.y = player.p2.timeLog.pop()
 				player.p2.velocity.z = player.p2.timeLog.pop()
+				//player.p2.quaternion = new CANNON.Quaternion(0,0,0,1)
 				player.placeholder.position.copy(player.p2.position)
 				player.placeholder.quaternion.copy(player.p2.quaternion)
 			}else{
