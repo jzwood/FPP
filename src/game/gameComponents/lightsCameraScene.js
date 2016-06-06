@@ -11,31 +11,45 @@ FPP.LCS = (function(window, document, undefined) {
 
 	lcs.initLights = function() {
 		// var amb_light = new THREE.AmbientLight(0x6B6B6B) // soft white light
-		var amb_light = new THREE.AmbientLight(0x242424)
+		var amb_light = new THREE.AmbientLight(0xffffff, 0.6)
 		lcs.scene.add(amb_light)
 
-		var light = new THREE.PointLight( 0xffffff, 1, 100 );
-		light.position.set( 0,-3,0);
-		lcs.scene.add( light );
-		// var spot_light = new THREE.SpotLight(0xffffff)
-		// spot_light.position.set(0, -1, 0)
-		// spot_light.target.position.set(0, 0, 0)
-		//
-		// if (true) {
-		// 	spot_light.castShadow = true
-		//
-		// 	spot_light.shadow.camera.near = 20
-		// 	spot_light.shadow.camera.far = 50 //camera.far;
-		// 	spot_light.shadow.camera.fov = 40
-		//
-		// 	spot_light.shadowMapBias = 0.1
-		// 	spot_light.shadowMapDarkness = 0.7
-		// 	spot_light.shadow.mapSize.width = 2 * 512
-		// 	spot_light.shadow.mapSize.height = 2 * 512
+		//not doing this yet
+		if (false) {
+			var spotlights = []
+			var spotlight = new THREE.SpotLight(0xffffff, 0.5, 100, Math.PI / 2 )
+			spotlight.position.set(0, 1, 0)
+			spotlights.push(spotlight)
 
-		// spot_light.shadowCameraVisible = true
-		//}
-		//lcs.scene.add(spot_light)
+			var spotlight2 = spotlight.clone()
+			spotlight2.position.set(0, 1, 40)
+			spotlight2.target.position.set(0, 0, 40)
+			lcs.scene.add( spotlight2.target )
+			spotlights.push(spotlight2)
+
+			for(var s in spotlights){
+				var spot_light = spotlights[s]
+
+				spot_light.castShadow = true
+
+				spot_light.shadow.mapSize.width = 1024
+				spot_light.shadow.mapSize.height = 1024
+
+				spot_light.shadow.camera.near = 20
+				spot_light.shadow.camera.far = 50
+				spot_light.shadow.camera.fov = 40
+
+				spot_light.shadowMapBias = 0.1
+				spot_light.shadowMapDarkness = 0.7
+				spot_light.shadow.mapSize.width = 2 * 512
+				spot_light.shadow.mapSize.height = 2 * 512
+
+
+				var spotLightHelper = new THREE.SpotLightHelper( spot_light )
+				lcs.scene.add( spotLightHelper )
+				lcs.scene.add(spot_light)
+			}
+		}
 	}
 
 	lcs.initRenderer = function() {
