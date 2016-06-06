@@ -120,7 +120,8 @@ FPP.PLAYER = (function(window, document, undefined) {
 			if(player.p2.timeLog.length){
 				player.formatTime()
 				player.p2.velocity.x = player.p2.timeLog.pop()
-				player.p2.velocity.y = player.p2.timeLog.pop()
+				var jump = player.p2.timeLog.pop()
+				if(jump > 1) player.p2.velocity.y = jump
 				player.p2.velocity.z = player.p2.timeLog.pop()
 				//player.p2.quaternion = new CANNON.Quaternion(0,0,0,1)
 				player.placeholder.position.copy(player.p2.position)
