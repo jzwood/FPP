@@ -68,15 +68,10 @@ FPP.PLAYER = (function(window, document, undefined) {
 		player.p2.recording = false
 		player.p2.playback = true
 		player.p2.timeLog.reverse()
-		player.firstPerson.position.copy(player.p2.startPos)
-		player.p2.position.copy(player.p2.startPos)
-		player.placeholder.position.copy(player.p2.startPos)
-		//player.firstPerson.position.copy(player.p2.startPos)//change this eventually to be facing behind p2 on playback start
 		player.firstPerson.rewinding = true
 		document.getElementById('blocker').style.display = "block"
 		document.getElementById('instructions').style.display = "none"
 		document.getElementById('rewind').style.display = "none"
-
 	}
 
 	document.addEventListener('click', function(e){
@@ -107,6 +102,9 @@ FPP.PLAYER = (function(window, document, undefined) {
 		}else{
 			player.firstPerson.rewinding = false
 			player.time = 0
+			player.firstPerson.position.copy(player.p2.startPos)
+			player.p2.position.copy(player.p2.startPos)
+			player.placeholder.position.copy(player.p2.startPos)
 			document.getElementById('blocker').style.display = "none"
 		}
 	}
