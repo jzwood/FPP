@@ -172,7 +172,7 @@
         velocity.x += inputVelocity.x;
         velocity.z += inputVelocity.z;
 
-				secondPerson.record(velocity.x, velocity.z);
+				secondPerson.record(velocity.x, velocity.y, velocity.z);
 
         yawObject.position.copy(cannonBody.position);
     };
