@@ -19,24 +19,29 @@ canvas {
 #clock {
 	display: block;
 	position: absolute;
+	background-color: rgba(255,255,255,0.5);
+	color: #000000;
+}
+
+.clock {
 	top: 0.75em;
 	left: 0.75em;
 	padding: 0 0.25em 0 0.25em;
-	color: #000000;
-	font-size: 18pt;
-	background-color: white;
+	font-size: 22pt;
 	border-radius: 10px;
 }
 
-#blocker {
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	/*background-color: rgba(0, 0, 0, 0.5);*/
-	background-image: url('../images/static.png');
+.clock-rewind {
+	top: 40%;
+	margin: 0 30% 0 30%;
+	padding: 0;
+	width: 40%;
+	text-align: center;
+	font-size: 48pt;
+	border-radius: 15px;
 }
 
-#blocker2 {
+#blocker {
 	position: absolute;
 	width: 100%;
 	height: 100%;

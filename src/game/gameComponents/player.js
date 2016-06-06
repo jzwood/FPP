@@ -23,8 +23,9 @@ FPP.PLAYER = (function(window, document, undefined) {
 		this.p2.timeLog = []
 		this.p2.playback = false
 		this.p2.recording = false
-		this.timer = 0
 
+		this.rewindSpeed = 2
+		this.timer = 0
 		this.time = 0
 		this.dt = 1/60.
 		this.clock = document.getElementById('clock')
@@ -57,7 +58,7 @@ FPP.PLAYER = (function(window, document, undefined) {
 		player.p2.recording = true
 		player.p2.playback = false
 		player.p2.startPos.copy(player.firstPerson.position)
-		document.getElementById('rewind').style.display = "block"
+		// document.getElementById('rewind').style.display = "block"
 
 	}
 
@@ -69,9 +70,11 @@ FPP.PLAYER = (function(window, document, undefined) {
 		player.p2.playback = true
 		player.p2.timeLog.reverse()
 		player.firstPerson.rewinding = true
-		document.getElementById('blocker').style.display = "block"
-		document.getElementById('instructions').style.display = "none"
-		document.getElementById('rewind').style.display = "none"
+		document.getElementById('clock').classList.toggle('clock-rewind')
+
+		// document.getElementById('blocker').style.display = "block"
+		// document.getElementById('instructions').style.display = "none"
+		// document.getElementById('rewind').style.display = "none"
 	}
 
 	document.addEventListener('click', function(e){
@@ -88,7 +91,7 @@ FPP.PLAYER = (function(window, document, undefined) {
 			player.time++
 			player.formatTime()
 			player.p2.timeLog.push(vx, vy, vz)
-			if(player.time % 2 === 0){ // sped up reversal
+			if(player.time % player.rewindSpeed === 0){ // sped up reversal
 				player.firstPerson.posLog.push(player.firstPerson.position.clone())
 			}
 		}
@@ -97,7 +100,7 @@ FPP.PLAYER = (function(window, document, undefined) {
 	player.rewind = function(){
 		if(player.firstPerson.posLog.length){
 			player.firstPerson.position.copy(player.firstPerson.posLog.pop())
-			player.time -= 2
+			player.time -= player.rewindSpeed
 			player.formatTime()
 		}else{
 			player.firstPerson.rewinding = false
@@ -105,7 +108,8 @@ FPP.PLAYER = (function(window, document, undefined) {
 			player.firstPerson.position.copy(player.p2.startPos)
 			player.p2.position.copy(player.p2.startPos)
 			player.placeholder.position.copy(player.p2.startPos)
-			document.getElementById('blocker').style.display = "none"
+			document.getElementById('clock').classList.toggle('clock-rewind')
+			//document.getElementById('blocker').style.display = "none"
 		}
 	}
 
