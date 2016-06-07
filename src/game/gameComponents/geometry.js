@@ -22,6 +22,25 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 
 	}
 
+	models.makeTunnel = function(rTop, rBottom, height, position, rotate){
+		var geometry = new THREE.CylinderGeometry( rTop, rBottom, height, 4, 64, true),
+		material = new THREE.MeshPhongMaterial( {
+			transparent: true,
+			wireframe: false,
+			//color: 'white',
+			opacity: 0.5 ,
+			side: THREE.DoubleSide
+		} ),
+		cylinder = new THREE.Mesh( geometry, material )
+		cylinder.position.copy(position)
+		cylinder.rotateX(rotate.x)
+		cylinder.rotateY(rotate.y)
+		cylinder.rotateZ(rotate.z)
+		FPP.LCS.scene.add( cylinder )
+		var edges = new THREE.EdgesHelper(cylinder, 0x6d6d6d)
+		FPP.LCS.scene.add(edges)
+	}
+
 	/*
 	MAKES INVISIBLE WALL THAT RESPONDS TO PHYSICS
 	v must be normalized normal vector to plane

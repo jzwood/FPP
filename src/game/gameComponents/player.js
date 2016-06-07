@@ -58,7 +58,7 @@ FPP.PLAYER = (function(window, document, undefined) {
 		player.p2.recording = true
 		player.p2.playback = false
 		player.p2.startPos.copy(player.firstPerson.position)
-		// document.getElementById('rewind').style.display = "block"
+		document.getElementById('rewind').style.display = "block"
 
 	}
 
@@ -74,7 +74,7 @@ FPP.PLAYER = (function(window, document, undefined) {
 
 		// document.getElementById('blocker').style.display = "block"
 		// document.getElementById('instructions').style.display = "none"
-		// document.getElementById('rewind').style.display = "none"
+		document.getElementById('rewind').style.display = "none"
 	}
 
 	document.addEventListener('click', function(e){
@@ -147,6 +147,12 @@ FPP.PLAYER = (function(window, document, undefined) {
 		// console.log(e.keyCode)
 		if(e.keyCode === 69){
 			FPP.PLAYER.firstPerson.position.y += 5
+		}
+		if(e.keyCode === 82){
+			FPP.PLAYER.firstPerson.position.copy(new THREE.Vector3(0,0,0))
+		}
+		if(e.keyCode === 84){
+			FPP.PLAYER.firstPerson.position.copy(new THREE.Vector3(0,-10,70))
 		}
 	})
 
