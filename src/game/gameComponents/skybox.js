@@ -13,10 +13,9 @@ FPP.SKYBOX = (function(window, document, undefined) {
 		FPP.GEOMETRY.loader.load(path, function(img) {
 			var material = new THREE.MeshPhongMaterial({
 				map: img,
-				side: spin ? THREE.BackSide : THREE.FrontSide
+				side: spin ? THREE.BackSide : THREE.DoubleSide
 			})
 			var mesh = new THREE.Mesh(geo, material)
-			console.log(translate)
 			if(translate) mesh.position.add(translate)
 			if(spin) sky.star =  mesh
 			FPP.LCS.scene.add(mesh)

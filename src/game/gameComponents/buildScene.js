@@ -14,6 +14,7 @@ FPP.BUILDSCENE = (function(window, document, undefined) {
 		this.room2 = []
 		this.btns2 = []
 
+		//LEVEL TWO
 		this.fLwall2 = { 'specs':{ 'translate': new THREE.Vector3(-10, -5.5, 20), 'rx':-Math.PI/2,'ry':0,'rz':0,'width':10,'height': 9, 'image_path': './assets/images/floor4HD.jpg' }, 'options' : { 'solid':true, 'stretch':true , 'doubleside': true} }
 		this.room2.push(this.fLwall2)
 
@@ -22,6 +23,15 @@ FPP.BUILDSCENE = (function(window, document, undefined) {
 
 		this.bLwall2 = { 'specs':{ 'translate': new THREE.Vector3(-10, -5.5, -20), 'rx':Math.PI/2,'ry':0,'rz':0,'width':10,'height': 9, 'image_path': './assets/images/floor4HD.jpg' }, 'options' : { 'solid':true, 'stretch':true , 'doubleside': true} }
 		this.room2.push(this.bLwall2)
+
+		this.bCwall2 = { 'specs':{ 'translate': new THREE.Vector3(0, -5.5, -20), 'rx':Math.PI/2,'ry':0,'rz':0,'width':10,'height': 9,
+		'mat': new THREE.MeshPhongMaterial( {
+			transparent: true,
+			opacity: 0.8 ,
+			side: THREE.DoubleSide
+			})
+		}, 'options' : { 'solid':false, 'stretch':true , 'doubleside': true} }
+		this.room2.push(this.bCwall2)
 
 		this.bRwall2 = { 'specs':{ 'translate': new THREE.Vector3(10, -5.5, -20), 'rx':Math.PI/2,'ry':0,'rz':0,'width':10,'height': 9, 'image_path': './assets/images/floor4HD.jpg' }, 'options' : { 'solid':true, 'stretch':true, 'doubleside': true } }
 		this.room2.push(this.bRwall2)
@@ -44,8 +54,15 @@ FPP.BUILDSCENE = (function(window, document, undefined) {
 		this.btn2 = {'specs': { 'id': 2, 'translate' : new THREE.Vector3(0,0.1-10,0), 'path' : './assets/images/btn1.png' }}
 		this.btns2.push(this.btn2)
 
-		//LEVEL ONE (BELOW)
-		// Create a textured quad that is fixed in space and obeys physics
+		//LEVEL 1 - 2 BRIDGE
+		this.bridge = { 'specs':{ 'translate': new THREE.Vector3(0,-15, 40), 'rx':(0.24497866312686414),'ry': Math.PI/2,'rz': 0, 'width': (41.5),'height': 20, 'mat': new THREE.MeshPhongMaterial( {
+			transparent: true,
+			opacity: 0.5 ,
+			side: THREE.DoubleSide
+		})}, 'options' : { 'solid':true, 'doubleside': true } }
+		this.walls.push(this.bridge)
+
+		//LEVEL ONE
 		this.floor = { 'specs':{ 'translate': new THREE.Vector3(0, -10, 0), 'rx':0,'ry':0,'rz':0,'width':30,'height': 40, 'image_path': './assets/images/floor3.jpg' }, 'options' : { 'solid':true, 'stretch':false, 'wrap_w':15, 'wrap_h':20 } }
 		this.walls.push(this.floor)
 
@@ -106,7 +123,7 @@ FPP.BUILDSCENE = (function(window, document, undefined) {
 			makeB(unit.btns2[b])
 		}
 
-		FPP.GEOMETRY.makeTunnel(5, 5, 40.5, new THREE.Vector3(0,-10.5,41), new THREE.Vector3(-Math.PI/2 + 0.25 , Math.PI/4,0))
+		//FPP.GEOMETRY.makeTunnel(5, 5, 40.5, new THREE.Vector3(0,-10.5,41), new THREE.Vector3(-Math.PI/2 + 0.25 , Math.PI/4,0))
 
 
 	}

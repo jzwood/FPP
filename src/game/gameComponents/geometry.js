@@ -83,20 +83,9 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 
 	/* MAKES TEXTURED WALL THAT MATCHES WALL */
 	models.makeTile = function(specs, options) {
-		models.loader.load(specs.image_path, function(img) {
 
 			var w = 0.5 * specs.width,
 			h = 0.5 * specs.height
-
-			if (options.stretch !== true) {
-				var wrap_w = options.wrap_w || 1,
-				wrap_h = options.wrap_h || 1
-				img.wrapS = THREE.RepeatWrapping
-				img.wrapT = THREE.RepeatWrapping
-				img.anisotropy = 16
-				img.magFilter = THREE.LinearFilter
-				img.repeat.set(wrap_w, wrap_h)
-			}
 
 			//this pain-stakingly specifies the vertices of our quad
 			var geom = new THREE.Geometry()
@@ -128,7 +117,6 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 			geom.faceVertexUvs[0].push(faceVertexUvs1, faceVertexUvs2)
 			geom.uvsNeedUpdate = true
 			geom.buffersNeedUpdate = true
-
 			// var geom = new THREE.PlaneGeometry(specs.width, specs.height, 1, 1)
 
 			var quat = new THREE.Quaternion().setFromEuler(new THREE.Euler(specs.rx, specs.ry, specs.rz, 'XZY'))
@@ -138,38 +126,56 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 			if (options.solid) {
 				models.physicsTile(p, specs.width, specs.height, quat, specs.id)
 			}
+			if(specs.mat){
+				var mesh = new THREE.Mesh(geom, specs.mat)
 
-			// geom.applyMatrix(new THREE.Matrix4().makeRotationFromQuaternion(new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 0, 1), specs.normal)))
+				mesh.castShadow = true
+				mesh.receiveShadow = true
 
-			var material = new THREE.MeshPhongMaterial({
-				map: img,
-				side: options.doubleside ? THREE.DoubleSide : THREE.FrontSide
-			})
+				mesh.position.set(p.x, p.y, p.z)
+				FPP.LCS.scene.add(mesh)
+			}else{
+				// geom.applyMatrix(new THREE.Matrix4().makeRotationFromQuaternion(new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 0, 1), specs.normal)))
+				models.loader.load(specs.image_path, function(img) {
+					if (options.stretch !== true) {
+						var wrap_w = options.wrap_w || 1,
+						wrap_h = options.wrap_h || 1
+						img.wrapS = THREE.RepeatWrapping
+						img.wrapT = THREE.RepeatWrapping
+						img.anisotropy = 16
+						img.magFilter = THREE.LinearFilter
+						img.repeat.set(wrap_w, wrap_h)
+					}
+					var material = new THREE.MeshPhongMaterial({
+						map: img,
+						side: options.doubleside ? THREE.DoubleSide : THREE.FrontSide
+					})
 
-			var mesh = new THREE.Mesh(geom, material)
+					var mesh = new THREE.Mesh(geom, material)
 
-			mesh.castShadow = true
-			mesh.receiveShadow = true
+					mesh.castShadow = true
+					mesh.receiveShadow = true
 
-			mesh.position.set(p.x, p.y, p.z)
-			FPP.LCS.scene.add(mesh)
+					mesh.position.set(p.x, p.y, p.z)
+					FPP.LCS.scene.add(mesh)
 
-			//we want to keep track of doors
-			if (specs.id) {
-				mesh.name = specs.id
-				mesh.originalY = mesh.position.y
-				mesh.raise = specs.height
-				models.doorMeshes.push(mesh)
+					//we want to keep track of doors
+					if (specs.id) {
+						mesh.name = specs.id
+						mesh.originalY = mesh.position.y
+						mesh.raise = specs.height
+						models.doorMeshes.push(mesh)
+					}
+
+				},
+				function(xhr) { // Function called when download progresses
+					console.log((xhr.loaded / xhr.total * 100) + '% loaded')
+				},
+				function(xhr) { // Function called when download errors
+					console.log(xhr, 'Texture Load Error Occurred')
+				})
 			}
-
-		},
-		function(xhr) { // Function called when download progresses
-			console.log((xhr.loaded / xhr.total * 100) + '% loaded')
-		},
-		function(xhr) { // Function called when download errors
-			console.log(xhr, 'Texture Load Error Occurred')
-		})
-	}
+		}
 
 	//moves door up when you stand on button, down when you walk off
 	models.updateDoors = function(id, up) {
