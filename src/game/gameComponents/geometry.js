@@ -11,6 +11,8 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 		this.buttonMeshes = []
 		this.doorMeshes = []
 		this.doorBodies = []
+		this.sBtnCount = 0
+
 
 		//group numbers are consecutive powers of 2
 		this.group = function(num) {
@@ -215,6 +217,7 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 	models.updateButtons = function() {
 		var bm = models.buttonMeshes,
 		minDist = 3
+
 		for (var i = 0, m = bm.length; i < m; i++) {
 			var pb = bm[i].position,
 			pp = FPP.PLAYER.firstPerson.position,
@@ -234,14 +237,30 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 							//green means you're standing on button
 							bm[i].material.color = new THREE.Color("#009500")
 							bm[i].material.needsUpdate = true
-							models.updateDoors(bm[i].name, true) //open door
+							if(bm[i].isSbutton){
+								models.sBtnCount++
+								console.log(models.sBtnCount)
+								if(models.sBtnCount === 2)
+									models.updateDoors(bm[i].name, true) //open door
+							}else{
+								models.updateDoors(bm[i].name, true) //open door
+							}
 						}
 					} else {
 						if (bm[i].material.color.r === 0) {
 							//red means you're not standing on button
 							bm[i].material.color = new THREE.Color("#BBBAA3")
 							bm[i].material.needsUpdate = true
-							models.updateDoors(bm[i].name, false) //close door
+							if(bm[i].isSbutton){
+								models.sBtnCount = Math.max(0, models.sBtnCount - 1)
+								var btnName = bm[i].name
+								window.setTimeout(function(){
+									models.updateDoors(btnName, false)
+								}, 20000)
+								console.log(models.sBtnCount)
+							}else{
+								models.updateDoors(bm[i].name, false) //close door
+							}
 						}
 					}
 				}
@@ -261,6 +280,7 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 				var p = specs.translate.clone()
 				cylinder.position.set(p.x, p.y, p.z)
 				cylinder.name = specs.id || ''
+				cylinder.isSbutton = specs.isSbutton || false
 
 				cylinder.collisionFilterMask = this.group(1) | this.group(2) | this.group(3) //collides with first 3 groups (111)
 

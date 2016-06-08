@@ -11,7 +11,7 @@ FPP.LCS = (function(window, document, undefined) {
 
 	lcs.initLights = function() {
 		// var amb_light = new THREE.AmbientLight(0x6B6B6B) // soft white light
-		var amb_light = new THREE.AmbientLight(0xffffff, 0.6)
+		var amb_light = new THREE.AmbientLight(0xffffff, 0.7)
 		lcs.scene.add(amb_light)
 
 		//not doing this yet
