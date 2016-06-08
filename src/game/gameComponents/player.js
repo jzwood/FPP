@@ -133,7 +133,7 @@ FPP.PLAYER = (function(window, document, undefined) {
 			}else{
 				console.log('done updating')
 				player.placeholder.visible = false
-				player.p2.position.y = -10
+				player.p2.position.y -= 100 //puts physical sphere far below scene so it can't interfere
 				player.p2.playback = false
 				player.p2.recording = false
 				player.formatTime(true)

@@ -254,9 +254,10 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 							if(bm[i].isSbutton){
 								models.sBtnCount = Math.max(0, models.sBtnCount - 1)
 								var btnName = bm[i].name
-								window.setTimeout(function(){
+								clearTimeout(models.timeout)
+								models.timeout = setTimeout(function(){
 									models.updateDoors(btnName, false)
-								}, 20000)
+								}, 15000)
 								console.log(models.sBtnCount)
 							}else{
 								models.updateDoors(bm[i].name, false) //close door
