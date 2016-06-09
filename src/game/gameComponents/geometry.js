@@ -193,7 +193,7 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 							clearInterval(models.doorMovement)
 						} else {
 							dm[i].position.y += 0.1
-							models.doorBodies[i].position.y = dm[i].position.y
+							models.doorBodies[i].position.copy(dm[i].position)
 						}
 					}, 15)
 				} else {
@@ -205,7 +205,7 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 							clearInterval(models.doorMovement)
 						} else {
 							dm[i].position.y -= 0.1
-							models.doorBodies[i].position.y = dm[i].position.y
+							models.doorBodies[i].position.copy(dm[i].position)
 						}
 					}, 15)
 				}

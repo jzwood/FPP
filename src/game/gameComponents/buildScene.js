@@ -14,6 +14,60 @@ FPP.BUILDSCENE = (function(window, document, undefined) {
 		this.room2 = []
 		this.btns2 = []
 
+		this.room3 = []
+		this.btns3 = []
+
+		//LEVEL THREE
+		this.fLwall3 = { 'specs':{ 'translate': new THREE.Vector3(-10, -5.5, 20), 'rx':-Math.PI/2,'ry':0,'rz':0,'width':10,'height': 9, 'image_path': './assets/images/floor4HD.jpg' }, 'options' : { 'solid':true, 'stretch':true , 'doubleside': true} }
+		this.room3.push(this.fLwall3)
+
+		this.fRwall3 = { 'specs':{ 'translate': new THREE.Vector3(10, -5.5, 20), 'rx':-Math.PI/2,'ry':0,'rz':0,'width':10,'height': 9, 'image_path': './assets/images/floor4HD.jpg' }, 'options' : { 'solid':true, 'stretch':true, 'doubleside': true } }
+		this.room3.push(this.fRwall3)
+
+		this.bLwall3 = { 'specs':{ 'translate': new THREE.Vector3(-10, -5.5, -20), 'rx':Math.PI/2,'ry':0,'rz':0,'width':10,'height': 9, 'image_path': './assets/images/floor4HD.jpg' }, 'options' : { 'solid':true, 'stretch':true , 'doubleside': true} }
+		this.room3.push(this.bLwall3)
+
+		this.bCwall3 = { 'specs':{ 'translate': new THREE.Vector3(0, -5.5, -20), 'rx':Math.PI/2,'ry':0,'rz':0,'width':10,'height': 9,
+		'mat': new THREE.MeshPhongMaterial( {
+			transparent: true,
+			opacity: 0.8 ,
+			side: THREE.DoubleSide
+			})
+		}, 'options' : { 'solid':false, 'stretch':true , 'doubleside': true} }
+		this.room3.push(this.bCwall3)
+
+		this.bRwall3 = { 'specs':{ 'translate': new THREE.Vector3(10, -5.5, -20), 'rx':Math.PI/2,'ry':0,'rz':0,'width':10,'height': 9, 'image_path': './assets/images/floor4HD.jpg' }, 'options' : { 'solid':true, 'stretch':true, 'doubleside': true } }
+		this.room3.push(this.bRwall3)
+
+		this.door3 = { 'specs':{ 'id': 3, 'translate': new THREE.Vector3(0, -5.5, 20), 'rx':-Math.PI/2,'ry':0,'rz':0,'width':10,'height': 9, 'image_path': './assets/images/door.jpg' }, 'options' : { 'solid':true, 'stretch':true , 'doubleside': true} }
+		this.room3.push(this.door3)
+
+		this.a3 = { 'specs':{ 'translate': new THREE.Vector3(0, -10, 0), 'rx':0,'ry':0,'rz':0,'width':30,'height': 40, 'image_path': './assets/images/floor1.jpg' }, 'options' : { 'solid':true, 'stretch':false, 'wrap_w':15, 'wrap_h':20 } }
+		this.room3.push(this.a3)
+
+		this.b3 = { 'specs':{ 'translate': new THREE.Vector3(15, -5.5, 0), 'rx':0,'ry':0,'rz':Math.PI/2,'width':9,'height':40, 'image_path': './assets/images/floor4HD.jpg' }, 'options' : { 'solid':true, 'stretch':false, 'wrap_w':2, 'wrap_h':10 } }
+		this.room3.push(this.b3)
+
+		this.c3 = { 'specs':{ 'translate': new THREE.Vector3(-15, -5.5, 0), 'rx':0,'ry':0,'rz':-Math.PI/2,'width':9,'height':40, 'image_path': './assets/images/floor4HD.jpg' }, 'options' : { 'solid':true, 'stretch':false, 'wrap_w':2, 'wrap_h':10 } }
+		this.room3.push(this.c3)
+
+		this.d3 = { 'specs':{ 'translate': new THREE.Vector3(0, -1, 0), 'rx':0,'ry':0,'rz':Math.PI,'width':30,'height': 40, 'image_path': './assets/images/floor4.jpg' }, 'options' : { 'solid':false, 'stretch':false, 'wrap_w':15, 'wrap_h':20 } }
+		this.room3.push(this.d3)
+
+		this.btn3a = {'specs': { 'id': 3, 'translate' : new THREE.Vector3(0,0.1-10,-5), 'path' : './assets/images/btn2.png' , 'isSbutton': true}}
+		this.btns3.push(this.btn3a)
+
+		this.btn3b = {'specs': { 'id': 3, 'translate' : new THREE.Vector3(0,0.1-10,5), 'path' : './assets/images/btn2.png' , 'isSbutton': true}}
+		this.btns3.push(this.btn3b)
+
+		//LEVEL 2 - 3 BRIDGE
+		this.bridge2 = { 'specs':{ 'translate': new THREE.Vector3(0,-17.5, 110), 'rx':-0.2449786631,'ry': Math.PI/2,'rz': 0, 'width': 21,'height': 10, 'mat': new THREE.MeshPhongMaterial( {
+			transparent: true,
+			opacity: 0.5 ,
+			side: THREE.DoubleSide
+		})}, 'options' : { 'solid':true, 'doubleside': true } }
+		this.walls.push(this.bridge2)
+
 		//LEVEL TWO
 		this.fLwall2 = { 'specs':{ 'translate': new THREE.Vector3(-10, -5.5, 20), 'rx':-Math.PI/2,'ry':0,'rz':0,'width':10,'height': 9, 'image_path': './assets/images/floor4HD.jpg' }, 'options' : { 'solid':true, 'stretch':true , 'doubleside': true} }
 		this.room2.push(this.fLwall2)
@@ -124,6 +178,16 @@ FPP.BUILDSCENE = (function(window, document, undefined) {
 		for(var b in unit.btns2){
 			unit.btns2[b].specs.translate.add(new THREE.Vector3(0,-10,80))
 			makeB(unit.btns2[b])
+		}
+
+		for(var w in unit.room3){
+			unit.room3[w].specs.translate.add(new THREE.Vector3(0,-5,140))
+			makeT(unit.room3[w])
+		}
+
+		for(var b in unit.btns3){
+			unit.btns3[b].specs.translate.add(new THREE.Vector3(0,-5,140))
+			makeB(unit.btns3[b])
 		}
 
 		//FPP.GEOMETRY.makeTunnel(5, 5, 40.5, new THREE.Vector3(0,-10.5,41), new THREE.Vector3(-Math.PI/2 + 0.25 , Math.PI/4,0))

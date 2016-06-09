@@ -3,6 +3,8 @@ FPP.SKYBOX = (function(window, document, undefined) {
 	var sky = new function(){
 		this.geo = new THREE.SphereGeometry(10000, 32, 32)
 		this.path = './assets/images/space4.jpg'
+		// this.path = './assets/images/bh.png'
+
 	}
 
 	sky.update = function(){
@@ -31,7 +33,7 @@ FPP.SKYBOX = (function(window, document, undefined) {
 
 	sky.init = function(){
 		sky.drawBox(sky.geo,sky.path, true, 'b')
-		sky.drawBox(new THREE.SphereGeometry(30, 12, 12), './assets/images/floor5.jpg', false, 'f')
+		//sky.drawBox(new THREE.SphereGeometry(30, 12, 12), './assets/images/floor5.jpg', false, 'f')
 		//sky.drawBox(new THREE.SphereGeometry(30, 12, 12), './assets/images/floor5.jpg', false, 'd', new THREE.Vector3(0,-10,80))
 
 		}
