@@ -58,7 +58,7 @@ FPP.BUILDSCENE = (function(window, document, undefined) {
 		this.btns2.push(this.btn2b)
 
 		//LEVEL 1 - 2 BRIDGE
-		this.bridge = { 'specs':{ 'translate': new THREE.Vector3(0,-15, 40), 'rx':(0.24497866312686414),'ry': Math.PI/2,'rz': 0, 'width': (41.5),'height': 20, 'mat': new THREE.MeshPhongMaterial( {
+		this.bridge = { 'specs':{ 'translate': new THREE.Vector3(0,-15, 40), 'rx':(0.24497866312686414),'ry': Math.PI/2,'rz': 0, 'width': (41.5),'height': 10, 'mat': new THREE.MeshPhongMaterial( {
 			transparent: true,
 			opacity: 0.5 ,
 			side: THREE.DoubleSide
