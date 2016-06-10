@@ -31,7 +31,9 @@ FPP.PLAYER = (function(window, document, undefined) {
 		this.clock = document.getElementById('clock')
 
 		//this is placeholder sphere for p2
-		var geometry = new THREE.SphereGeometry( radius, 7, 7 ),
+		var geometry = new THREE.IcosahedronGeometry(radius)
+		// var geometry = new THREE.TorusGeometry( radius, 0.2, 16, 100 );
+		//var geometry = new THREE.SphereGeometry( radius, 7, 7 ),
 		material = new THREE.MeshBasicMaterial( {color: 0x00ffff} )
 		this.placeholder = new THREE.Mesh( geometry, material )
 		this.placeholder.visible = false
