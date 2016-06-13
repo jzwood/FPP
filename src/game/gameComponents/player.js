@@ -34,11 +34,11 @@ FPP.PLAYER = (function(window, document, undefined) {
 		var geometry = new THREE.IcosahedronGeometry(radius)
 		// var geometry = new THREE.TorusGeometry( radius, 0.2, 16, 100 );
 		//var geometry = new THREE.SphereGeometry( radius, 7, 7 ),
-		material = new THREE.MeshBasicMaterial( {color: 0x00ffff} )
+		material = new THREE.MeshBasicMaterial( {color: 0xffffff, side: THREE.FrontSide} )
 		this.placeholder = new THREE.Mesh( geometry, material )
 		this.placeholder.visible = false
-		var edges = new THREE.EdgesHelper(this.placeholder, 0x919191)
-		FPP.LCS.scene.add(edges)
+		this.placeholder.edges = new THREE.EdgesHelper(this.placeholder, 0x000000)
+		FPP.LCS.scene.add(this.placeholder.edges)
 	}
 
 	player.formatTime = function(isGreen){
@@ -122,7 +122,9 @@ FPP.PLAYER = (function(window, document, undefined) {
 		}else if(player.p2.playback){
 			//console.log('updating')
 			player.time++
-			player.placeholder.visible = true
+			var doppleganger = player.placeholder
+			doppleganger.visible = true
+			doppleganger.edges.visible = true
 			if(player.p2.timeLog.length){
 				player.formatTime()
 				player.p2.velocity.x = player.p2.timeLog.pop()
@@ -134,7 +136,8 @@ FPP.PLAYER = (function(window, document, undefined) {
 				player.placeholder.quaternion.copy(player.p2.quaternion)
 			}else{
 				console.log('done updating')
-				player.placeholder.visible = false
+				doppleganger.visible = false
+				doppleganger.edges.visible = false
 				player.p2.position.y -= 100 //puts physical sphere far below scene so it can't interfere
 				player.p2.playback = false
 				player.p2.recording = false

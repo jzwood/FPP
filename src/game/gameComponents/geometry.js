@@ -190,6 +190,7 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 					models.doorMovement = setInterval(function() {
 						if (dm[i].position.y >= dm[i].originalY + dm[i].raise) {
 							dm[i].position.y = dm[i].originalY + dm[i].raise
+							models.doorBodies[i].position.copy(dm[i].position)
 							clearInterval(models.doorMovement)
 						} else {
 							dm[i].position.y += 0.1
@@ -202,6 +203,7 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 					models.doorMovement = setInterval(function() {
 						if (dm[i].position.y < dm[i].originalY) {
 							dm[i].position.y = dm[i].originalY
+							models.doorBodies[i].position.copy(dm[i].position)
 							clearInterval(models.doorMovement)
 						} else {
 							dm[i].position.y -= 0.1
@@ -252,12 +254,17 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 							bm[i].material.color = new THREE.Color("#BBBAA3")
 							bm[i].material.needsUpdate = true
 							if(bm[i].isSbutton){
+
+								if(models.sBtnCount === 2){
+									clearTimeout(models.timeout)
+									var btnName = bm[i].name
+									models.timeout = setTimeout(function(){
+										models.updateDoors(btnName, false)
+									}, 15000)
+								}
+
 								models.sBtnCount = Math.max(0, models.sBtnCount - 1)
-								var btnName = bm[i].name
-								clearTimeout(models.timeout)
-								models.timeout = setTimeout(function(){
-									models.updateDoors(btnName, false)
-								}, 15000)
+
 								console.log(models.sBtnCount)
 							}else{
 								models.updateDoors(bm[i].name, false) //close door
