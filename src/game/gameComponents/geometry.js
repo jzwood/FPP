@@ -47,7 +47,7 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 	MAKES INVISIBLE WALL THAT RESPONDS TO PHYSICS
 	v must be normalized normal vector to plane
 	*/
-	models.physicsTile = function(p, width, height, quat, isDoor) {
+	models.physicsTile = function(p, width, height, quat, doorId) {
 		var wall = new CANNON.Body({
 			mass: 0 //makes it a solid immovable structure
 		}),
@@ -77,7 +77,8 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 		models.world.addBody(wall)
 
 		//we want to keep track of doors
-		if (isDoor) {
+		if (doorId) {
+			wall.name = doorId
 			models.doorBodies.push(wall)
 		}
 
@@ -185,30 +186,32 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 		for (var i = 0, m = dm.length; i < m; i++) {
 			if (dm[i].name === id) {
 				if (up) {
-					// console.log("door up",id)
+					console.log("door up",id)
 					clearInterval(models.doorMovement)
 					models.doorMovement = setInterval(function() {
 						if (dm[i].position.y >= dm[i].originalY + dm[i].raise) {
 							dm[i].position.y = dm[i].originalY + dm[i].raise
-							models.doorBodies[i].position.copy(dm[i].position)
 							clearInterval(models.doorMovement)
 						} else {
 							dm[i].position.y += 0.1
-							models.doorBodies[i].position.copy(dm[i].position)
-						}
+						}//after updating mesh sync solid door
+						models.doorBodies.filter(function(door){
+							if(door.name === id) door.position.copy(dm[i].position)
+						})
 					}, 15)
 				} else {
-					// console.log("door down",id)
+					console.log("door down",id)
 					clearInterval(models.doorMovement)
 					models.doorMovement = setInterval(function() {
 						if (dm[i].position.y < dm[i].originalY) {
 							dm[i].position.y = dm[i].originalY
-							models.doorBodies[i].position.copy(dm[i].position)
 							clearInterval(models.doorMovement)
 						} else {
 							dm[i].position.y -= 0.1
-							models.doorBodies[i].position.copy(dm[i].position)
-						}
+						}//after updating mesh sync solid door
+						models.doorBodies.filter(function(door){
+							if(door.name === id) door.position.copy(dm[i].position)
+						})
 					}, 15)
 				}
 				return false // no more iteration needed after we've found the button

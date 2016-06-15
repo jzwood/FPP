@@ -190,6 +190,8 @@ FPP.BUILDSCENE = (function(window, document, undefined) {
 			makeB(unit.btns3[b])
 		}
 
+		FPP.LCS.scene.fog = new THREE.Fog(0x686073,1,1415)
+
 		//FPP.GEOMETRY.makeTunnel(5, 5, 40.5, new THREE.Vector3(0,-10.5,41), new THREE.Vector3(-Math.PI/2 + 0.25 , Math.PI/4,0))
 
 
