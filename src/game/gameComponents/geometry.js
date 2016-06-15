@@ -149,9 +149,11 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 						img.magFilter = THREE.LinearFilter
 						img.repeat.set(wrap_w, wrap_h)
 					}
-					var material = new THREE.MeshPhongMaterial({
+					var tSide = {'default': THREE.FrontSide, 'b': THREE.BackSide, 'd': THREE.DoubleSide},
+					sidesShowing = options.side ? tSide[options.side] : tSide['default'],
+					material = new THREE.MeshPhongMaterial({
 						map: img,
-						side: options.doubleside ? THREE.DoubleSide : THREE.FrontSide
+						side: sidesShowing
 					})
 
 					var mesh = new THREE.Mesh(geom, material)
