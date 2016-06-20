@@ -46,7 +46,8 @@ canvas {
 	width: 100%;
 	height: 100%;
 	/*background-color: rgba(0, 0, 0, 0.5);*/
-	/*background-image: url('../images/static2.png');*//* we want this but not while debuggin */
+	/*background-image: url('../images/static2.png');*/
+	 /*we want this but not while debuggin */
 }
 
 

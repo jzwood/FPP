@@ -186,37 +186,38 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 	models.updateDoors = function(id, up) {
 		var dm = models.doorMeshes
 		for (var i = 0, m = dm.length; i < m; i++) {
-			if (dm[i].name === id) {
+			if (dm[i].name && dm[i].name === id) {
+				var dmi = dm[i]//because of the intervals, need scoped temp var to prevent sync errors
 				if (up) {
 					console.log("door up",id)
 					clearInterval(models.doorMovement)
 					models.doorMovement = setInterval(function() {
-						if (dm[i].position.y >= dm[i].originalY + dm[i].raise) {
-							dm[i].position.y = dm[i].originalY + dm[i].raise
+						if (dmi.position.y >= dmi.originalY + dmi.raise) {
+							dmi.position.y = dmi.originalY + dmi.raise
 							clearInterval(models.doorMovement)
 						} else {
-							dm[i].position.y += 0.1
+							dmi.position.y += 0.1
 						}//after updating mesh sync solid door
 						models.doorBodies.filter(function(door){
-							if(door.name === id) door.position.copy(dm[i].position)
+							if(door.name === id) door.position.copy(dmi.position)
 						})
 					}, 15)
 				} else {
 					console.log("door down",id)
 					clearInterval(models.doorMovement)
 					models.doorMovement = setInterval(function() {
-						if (dm[i].position.y < dm[i].originalY) {
-							dm[i].position.y = dm[i].originalY
+						if (dmi.position.y < dmi.originalY) {
+							dmi.position.y = dmi.originalY
 							clearInterval(models.doorMovement)
 						} else {
-							dm[i].position.y -= 0.1
+							dmi.position.y -= 0.1
 						}//after updating mesh sync solid door
 						models.doorBodies.filter(function(door){
-							if(door.name === id) door.position.copy(dm[i].position)
+							if(door.name === id) door.position.copy(dmi.position)
 						})
 					}, 15)
 				}
-				return false // no more iteration needed after we've found the button
+				//return false // no more iteration needed after we've found the button
 			}
 		}
 	}
