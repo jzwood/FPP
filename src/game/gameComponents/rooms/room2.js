@@ -6,26 +6,25 @@ FPP.ROOM2 = (function(window, document, undefined) {
     this.btns = []
 
     //LEVEL TWO
-    this.fLwall2 = { 'specs':{ 'translate': new THREE.Vector3(-10, -5.5, 20), 'rx':-Math.PI/2,'ry':0,'rz':0,'width':10,'height': 9, 'image_path': './assets/images/floor4HD.jpg' }, 'options' : { 'solid':true, 'stretch':true , 'side': 'd'} }
-    this.walls.push(this.fLwall2)
+    this.fLwall = { 'specs':{ 'translate': new THREE.Vector3(-10, -5.5, 20), 'rx':-Math.PI/2,'ry':0,'rz':0,'width':10,'height': 9, 'image_path': './assets/images/floor4HD.jpg' }, 'options' : { 'solid':true, 'stretch':true , 'side': 'd'} }
+    this.walls.push(this.fLwall)
 
+    this.fRwall = { 'specs':{ 'translate': new THREE.Vector3(10, -5.5, 20), 'rx':-Math.PI/2,'ry':0,'rz':0,'width':10,'height': 9, 'image_path': './assets/images/floor4HD.jpg' }, 'options' : { 'solid':true, 'stretch':true, 'side': 'd' } }
+    this.walls.push(this.fRwall)
 
-    this.fRwall2 = { 'specs':{ 'translate': new THREE.Vector3(10, -5.5, 20), 'rx':-Math.PI/2,'ry':0,'rz':0,'width':10,'height': 9, 'image_path': './assets/images/floor4HD.jpg' }, 'options' : { 'solid':true, 'stretch':true, 'side': 'd' } }
-    this.walls.push(this.fRwall2)
+    this.bLwall = { 'specs':{ 'translate': new THREE.Vector3(-10, -5.5, -20), 'rx':Math.PI/2,'ry':0,'rz':0,'width':10,'height': 9, 'image_path': './assets/images/floor4HD.jpg' }, 'options' : { 'solid':true, 'stretch':true , 'side': 'd'} }
+    this.walls.push(this.bLwall)
 
-    this.bLwall2 = { 'specs':{ 'translate': new THREE.Vector3(-10, -5.5, -20), 'rx':Math.PI/2,'ry':0,'rz':0,'width':10,'height': 9, 'image_path': './assets/images/floor4HD.jpg' }, 'options' : { 'solid':true, 'stretch':true , 'side': 'd'} }
-    this.walls.push(this.bLwall2)
-
-    this.bCwall2 = { 'specs':{ 'translate': new THREE.Vector3(0, -5.5, -20), 'rx':Math.PI/2,'ry':0,'rz':0,'width':10,'height': 9,
+    this.bCwall = { 'specs':{ 'translate': new THREE.Vector3(0, -5.5, -20), 'rx':Math.PI/2,'ry':0,'rz':0,'width':10,'height': 9,
     'mat': new THREE.MeshPhongMaterial( { transparent: true, opacity: 0.3, side: THREE.DoubleSide })
     }, 'options' : { 'solid':false, 'stretch':true , 'side': 'd'} }
-    this.walls.push(this.bCwall2)
+    this.walls.push(this.bCwall)
 
-    this.bRwall2 = { 'specs':{ 'translate': new THREE.Vector3(10, -5.5, -20), 'rx':Math.PI/2,'ry':0,'rz':0,'width':10,'height': 9, 'image_path': './assets/images/floor4HD.jpg' }, 'options' : { 'solid':true, 'stretch':true, 'side': 'd' } }
-    this.walls.push(this.bRwall2)
+    this.bRwall = { 'specs':{ 'translate': new THREE.Vector3(10, -5.5, -20), 'rx':Math.PI/2,'ry':0,'rz':0,'width':10,'height': 9, 'image_path': './assets/images/floor4HD.jpg' }, 'options' : { 'solid':true, 'stretch':true, 'side': 'd' } }
+    this.walls.push(this.bRwall)
 
-    this.door2 = { 'specs':{ 'id': 2, 'translate': new THREE.Vector3(0, -5.5, 20), 'rx':-Math.PI/2,'ry':0,'rz':0,'width':10,'height': 9, 'image_path': './assets/images/door.jpg' }, 'options' : { 'solid':true, 'stretch':true , 'side': 'd'} }
-    this.walls.push(this.door2)
+    this.door = { 'specs':{ 'id': 2, 'translate': new THREE.Vector3(0, -5.5, 20), 'rx':-Math.PI/2,'ry':0,'rz':0,'width':10,'height': 9, 'image_path': './assets/images/door.jpg' }, 'options' : { 'solid':true, 'stretch':true , 'side': 'd'} }
+    this.walls.push(this.door)
 
     this.a2 = { 'specs':{ 'translate': new THREE.Vector3(0, -10, 0), 'rx':0,'ry':0,'rz':0,'width':30,'height': 40, 'image_path': './assets/images/floor1.jpg' }, 'options' : { 'solid':true, 'stretch':false, 'wrap_w':15, 'wrap_h':20, 'side': 'd' } }
     this.walls.push(this.a2)
@@ -44,6 +43,8 @@ FPP.ROOM2 = (function(window, document, undefined) {
 
     this.btn2b = {'specs': { 'id': 2, 'translate' : new THREE.Vector3(5,0.1-10,0), 'path' : './assets/images/btn2.png' , 'isSbutton': true}}
     this.btns.push(this.btn2b)
+
+    this.move = new THREE.Vector3(0,-10,80)
   }
 
   return room2
