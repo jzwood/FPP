@@ -9,7 +9,7 @@ FPP.PLAYER = (function(window, document, undefined) {
 
 		this.firstPerson = new CANNON.Body({ mass: mass, material: FPP.GEOMETRY.groundMaterial })
 		this.firstPerson.addShape(sphereShape)
-		this.firstPerson.position.set(0, -10, 114)
+		this.firstPerson.position.set(0, -12, 190)
 		this.firstPerson.linearDamping = 0.9
 		this.firstPerson.collisionFilterGroup = group(2) //things are by default group(1)
 		this.firstPerson.posLog = []
@@ -149,15 +149,24 @@ FPP.PLAYER = (function(window, document, undefined) {
 	}
 
 	document.addEventListener('keydown', function(e){
-		// console.log(e.keyCode)
+		console.log(e.keyCode)
 		if(e.keyCode === 69){
 			FPP.PLAYER.firstPerson.position.y += 5
 		}
-		if(e.keyCode === 82){
+		if(e.keyCode === 49){
 			FPP.PLAYER.firstPerson.position.copy(new THREE.Vector3(0,0,0))
 		}
-		if(e.keyCode === 84){
+		if(e.keyCode === 50){
 			FPP.PLAYER.firstPerson.position.copy(new THREE.Vector3(0,-10,70))
+		}
+		if(e.keyCode === 51){
+			FPP.PLAYER.firstPerson.position.copy(new THREE.Vector3(0,-10,140))
+		}
+		if(e.keyCode === 52){
+			FPP.PLAYER.firstPerson.position.copy(new THREE.Vector3(0,-10,210))
+		}
+		if(e.keyCode === 53){
+			FPP.PLAYER.firstPerson.position.copy(new THREE.Vector3(0,-10,280))
 		}
 	})
 

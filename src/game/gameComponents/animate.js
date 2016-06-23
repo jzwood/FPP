@@ -12,8 +12,20 @@ FPP.ANIMATE = (function(window, document, undefined) {
 		this.time = Date.now()
 	}
 
+	// @see http://paulirish.com/2011/requestanimationframe-for-smart-animating/
+	window.requestAnimFrame = (function() {
+		return window.requestAnimationFrame ||
+		window.webkitRequestAnimationFrame ||
+		window.mozRequestAnimationFrame ||
+		window.oRequestAnimationFrame ||
+		window.msRequestAnimationFrame ||
+		function( /* function */ callback, /* DOMElement */ element) {
+			window.setTimeout(callback, 1000 / 60)
+		}
+	})()
+
 	run.animate = function() {
-		requestAnimationFrame(run.animate)
+		requestAnimFrame(run.animate)
 		if (FPP.PLAYER.controls.enabled) {
 			FPP.GEOMETRY.world.step(run.dt)
 			FPP.PLAYER.p2.update() //updates second person during playback

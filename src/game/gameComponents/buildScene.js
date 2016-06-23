@@ -3,13 +3,26 @@ FPP.BUILDSCENE = (function(window, document, undefined) {
 	var unit = new function() {
 
 		//helper, origin indicator
-		var geometry = new THREE.SphereGeometry( 0.5, 32, 32 )
+		var geometry = new THREE.SphereGeometry( 1000, 32, 32 )
 		var material = new THREE.MeshLambertMaterial( {color: 0xffffff} )
 		var sphere = new THREE.Mesh( geometry, material )
 		FPP.LCS.scene.add( sphere )
 
 		this.walls = []
 		this.btns = []
+
+
+		//LEVEL 3 - 4 BRIDGE
+		this.bridge2 = { 'specs':{ 'translate': new THREE.Vector3(0,-20, 280.2), 'rx':0,'ry': Math.PI/2,'rz': Math.PI/4, 'width': 40,'height': 30, 'mat': new THREE.MeshPhongMaterial( {
+			transparent: true, opacity: 0.5 , side: THREE.DoubleSide
+		})}, 'options' : { 'solid':true, 'side': 'd' } }
+		this.walls.push(this.bridge2)
+
+		//LEVEL 3 - 4 BRIDGE
+		this.bridge2 = { 'specs':{ 'translate': new THREE.Vector3(0,-15, 190.2), 'rx':0,'ry': Math.PI/2,'rz': 0, 'width': 20,'height': 10, 'mat': new THREE.MeshPhongMaterial( {
+			transparent: true, opacity: 0.5 , side: THREE.DoubleSide
+		})}, 'options' : { 'solid':true, 'side': 'd' } }
+		this.walls.push(this.bridge2)
 
 		//LEVEL 2 - 3 BRIDGE
 		this.bridge2 = { 'specs':{ 'translate': new THREE.Vector3(0,-17.5, 110), 'rx':-0.2449786631,'ry': Math.PI/2,'rz': 0, 'width': 21,'height': 10, 'mat': new THREE.MeshPhongMaterial( {
