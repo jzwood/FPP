@@ -13,26 +13,35 @@ FPP.BUILDSCENE = (function(window, document, undefined) {
 
 
 		//LEVEL 3 - 4 BRIDGE
-		this.bridge2 = { 'specs':{ 'translate': new THREE.Vector3(0,-20, 280.2), 'rx':0,'ry': Math.PI/2,'rz': Math.PI/4, 'width': 40,'height': 30, 'mat': new THREE.MeshPhongMaterial( {
-			transparent: true, opacity: 0.5 , side: THREE.DoubleSide
-		})}, 'options' : { 'solid':true, 'side': 'd' } }
+		this.bridge2 = { 'specs':{ 'translate': new THREE.Vector3(0,-15, 280.2), 'rx':0,'ry': Math.PI/2,'rz': 0*Math.PI/4, 'width': 40,'height': 3, 'mat': new THREE.MeshPhongMaterial( {
+			transparent: true, opacity: 0.05 , side: THREE.DoubleSide
+		})}, 'options' : { 'solid':true, 'side': 'd'} }
 		this.walls.push(this.bridge2)
+
+		this.door = { 'specs':{ 'id': 'bridge3-4', 'translate': new THREE.Vector3(0,-12+0.01,290), 'rx':Math.PI/2,'ry':0,'rz':0,'width':10,'height': 6, 'image_path': './assets/images/door.jpg' }, 'options' : { 'solid':true, 'stretch':true , 'side': 'd'} }
+		this.walls.push(this.door)
+
+		this.btn1 = {'specs': { 'id': 'bridge3-4', 'translate' : new THREE.Vector3(0,-40,270), 'path' : './assets/images/btn2.png' , 'isSbutton': true}}
+		this.btns.push(this.btn1)
+
+		this.btn2 = {'specs': { 'id': 'bridge3-4', 'translate' : new THREE.Vector3(0,-15+0.01,270), 'path' : './assets/images/btn2.png' , 'isSbutton': true}}
+		this.btns.push(this.btn2)
 
 		//LEVEL 3 - 4 BRIDGE
 		this.bridge2 = { 'specs':{ 'translate': new THREE.Vector3(0,-15, 190.2), 'rx':0,'ry': Math.PI/2,'rz': 0, 'width': 20,'height': 10, 'mat': new THREE.MeshPhongMaterial( {
-			transparent: true, opacity: 0.5 , side: THREE.DoubleSide
+			transparent: true, opacity: 0.2 , side: THREE.DoubleSide
 		})}, 'options' : { 'solid':true, 'side': 'd' } }
 		this.walls.push(this.bridge2)
 
 		//LEVEL 2 - 3 BRIDGE
 		this.bridge2 = { 'specs':{ 'translate': new THREE.Vector3(0,-17.5, 110), 'rx':-0.2449786631,'ry': Math.PI/2,'rz': 0, 'width': 21,'height': 10, 'mat': new THREE.MeshPhongMaterial( {
-			transparent: true, opacity: 0.5 , side: THREE.DoubleSide
+			transparent: true, opacity: 0.3 , side: THREE.DoubleSide
 		})}, 'options' : { 'solid':true, 'side': 'd' } }
 		this.walls.push(this.bridge2)
 
 		//LEVEL 1 - 2 BRIDGE
 		this.bridge = { 'specs':{ 'translate': new THREE.Vector3(0,-15, 40), 'rx':(0.24497866312686414),'ry': Math.PI/2,'rz': 0, 'width': (41.5),'height': 10, 'mat': new THREE.MeshPhongMaterial( {
-			transparent: true, opacity: 0.3, side: THREE.DoubleSide
+			transparent: true, opacity: 0.4, side: THREE.DoubleSide
 		})}, 'options' : { 'solid':true, 'side': 'd' } }
 		this.walls.push(this.bridge)
 

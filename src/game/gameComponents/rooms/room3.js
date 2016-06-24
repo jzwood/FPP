@@ -18,7 +18,7 @@ FPP.ROOM3 = (function(window, document, undefined) {
     this.walls.push(this.bLwall)
 
     this.bCwall = { 'specs':{ 'translate': new THREE.Vector3(0, -2.5, -30), 'rx':Math.PI/2,'ry':0,'rz':0,'width':10,'height': 15,
-    'mat': new THREE.MeshPhongMaterial( { transparent: true, opacity: 0.3, side: THREE.DoubleSide })
+    'mat': new THREE.MeshPhongMaterial( { transparent: true, opacity: 0.1, side: THREE.DoubleSide })
     }, 'options' : { 'solid':false, 'stretch':true , 'side': 'd'} }
     this.walls.push(this.bCwall)
 
@@ -38,24 +38,9 @@ FPP.ROOM3 = (function(window, document, undefined) {
     this.walls.push(this.d3)
 
     this.cage1 = { 'specs':{'translate': new THREE.Vector3(0,-5.5,10), 'rx':Math.PI/2,'ry':0,'rz':0,'width':30,'height': 9, 'image_path': './assets/images/bh.png','mat': new THREE.MeshPhongMaterial( {
-      transparent: true, opacity: 0.3, side: THREE.DoubleSide })
+      transparent: true, opacity: 0.1, side: THREE.DoubleSide })
     }, 'options' : { 'solid':true, 'stretch':true , 'side': 'd'} }
     this.walls.push(this.cage1)
-
-    this.cage2 = { 'specs':{'translate': new THREE.Vector3(0,-5.5,16), 'rx':Math.PI/2,'ry':0,'rz':0,'width':6,'height': 9, 'image_path': './assets/images/bh.png' ,'mat': new THREE.MeshPhongMaterial( {
-      transparent: true, opacity: 0.3, side: THREE.DoubleSide })
-    }, 'options' : { 'solid':true, 'stretch':true , 'side': 'd'} }
-    // this.walls.push(this.cage2)
-
-    this.cage3 = { 'specs':{'translate': new THREE.Vector3(3,-5.5,13), 'rx':Math.PI/2,'ry':0,'rz':Math.PI/2,'width':6,'height': 9, 'image_path': './assets/images/bh.png' ,'mat': new THREE.MeshPhongMaterial( {
-      transparent: true, opacity: 0.3, side: THREE.DoubleSide })
-    }, 'options' : { 'solid':true, 'stretch':true , 'side': 'd'} }
-    // this.walls.push(this.cage3)
-
-    this.cage4 = { 'specs':{'translate': new THREE.Vector3(-3,-5.5,13), 'rx':Math.PI/2,'ry':0,'rz':Math.PI/2,'width':6,'height': 9, 'image_path': './assets/images/bh.png', 'mat': new THREE.MeshPhongMaterial( {
-      transparent: true, opacity: 0.3, side: THREE.DoubleSide })
-    }, 'options' : { 'solid':true, 'stretch':true , 'side': 'd'} }
-    // this.walls.push(this.cage4)
 
     this.doori = { 'specs':{ 'id': 3, 'translate': new THREE.Vector3(0,-10+0.01,0), 'rx':0,'ry':0,'rz':0,'width':10,'height': 9, 'image_path': './assets/images/door.jpg' }, 'options' : { 'solid':true, 'stretch':true , 'side': 'd'} }
     this.walls.push(this.doori)

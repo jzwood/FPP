@@ -16,7 +16,7 @@ FPP.ROOM2 = (function(window, document, undefined) {
     this.walls.push(this.bLwall)
 
     this.bCwall = { 'specs':{ 'translate': new THREE.Vector3(0, -5.5, -20), 'rx':Math.PI/2,'ry':0,'rz':0,'width':10,'height': 9,
-    'mat': new THREE.MeshPhongMaterial( { transparent: true, opacity: 0.3, side: THREE.DoubleSide })
+    'mat': new THREE.MeshPhongMaterial( { transparent: true, opacity: 0.1, side: THREE.DoubleSide })
     }, 'options' : { 'solid':false, 'stretch':true , 'side': 'd'} }
     this.walls.push(this.bCwall)
 

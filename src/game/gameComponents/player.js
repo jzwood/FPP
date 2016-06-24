@@ -34,7 +34,7 @@ FPP.PLAYER = (function(window, document, undefined) {
 		var geometry = new THREE.IcosahedronGeometry(radius)
 		// var geometry = new THREE.TorusGeometry( radius, 0.2, 16, 100 );
 		//var geometry = new THREE.SphereGeometry( radius, 7, 7 ),
-		material = new THREE.MeshBasicMaterial( {color: 0xffffff, side: THREE.FrontSide} )
+		material = new THREE.MeshPhongMaterial( {color: 0xffffff, transparent: true, opacity: 0.4, side: THREE.FrontSide} )
 		this.placeholder = new THREE.Mesh( geometry, material )
 		this.placeholder.visible = false
 		this.placeholder.edges = new THREE.EdgesHelper(this.placeholder, 0x000000)
@@ -149,7 +149,7 @@ FPP.PLAYER = (function(window, document, undefined) {
 	}
 
 	document.addEventListener('keydown', function(e){
-		console.log(e.keyCode)
+		//console.log(e.keyCode)
 		if(e.keyCode === 69){
 			FPP.PLAYER.firstPerson.position.y += 5
 		}

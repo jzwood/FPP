@@ -13,6 +13,8 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 		this.doorBodies = []
 		this.sBtnCount = 0
 
+		this.timingEvents = {}
+
 
 		//group numbers are consecutive powers of 2
 		this.group = function(num) {
@@ -190,11 +192,11 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 				var dmi = dm[i]//because of the intervals, need scoped temp var to prevent sync errors
 				if (up) {
 					console.log("door up",id)
-					clearInterval(models.doorMovement)
-					models.doorMovement = setInterval(function() {
+					clearInterval(models.timingEvents[String(id)])
+					models.timingEvents[String(id)] = setInterval(function() {
 						if (dmi.position.y >= dmi.originalY + dmi.raise) {
 							dmi.position.y = dmi.originalY + dmi.raise
-							clearInterval(models.doorMovement)
+							clearInterval(models.timingEvents[String(id)])
 						} else {
 							dmi.position.y += 0.1
 						}//after updating mesh sync solid door
@@ -204,11 +206,11 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 					}, 15)
 				} else {
 					console.log("door down",id)
-					clearInterval(models.doorMovement)
-					models.doorMovement = setInterval(function() {
+					clearInterval(models.timingEvents[String(id)])
+					models.timingEvents[String(id)] = setInterval(function() {
 						if (dmi.position.y < dmi.originalY) {
 							dmi.position.y = dmi.originalY
-							clearInterval(models.doorMovement)
+							clearInterval(models.timingEvents[String(id)])
 						} else {
 							dmi.position.y -= 0.1
 						}//after updating mesh sync solid door
@@ -281,17 +283,25 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 			}
 
 			models.makePressureButton = function(specs) {
-
 				//make THREE cylinder with solid color and edges colored
 				var tRad = 2.75,
 				bRad = 3,
 				height = 0.1
+
+				var p = specs.translate.clone()
+				if(specs.invisible){
+					//keep track of all buttons
+					var cylinder = {'position': new THREE.Vector3(p.x, p.y + 1.01 * height / 2, p.z), 'name': specs.id || '', 'material':{'color': new THREE.Color("#BBBAA3")}}
+					models.buttonMeshes.push(cylinder)
+					return false
+				}
+
 				var geometry = new THREE.CylinderGeometry(tRad, bRad, height, 60, 1, false),
 				material = new THREE.MeshPhongMaterial({
 					color: 0x009500
 				}),
 				cylinder = new THREE.Mesh(geometry, material)
-				var p = specs.translate.clone()
+
 				cylinder.position.set(p.x, p.y, p.z)
 				cylinder.name = specs.id || ''
 				cylinder.isSbutton = specs.isSbutton || false
