@@ -9,7 +9,7 @@ FPP.PLAYER = (function(window, document, undefined) {
 
 		this.firstPerson = new CANNON.Body({ mass: mass, material: FPP.GEOMETRY.groundMaterial })
 		this.firstPerson.addShape(sphereShape)
-		this.firstPerson.position.set(0, -12, 364)
+		this.firstPerson.position.set(0, 0, -10)
 		this.firstPerson.linearDamping = 0.9
 		this.firstPerson.collisionFilterGroup = group(2) //things are by default group(1)
 		this.firstPerson.posLog = []
