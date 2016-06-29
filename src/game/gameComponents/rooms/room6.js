@@ -69,7 +69,7 @@ FPP.ROOM6 = (function(window, document, undefined) {
     this.doorii = { 'specs':{ 'id': '6b', 'translate': new THREE.Vector3(0, -5.5, 30), 'rx':-Math.PI/2,'ry':0,'rz':0,'width':10,'height': 9, 'image_path': './assets/images/door.jpg' }, 'options' : { 'solid':true, 'stretch':true , 'side': 'd'} }
     this.walls.push(this.doorii)
 
-    this.move = new THREE.Vector3(0,-5,150.2 + 180 + 100)
+    this.move = new THREE.Vector3(0,-5,150.2 + 180 + 70)
   }
 
   return room6

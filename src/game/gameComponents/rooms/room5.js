@@ -42,12 +42,12 @@ FPP.ROOM5 = (function(window, document, undefined) {
 
     var ramp1 = { 'specs':{ 'translate': new THREE.Vector3(10,-5.5,-0.5), 'rx':Math.PI/4,'ry':0,'rz':0,'width':10,'height': Math.sqrt(2)*9, 'image_path': './assets/images/floor3.jpg' }, 'options' : { 'solid':true, 'stretch':true , 'side': 'f'} }
     this.walls.push(ramp1)
-    var platform1 = { 'specs':{ 'translate': new THREE.Vector3(10,-1,-7.5), 'rx':0,'ry':0,'rz':0,'width':30,'height': 5, 'image_path': './assets/images/floor3.jpg' }, 'options' : { 'solid':true, 'stretch':false , 'wrap_w':6, 'wrap_h':1, 'side': 'f'} }
+    var platform1 = { 'specs':{ 'translate': new THREE.Vector3(5,-1,-7.5), 'rx':0,'ry':0,'rz':0,'width':20,'height': 5, 'image_path': './assets/images/floor3.jpg' }, 'options' : { 'solid':true, 'stretch':false , 'wrap_w':6, 'wrap_h':1, 'side': 'f'} }
     this.walls.push(platform1)
 
     var ramp2 = { 'specs':{ 'translate': new THREE.Vector3(-10,-5.5,-0.5+20), 'rx':Math.PI/4,'ry':0,'rz':0,'width':10,'height': Math.sqrt(2)*9, 'image_path': './assets/images/floor3.jpg' }, 'options' : { 'solid':true, 'stretch':true , 'side': 'f'} }
     this.walls.push(ramp2)
-    var platform2 = { 'specs':{ 'translate': new THREE.Vector3(-10,-1,-7.5+20), 'rx':0,'ry':0,'rz':0,'width':30,'height': 5, 'image_path': './assets/images/floor3.jpg' }, 'options' : { 'solid':true, 'stretch':false , 'wrap_w':6, 'wrap_h':1, 'side': 'f'} }
+    var platform2 = { 'specs':{ 'translate': new THREE.Vector3(-5,-1,-7.5+20), 'rx':0,'ry':0,'rz':0,'width':20,'height': 5, 'image_path': './assets/images/floor3.jpg' }, 'options' : { 'solid':true, 'stretch':false , 'wrap_w':6, 'wrap_h':1, 'side': 'f'} }
     this.walls.push(platform2)
 
     var door1 = { 'specs':{ 'id': '5a', 'translate': new THREE.Vector3(0,-5.5,-10), 'rx':Math.PI/2,'ry':0,'rz':0,'width':10,'height': 9, 'image_path': './assets/images/door.jpg' }, 'options' : { 'solid':true, 'stretch':true , 'side': 'd'} }
