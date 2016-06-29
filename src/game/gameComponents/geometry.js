@@ -291,7 +291,12 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 				var p = specs.translate.clone()
 				if(specs.invisible){
 					//keep track of all buttons
-					var cylinder = {'position': new THREE.Vector3(p.x, p.y + 1.01 * height / 2, p.z), 'name': specs.id || '', 'material':{'color': new THREE.Color("#BBBAA3")}}
+					var cylinder = {
+						'position': new THREE.Vector3(p.x, p.y + 1.01 * height / 2, p.z),
+						'material':{'color': new THREE.Color("#BBBAA3")}
+					}
+					cylinder.isSbutton = specs.isSbutton || false
+					cylinder.name = specs.id || ''
 					models.buttonMeshes.push(cylinder)
 					return false
 				}
