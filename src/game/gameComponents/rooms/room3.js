@@ -42,16 +42,16 @@ FPP.ROOM3 = (function(window, document, undefined) {
     }, 'options' : { 'solid':true, 'stretch':true , 'side': 'd'} }
     this.walls.push(this.cage1)
 
-    this.doori = { 'specs':{ 'id': 3, 'translate': new THREE.Vector3(0,-10+0.01,0), 'rx':0,'ry':0,'rz':0,'width':10,'height': 9, 'image_path': './assets/images/door.jpg' }, 'options' : { 'solid':true, 'stretch':true , 'side': 'd'} }
+    this.doori = { 'specs':{ 'id': '3a', 'translate': new THREE.Vector3(0,-10+0.01,0), 'rx':0,'ry':0,'rz':0,'width':10,'height': 9, 'image_path': './assets/images/door.jpg' }, 'options' : { 'solid':true, 'stretch':true , 'side': 'd'} }
     this.walls.push(this.doori)
 
-    this.btn3i = {'specs': { 'id': 3, 'translate' : new THREE.Vector3(0,-10+0.01,-10), 'path' : './assets/images/btn1.png' , 'isSbutton': false}}
+    this.btn3i = {'specs': { 'id': '3a', 'translate' : new THREE.Vector3(0,-10+0.01,-10), 'path' : './assets/images/btn1.png' , 'isSbutton': false}}
     this.btns.push(this.btn3i)
 
-    this.btn3ii= {'specs': { 'id': 4, 'translate' : new THREE.Vector3(0,-10+0.01,13), 'path' : './assets/images/btn1.png' , 'isSbutton': false}}
+    this.btn3ii= {'specs': { 'id': '3b', 'translate' : new THREE.Vector3(0,-10+0.01,13), 'path' : './assets/images/btn1.png' , 'isSbutton': false}}
     this.btns.push(this.btn3ii)
 
-    this.doorii = { 'specs':{ 'id': 4, 'translate': new THREE.Vector3(0, -5.5, 30), 'rx':-Math.PI/2,'ry':0,'rz':0,'width':10,'height': 9, 'image_path': './assets/images/door.jpg' }, 'options' : { 'solid':true, 'stretch':true , 'side': 'd'} }
+    this.doorii = { 'specs':{ 'id': '3b', 'translate': new THREE.Vector3(0, -5.5, 30), 'rx':-Math.PI/2,'ry':0,'rz':0,'width':10,'height': 9, 'image_path': './assets/images/door.jpg' }, 'options' : { 'solid':true, 'stretch':true , 'side': 'd'} }
     this.walls.push(this.doorii)
 
     this.move = new THREE.Vector3(0,-5,150.2)
