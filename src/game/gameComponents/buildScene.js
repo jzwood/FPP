@@ -63,7 +63,7 @@ FPP.BUILDSCENE = (function(window, document, undefined) {
 		for(var w in unit.walls){ makeT(unit.walls[w]); }
 		for(var b in unit.btns){ makeB(unit.btns[b]); }
 
-		var lastRoomNum = 6
+		var lastRoomNum = 7
 		for(var i=1; i<=lastRoomNum; i++){
 			var rn = "ROOM" + i,
 			rw = FPP[rn].walls, rb = FPP[rn].btns

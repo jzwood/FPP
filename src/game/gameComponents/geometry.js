@@ -152,10 +152,9 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 						img.repeat.set(wrap_w, wrap_h)
 					}
 					var tSide = {'default': THREE.FrontSide, 'b': THREE.BackSide, 'd': THREE.DoubleSide},
-					sidesShowing = options.side ? tSide[options.side] : tSide['default'],
 					material = new THREE.MeshPhongMaterial({
 						map: img,
-						side: sidesShowing
+						side: tSide[options.side] || THREE.FrontSide
 					})
 
 					var mesh = new THREE.Mesh(geom, material)
