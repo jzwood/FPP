@@ -21,14 +21,14 @@ FPP.BUILDSCENE = (function(window, document, undefined) {
 		})}, 'options' : { 'solid':true, 'side': 'd'} }
 		this.walls.push(bridge)
 
-		this.door = { 'specs':{ 'id': 'bridge3-4', 'translate': new THREE.Vector3(0,-12+0.01,290), 'rx':Math.PI/2,'ry':0,'rz':0,'width':10,'height': 6, 'image_path': './assets/images/door.jpg' }, 'options' : { 'solid':true, 'stretch':true , 'side': 'd'} }
-		this.walls.push(this.door)
+		var door = { 'specs':{ 'id': 'bridge3-4', 'translate': new THREE.Vector3(0,-12+0.01,290), 'rx':Math.PI/2,'ry':0,'rz':0,'width':10,'height': 6, 'image_path': './assets/images/door.jpg' }, 'options' : { 'solid':true, 'stretch':true , 'side': 'd'} }
+		this.walls.push(door)
 
-		this.btn1 = {'specs': { 'id': 'bridge3-4', 'translate' : new THREE.Vector3(0,-40,270), 'path' : './assets/images/btn2.png' , 'isSbutton': true}}
-		this.btns.push(this.btn1)
+		var btn1 = {'specs': { 'id': 'bridge3-4', 'translate' : new THREE.Vector3(0,-40,270), 'path' : './assets/images/btn2.png' , 'isSbutton': true}}
+		this.btns.push(btn1)
 
-		this.btn2 = {'specs': { 'id': 'bridge3-4', 'translate' : new THREE.Vector3(0,-15+0.01,270), 'path' : './assets/images/btn2.png' , 'isSbutton': true}}
-		this.btns.push(this.btn2)
+		var btn2 = {'specs': { 'id': 'bridge3-4', 'translate' : new THREE.Vector3(0,-15+0.01,270), 'path' : './assets/images/btn2.png' , 'isSbutton': true}}
+		this.btns.push(btn2)
 
 		//LEVEL 3 - 4 BRIDGE
 		bridge = { 'specs':{ 'translate': new THREE.Vector3(0,-15, 190.2), 'rx':0,'ry': Math.PI/2,'rz': 0, 'width': 20,'height': 10, 'mat': new THREE.MeshPhongMaterial( {
