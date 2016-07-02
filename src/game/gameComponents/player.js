@@ -1,5 +1,8 @@
 FPP.PLAYER = (function(window, document, undefined) {
 
+	var querystring = location.search.slice(1),
+	level = (querystring.search(/ending=[1-7]/) > -1) ? querystring.match(/[1-7]/)[0] : 2
+
 	var player = new function(){
 
 		var mass = 5, radius = 2,
@@ -148,35 +151,22 @@ FPP.PLAYER = (function(window, document, undefined) {
 		}
 	}
 
+ 	var setPlayer = {
+		1 : function(){FPP.PLAYER.firstPerson.position.copy(new THREE.Vector3(0,0,0))},
+		2 : function(){FPP.PLAYER.firstPerson.position.copy(new THREE.Vector3(0,-10,70))},
+		3 : function(){FPP.PLAYER.firstPerson.position.copy(new THREE.Vector3(0,-10,140))},
+		4 : function(){FPP.PLAYER.firstPerson.position.copy(new THREE.Vector3(0,-10,210))},
+		5 : function(){FPP.PLAYER.firstPerson.position.copy(new THREE.Vector3(0,-10,280))},
+		6 : function(){FPP.PLAYER.firstPerson.position.copy(new THREE.Vector3(0,-10,308))},
+		7 : function(){FPP.PLAYER.firstPerson.position.copy(new THREE.Vector3(0,-10,382))},
+		8 : function(){FPP.PLAYER.firstPerson.position.copy(new THREE.Vector3(0,0,465))}
+	}
+
 	document.addEventListener('keydown', function(e){
 		//console.log(e.keyCode)
-		if(e.keyCode === 69){
-			FPP.PLAYER.firstPerson.position.y += 5
-		}
-		else if(e.keyCode === 49){
-			FPP.PLAYER.firstPerson.position.copy(new THREE.Vector3(0,0,0))
-		}
-		else if(e.keyCode === 50){
-			FPP.PLAYER.firstPerson.position.copy(new THREE.Vector3(0,-10,70))
-		}
-		else if(e.keyCode === 51){
-			FPP.PLAYER.firstPerson.position.copy(new THREE.Vector3(0,-10,140))
-		}
-		else if(e.keyCode === 52){
-			FPP.PLAYER.firstPerson.position.copy(new THREE.Vector3(0,-10,210))
-		}
-		else if(e.keyCode === 53){
-			FPP.PLAYER.firstPerson.position.copy(new THREE.Vector3(0,-10,280))
-		}
-		else if(e.keyCode === 54){
-			FPP.PLAYER.firstPerson.position.copy(new THREE.Vector3(0,-10,308))
-		}
-		else if(e.keyCode === 55){
-			FPP.PLAYER.firstPerson.position.copy(new THREE.Vector3(0,-10,382))
-		}
-		else if(e.keyCode === 56){
-			FPP.PLAYER.firstPerson.position.copy(new THREE.Vector3(0,0,465))
-		}
+		if(e.keyCode === 69){ FPP.PLAYER.firstPerson.position.y += 5 }
+		else if(e.keyCode >= 49 && e.keyCode <= 56){ setPlayer[e.keyCode - 48]() }
+
 
 	})
 
