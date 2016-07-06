@@ -19,6 +19,14 @@ body{
   height:100vh;
   background: #272727;
 }
+
+.wrapper{
+}
+
+img{
+  display: block;
+  opacity: 0.99;
+}
 /* Some default styles to make each box visible */
 .box {
   color:white;
@@ -45,7 +53,6 @@ body{
 .container {
   display:flex;
   flex-wrap: wrap;
-  min-width: 300px;
 }
 
 .cover{
@@ -61,7 +68,7 @@ body{
   position: absolute;
 }
 
-.layer1, .layer2, .layer3{
+.layer0, .layer1, .layer2{
   width: 100%;
   -webkit-transition: height 1s;
   transition: height 1s;
@@ -73,18 +80,105 @@ body{
   background-color: #838272;
 }
 
-.layer1 > p {
-  padding-left: 20px;
+.hero-title{
+  font-size: 18pt;
+  font-weight: 600;
+}
+
+.layer1 .bounce{
+  z-index: 1;
+  animation-duration: 14s;
+  animation-iteration-count: infinite;
+  animation-name: updown;
+  animation-direction: alternate;
+}
+
+@keyframes updown {
+
+  0% { -ms-transform: translate(0, 0); /* IE 9 */ -webkit-transform: translate(0, 0); /* Safari */ transform: translate(0, 10); }
+  25% { -ms-transform: translate(0, 0); /* IE 9 */ -webkit-transform: translate(0, 0); /* Safari */ transform: translate(0, 10); }
+  30% { -ms-transform: translate(0, 20px); /* IE 9 */ -webkit-transform: translate(0, 20px); /* Safari */ transform: translate(0, 20px); }
+  70% { -ms-transform: translate(0, 20px); /* IE 9 */ -webkit-transform: translate(0, 20px); /* Safari */ transform: translate(0, 20px); }
+  75% { -ms-transform: translate(0, 0); /* IE 9 */ -webkit-transform: translate(0, 0); /* Safari */ transform: translate(0, 10); }
+  100% { -ms-transform: translate(0, 0); /* IE 9 */ -webkit-transform: translate(0, 0); /* Safari */ transform: translate(0, 10); }
+
 }
 
 .layer2{
   background-color: #555544;
 }
 
+.content1{
+  margin-top: 15px;
+  margin-left: calc(5% + 15px);
+  margin-right: calc(2% + 5px);
+  align-content: center;
+  position: relative;
+}
+
+.anims{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@keyframes cf3FadeInOut {
+    0% { opacity: 1; }
+    25% { opacity: 1; }
+    40% { opacity: 0; }
+    60% { opacity: 0; }
+    75% { opacity: 1; }
+    100% { opacity: 1; }
+}
+
+.btn1{
+  margin-top: 90px;
+}
+
+.button-anim {
+  width: 250px;
+  height:200px;
+}
+
+.button-anim img{
+  position: absolute;
+}
+
+.button-anim .top {
+    animation-name: cf3FadeInOut;
+    animation-iteration-count: infinite;
+    animation-duration: 14s;
+    animation-direction: alternate;
+}
+
+@keyframes doorupdown {
+  0% { -ms-transform: translate(0, 10px); /* IE 9 */ -webkit-transform: translate(0, 10px); /* Safari */ transform: translate(0, 10px); }
+  25% { -ms-transform: translate(0, 10px); /* IE 9 */ -webkit-transform: translate(0, 10px); /* Safari */ transform: translate(0, 10px); }
+  30% { -ms-transform: translate(0, -50px); /* IE 9 */ -webkit-transform: translate(0, -50px); /* Safari */ transform: translate(0, -50px); }
+  70% { -ms-transform: translate(0, -50px); /* IE 9 */ -webkit-transform: translate(0, -50px); /* Safari */ transform: translate(0, -50px); }
+  75% { -ms-transform: translate(0, 10px); /* IE 9 */ -webkit-transform: translate(0, 10px); /* Safari */ transform: translate(0, 10px); }
+  100% { -ms-transform: translate(0, 10px); /* IE 9 */ -webkit-transform: translate(0, 10px); /* Safari */ transform: translate(0, 10px); }
+}
+
+.door-anim .bounce{
+  z-index: 1;
+  animation-duration: 14s;
+  animation-iteration-count: infinite;
+  animation-name: doorupdown;
+  animation-direction: alternate;
+}
+
+.door-anim {
+  width: 250px;
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
 .content2{
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-start;
+  justify-content: center;
 }
 
 .c2_1 { background-image: url("../images/demo/lev1.png");}
@@ -96,13 +190,30 @@ body{
 .c2_7 { background-image: url("../images/demo/lev7.png");}
 .c2_8 { background-image: url("../images/demo/lev8.png");}
 
+.hide{
+  display: none;
+}
+
+.minified{
+  height: 5px;
+}
+
 .c2{
   flex-basis: 200px;
   height: 200px;
-  border-radius: 20px;
-  margin: 15px;
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
+  transition: all .2s ease-in-out;
 }
+
+.c_box{
+  height: 200px;
+  width: 200px;
+  border-radius: 5px;
+  margin: 10px;
+  overflow: hidden;
+}
+
+.c2:hover { transform: scale(1.15); }

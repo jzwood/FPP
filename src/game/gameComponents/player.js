@@ -1,7 +1,18 @@
 FPP.PLAYER = (function(window, document, undefined) {
 
 	var querystring = location.search.slice(1),
-	level = (querystring.search(/ending=[1-7]/) > -1) ? querystring.match(/[1-7]/)[0] : 2
+	level = (querystring.search(/level=[1-9]/) > -1) ? querystring.match(/[1-9]/)[0] : 1
+
+	var setLevel = {
+			1 : function(){return new THREE.Vector3(0,0,0)},
+			2 : function(){return new THREE.Vector3(0,-10,70)},
+			3 : function(){return new THREE.Vector3(0,-10,140)},
+			4 : function(){return new THREE.Vector3(0,-10,210)},
+			5 : function(){return new THREE.Vector3(0,-10,280)},
+			6 : function(){return new THREE.Vector3(0,-10,308)},
+			7 : function(){return new THREE.Vector3(0,-10,382)},
+			8 : function(){return new THREE.Vector3(0,0,465)}
+		}
 
 	var player = new function(){
 
@@ -12,7 +23,8 @@ FPP.PLAYER = (function(window, document, undefined) {
 
 		this.firstPerson = new CANNON.Body({ mass: mass, material: FPP.GEOMETRY.groundMaterial })
 		this.firstPerson.addShape(sphereShape)
-		this.firstPerson.position.set(0, 0, 465)
+
+		this.firstPerson.position.copy(setLevel[level]())
 		this.firstPerson.linearDamping = 0.9
 		this.firstPerson.collisionFilterGroup = group(2) //things are by default group(1)
 		this.firstPerson.posLog = []
@@ -151,23 +163,12 @@ FPP.PLAYER = (function(window, document, undefined) {
 		}
 	}
 
- 	var setPlayer = {
-		1 : function(){FPP.PLAYER.firstPerson.position.copy(new THREE.Vector3(0,0,0))},
-		2 : function(){FPP.PLAYER.firstPerson.position.copy(new THREE.Vector3(0,-10,70))},
-		3 : function(){FPP.PLAYER.firstPerson.position.copy(new THREE.Vector3(0,-10,140))},
-		4 : function(){FPP.PLAYER.firstPerson.position.copy(new THREE.Vector3(0,-10,210))},
-		5 : function(){FPP.PLAYER.firstPerson.position.copy(new THREE.Vector3(0,-10,280))},
-		6 : function(){FPP.PLAYER.firstPerson.position.copy(new THREE.Vector3(0,-10,308))},
-		7 : function(){FPP.PLAYER.firstPerson.position.copy(new THREE.Vector3(0,-10,382))},
-		8 : function(){FPP.PLAYER.firstPerson.position.copy(new THREE.Vector3(0,0,465))}
-	}
-
 	document.addEventListener('keydown', function(e){
 		//console.log(e.keyCode)
 		if(e.keyCode === 69){ FPP.PLAYER.firstPerson.position.y += 5 }
-		else if(e.keyCode >= 49 && e.keyCode <= 56){ setPlayer[e.keyCode - 48]() }
-
-
+		else if(e.keyCode >= 49 && e.keyCode <= 56){
+			FPP.PLAYER.firstPerson.position.copy(setLevel[e.keyCode - 48]())
+		}
 	})
 
 	player.init = function(){

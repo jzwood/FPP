@@ -1,39 +1,107 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>FPP Instructions</title>
   <link rel="stylesheet" href="assets/css/homestyles.css">
   <script src="assets/js/mouseHandling.js"></script>
 </head>
-<body>
 
-  <div class="container">
-    <div class="box box1"><a href="http://jzwood.github.io/FPP/src/fpp.html" target="_blank">Start Game</a></div>
-    <div class="box box2" onclick="howto()"><a>Wait, how do I do this?</a></div>
-    <div class="box box3" onclick="showLevels()"><a>Jump to a Level</a></div>
-  </div>
-  <!-- <div class="box4"> -->
-  <div class="layer1">
-    <p>
-      Hello World
-    </p>
-  </div>
-  <div class="layer2">
-    <div class="content2">
-      <div class="c2 c2_1">
-        <h2>Level 1</h2>
+<body>
+  <div class="wrapper">
+    <div class="container">
+      <div class="box box1"><a href="http://jzwood.github.io/FPP/src/fpp.html" target="_blank">Start Game</a></div>
+      <div class="box box2" onclick="howto()"><a>Wait, how do I do this?</a></div>
+      <div class="box box3" onclick="showLevels()"><a>Jump to a Level</a></div>
+    </div>
+    <div class="layer0 minified">
+      <h1>Causality Paradox</h1>
+    </div>
+    <div class="layer1 minified">
+      <div class="content1">
+        <p>
+          <span class="hero-title">The Objective</span>
+          <br> Navigate through locked rooms and across space ramps to get to the space station control tower. Each room cleared gets you closer(?) to the end!
+          <br>
+          <br>
+          <span class="hero-title">But Why?</span>
+          <br>Do you need a reason? Fine. See below.
+          <br>
+          <br>
+          <span class="hero-title">The Story</span>
+          <br>You are an undergraduate physics student who has unwittingly disproved Einstein's theory of General Relativity on your last problem set. The old and powerful <em>Physics Illuminati</em> will stop at nothing to suppress this subversion
+          of their beliefs and have locked you up in a secret space prison. Luckily for you, their fortifications were designed assuming Einstein's famous Space Time Postulates, and you will assume no such thing!
+          <br>
+          <br> Armed with youthful naïvety and retro-causality you must navigate your way through the space prison until you get to the control tower where there is a space elevator. Once there you can descend to Earth and escape your nefarious captors.
+          Good luck!
+          <br>
+          <br>
+          <span class="hero-title">Game Mechanics</span>
+          <br>
+          Buttons open doors. Standing on 1 <span style="color:white">white</span> button opens 1 door (as seen below), while some doors require 2 <span style="color:#00FFF6">blue</span> buttons to be pressed.
+        </p>
+        <div class="anims">
+          <div class="button-anim">
+            <img class="bounce" src="assets/images/demo/arrow.png" width="200" height="100" alt="">
+            <img class="btn1 bottom" src="assets/images/demo/btn1_green_demo.png" width="200" height="88" alt="">
+            <img class="btn1 top" src="assets/images/demo/btn1_demo.png" width="200" height="88" alt="">
+          </div>
+          <div class="door-anim">
+          <img class="bounce" src="assets/images/demo/door_demo.jpg" width="120" height="120" alt="">
+        </div>
       </div>
-      <div class="c2 c2_2"><h2>Level 2</h2></div>
-      <div class="c2 c2_3"><h2>Level 3</h2></div>
-      <div class="c2 c2_4"><h2>Level 4</h2></div>
-      <div class="c2 c2_5"><h2>Level 5</h2></div>
-      <div class="c2 c2_6"><h2>Level 6</h2></div>
-      <div class="c2 c2_7"><h2>Level 7</h2></div>
-      <div class="c2 c2_8"><h2>Level 8</h2></div>
+      <p>
+        Buttons are kinda the main thing.
+      </p>
     </div>
   </div>
-  <!-- <img class="cover box4" src="http://kingofwallpapers.com/space/space-008.jpg"></img> -->
-  <!-- </div> -->
+  <div class="layer2 minified">
+    <div class="content2">
+      <div class="c_box hide">
+        <div class="c2 c2_1">
+          <h2>Level 1</h2>
+        </div>
+      </div>
+      <div class="c_box hide">
+        <div class="c2 c2_2">
+          <h2>Level 2</h2>
+        </div>
+      </div>
+      <div class="c_box hide">
+        <div class="c2 c2_3">
+          <h2>Level 3</h2>
+        </div>
+      </div>
+      <div class="c_box hide">
+        <div class="c2 c2_4">
+          <h2>Level 4</h2>
+        </div>
+      </div>
+      <div class="c_box hide">
+        <div class="c2 c2_5">
+          <h2>Level 5</h2>
+        </div>
+      </div>
+      <div class="c_box hide">
+        <div class="c2 c2_6">
+          <h2>Level 6</h2>
+        </div>
+      </div>
+      <div class="c_box hide">
+        <div class="c2 c2_7">
+          <h2>Level 7</h2>
+        </div>
+      </div>
+      <div class="c_box hide">
+        <div class="c2 c2_8">
+          <h2>Level 8</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 </body>
+
 </html>
