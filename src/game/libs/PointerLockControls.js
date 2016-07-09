@@ -172,6 +172,10 @@
         velocity.x += inputVelocity.x;
         velocity.z += inputVelocity.z;
 
+        //stops you in you from drifting when you let up on keys
+        if(!moveRight && !moveLeft && !moveForward && !moveBackward && velocity.y !== 0){
+          velocity.x = 0; velocity.z = 0;//maybe divide by 10 or something?
+        }
 				secondPerson.record(velocity.x + 2 * inputVelocity.x, velocity.y, velocity.z + 2 * inputVelocity.z);
 
         yawObject.position.copy(cannonBody.position);

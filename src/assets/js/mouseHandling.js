@@ -12,6 +12,9 @@ window.onload = function() {
 
 function howto() {
   l1.classList.toggle("minified")
+  var showlevels = setTimeout(function() {
+    document.body.classList.toggle('layer1')
+  }, instructions ? 0 :1000)
   instructions = !instructions
 }
 
