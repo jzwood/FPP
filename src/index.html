@@ -10,14 +10,15 @@
 </head>
 
 <body>
+  <div class="desktop-only"><h1>DESKTOP ONLY</h1></div>
   <div class="wrapper">
     <div class="container">
-      <div class="box box1"><a href="http://jzwood.github.io/FPP/src/fpp.html" target="_blank">Start Game</a></div>
+      <div class="box box1" onclick="home()"><a>Home</a></div>
       <div class="box box2" onclick="howto()"><a>Wait, how do I do this?</a></div>
       <div class="box box3" onclick="showLevels()"><a>Jump to a Level</a></div>
     </div>
-    <div class="layer0 minified">
-      <h1>Causality Paradox</h1>
+    <div class="layer0">
+      <a><div class="btn"><p>Just Start</p></div></a> <!-- <a><img class="btn" src="assets/images/demo/white-btn.png" width="200" alt=""/></a> -->
     </div>
     <div class="layer1 minified">
       <div class="content1 hide">
@@ -40,7 +41,7 @@
           <br>
           <span class="hero-title">Game Mechanics</span>
           <br>
-          You'll mostly be trying to get through doors and buttons open doors. Standing on 1 <span style="color:white">white</span> button opens 1 door (as seen below), while some doors require 2 <span style="color:#00FFF6">blue</span> buttons to be pressed.
+          You'll mostly be trying to get through doors and buttons open doors. Standing on 1 <span style="color:white">white</span> button opens 1 door (as seen below), while opening some doors require 2 <span style="color:#00FFF6">blue</span> buttons to be pressed.
         </p>
         <div class="anims">
           <img class="demo-btns" src="assets/images/demo/white-btn.png" width="150" alt=""/>
@@ -56,7 +57,7 @@
           </div> -->
       </div>
       <p>
-        <span class="hero-title">4 Dimensions (tldr version)</span>
+        <span class="hero-title">Using 4 Dimensions (tldr version)</span>
         <br>First mouse click records <span style="color:red;font-size:20pt;">&#9679;</span> your movements. Second click stops the clock, rewinds movement, then replays <span style="color:#00ff00;font-size:20pt;">&#9679;</span> what you just recorded.
         This allows you to perform some action, rewind time, then perform another action as your past (now current) self performs the initial action during the same time interval.
 
