@@ -47,9 +47,9 @@ function showLevels() {
   l2.classList.toggle("minified")
 
   var showlevels = setTimeout(function() {
-    c_boxes.forEach(function(box) {
-      box.classList.toggle('hide')
-    })
+    for (var i = 0, len = c_boxes.length; i < len; i++) {
+      c_boxes[i].classList.toggle('hide')
+    }
     document.body.classList.toggle('layer2')
     animating = false
 
