@@ -121,28 +121,28 @@ img{
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 200px;
+  min-height: 230px;
 }
 
 .footer{
   position: absolute;
   bottom: 0;
   left: 0;
-  height:40px;
+  height:50px;
   width: 100%;
   background: rgba(0, 0, 0, 0.2);
   margin: 0;
   text-align: center;
-  /*display: flex;*/
 }
 
 .footer img{
-margin: 0 4%;
-padding: 4px 1% 0 1%;
+  margin: 0 4%;
+  padding: 4px 1% 0 1%;
+  border: solid rgba(255, 255, 255, 0) 3px;
 }
 
 .footer img:hover{
-  background: rgba(255,255,255,0.4);
+  border-style: hidden;
 }
 
 .layer1{
