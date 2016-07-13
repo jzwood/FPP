@@ -4,9 +4,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- facebook sharing -->
+  <meta property="og:url"           content="http://jzwood.github.io/FPP/src/fpp.html" />
+	<meta property="og:type"          content="website" />
+	<meta property="og:title"         content="FPP" />
+	<meta property="og:description"   content="4D Space Puzzle" />
+	<meta property="og:image"         content="http://jzwood.github.io/FPP/src/assets/images/btn3.png" />
+
   <title>FPP Instructions</title>
   <link rel="stylesheet" href="assets/css/homestyles.css">
   <script src="assets/js/mouseHandling.js"></script>
+  <script src="assets/js/share.js"></script>
 </head>
 
 <body>
@@ -20,11 +28,13 @@
     <div class="layer0">
       <a><div class="btn"><p>Just Start</p></div></a> <!-- <a><img class="btn" src="assets/images/demo/white-btn.png" width="200" alt=""/></a> -->
       <footer class="footer">
-        <a><img src="assets/images/test/octocat.svg" height="46" alt=""/></a>
-        <a target="_blank" href="http://twitter.com/share?url=http://FPP.com&text=Escape space prison in this 4D, first person, cosmic, physics puzzle.&via=14CodeMonkeys" class="twitter-share-button" data-show-count="false">
+        <a target="_blank" href="https://github.com/jzwood/FPP" class="github-src"><img src="assets/images/test/octocat.svg" height="46" alt=""/></a>
+        <a href="#" onclick="twitter();" class="twitter-share-button">
           <img src="assets/images/test/twitter.svg" height="46" alt=""/>
         </a>
-        <a><img src="assets/images/test/facebook.svg" height="46" alt=""/></a>
+        <a href="#" onclick="fb();" class="share-facebook">
+          <img src="assets/images/test/facebook.svg" height="46" alt=""/>
+        </a>
       </footer>
     </div>
     <div class="layer1 minified">
