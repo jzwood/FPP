@@ -29,6 +29,12 @@ img{
   display: block;
   opacity: 0.99;
 }
+
+td{
+  border: solid black 1px;
+  padding: 2px 20px;
+  white-space: pre;
+}
 /* Some default styles to make each box visible */
 .box {
   color:white;
