@@ -2,7 +2,7 @@
 
 function fb(){
   //encodeURIComponent(location.href)
-  window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent("http://jzwood.github.io/FPP/src/fpp.html"), 'share-facebook', 'width=626,height=436');
+  window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent("http://jzwood.github.io/FPP/src/index.html"), 'share-facebook', 'width=626,height=436');
   return false;
 }
 
