@@ -22,47 +22,50 @@ function home(){
 }
 
 function howto() {
-  if(levels) showLevels()
 
-  // if(!animating){
-  animating = true
-  l1.classList.toggle('minified')
-  body.classList.toggle('scroll-lock')
-  c1.classList.toggle('hide')
+  if(!animating){
 
+    if(levels) showLevels()
 
-  var showlevels = setTimeout(function() {
-    body.classList.toggle('layer1')
-    c1.classList.toggle('transparent')
+    animating = true
+    l1.classList.toggle('minified')
     body.classList.toggle('scroll-lock')
-    animating = false
-  }, instructions ? 0 :1000)
-  instructions = !instructions
-  // }
+    c1.classList.toggle('hide')
+
+
+    var showlevels = setTimeout(function() {
+      body.classList.toggle('layer1')
+      c1.classList.toggle('transparent')
+      body.classList.toggle('scroll-lock')
+      animating = false
+    }, instructions ? 0 :1000)
+    instructions = !instructions
+  }
 
 }
 
 function showLevels() {
 
-  if(instructions) howto()
+  if(!animating){
 
-  // if(!animating){
-  animating = true
+    if(instructions) howto()
 
-  l2.classList.toggle('minified')
-  c2.classList.toggle('hide')
+    animating = true
 
-  var showlevels = setTimeout(function() {
+    l2.classList.toggle('minified')
+    c2.classList.toggle('hide')
 
-    document.body.classList.toggle('layer2')
+    var showlevels = setTimeout(function() {
 
-    for (var i = 0, len = c_boxes.length; i < len; i++) {
-      c_boxes[i].classList.toggle('transparent')
-    }
-    animating = false
-  }, levels ? 0 : 1000)
-  levels = !levels
-  // }
+      document.body.classList.toggle('layer2')
+
+      for (var i = 0, len = c_boxes.length; i < len; i++) {
+        c_boxes[i].classList.toggle('transparent')
+      }
+      animating = false
+    }, levels ? 0 : 1000)
+    levels = !levels
+  }
 
 
 }
