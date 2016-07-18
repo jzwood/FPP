@@ -28,9 +28,12 @@ function howto() {
   animating = true
   l1.classList.toggle('minified')
   body.classList.toggle('scroll-lock')
+  c1.classList.toggle('hide')
+
+
   var showlevels = setTimeout(function() {
     body.classList.toggle('layer1')
-    c1.classList.toggle('hide')
+    c1.classList.toggle('transparent')
     body.classList.toggle('scroll-lock')
     animating = false
   }, instructions ? 0 :1000)
