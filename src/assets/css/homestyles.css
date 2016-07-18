@@ -271,12 +271,26 @@ td{
 .c2_7 { background-image: url("../images/demo/lev7.png");}
 .c2_8 { background-image: url("../images/demo/lev8.png");}
 
+.b1{ transition: opacity 1s ease-in 0s; }
+.b2{ transition: opacity 1s ease-in 0.25s; }
+.b3{ transition: opacity 1s ease-in 0.5s; }
+.b4{ transition: opacity 1s ease-in 0.75s; }
+.b5{ transition: opacity 1s ease-in 1s; }
+.b6{ transition: opacity 1s ease-in 1.25s; }
+.b7{ transition: opacity 1s ease-in 1.5s; }
+.b8{ transition: opacity 1s ease-in 1.75s; }
+
+
 .hide{
   display: none;
 }
 
 .minified{
   height: 0;
+}
+
+.transparent{
+  opacity: 0;
 }
 
 .scroll-lock{
@@ -290,7 +304,7 @@ td{
   align-items: center;
   justify-content: center;
   color: white;
-  transition: all .2s ease-in-out;
+  /*transition: all .2s ease-in-out;*/
 }
 
 .c_box{
