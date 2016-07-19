@@ -17,7 +17,7 @@
   <title>Causality Paradox</title>
   <link rel="icon" href="./assets/images/favicon.ico">
   <link rel="stylesheet" href="assets/css/homestyles.css">
-  <script src="assets/js/mouseHandling.js"></script>
+  <script src="assets/js/menuClicks.js"></script>
   <script src="assets/js/share.js"></script>
 </head>
 
@@ -103,7 +103,7 @@
             <br>
             <br>
             <span class="hero-title">Game Mechanics</span>
-            <br> You'll mostly be trying to get through doors and buttons open doors. Standing on 1 <span style="color:white">white</span> button opens 1 door (as seen below), while opening some doors require 2 <span style="color:#00FFF6">blue</span>                    buttons to be pressed.
+            <br> You'll mostly be trying to get through doors and buttons open doors. Standing on 1 <span style="color:white">white</span> button opens 1 door while opening some doors require 2 <span style="color:#00FFF6">blue</span>                    buttons to be pressed.
           </p>
           <div class="anims">
             <img class="demo-btns" src="assets/images/demo/white-btn.png" width="150" alt="" />
@@ -122,26 +122,52 @@
         <span class="hero-title">Using 4 Dimensions (tldr version)</span>
         <br>First mouse click records <span style="color:red;font-size:20pt;">&#9679;</span> your movements. Second click stops the clock, rewinds movement, then replays <span style="color:#00ff00;font-size:20pt;">&#9679;</span> what you just
         recorded. This allows you to perform some action, rewind time, then perform another action as your past (now current) self performs the initial action during the same time interval.
-
         <br>
         <br>
         <span class="hero-title">Hotkeys</span>
         <br>
         <table>
           <tr>
+            <td>Pause / Unpause</td>
+            <td><strong>||</strong></td>
+            <td>esc key / mouse click</td>
+          </tr>
+          <tr>
             <td>Move Forward</td>
+            <td>&uarr;</td>
             <td>W</td>
           </tr>
           <tr>
-            <td>Move Backward</td>
-            <td>S</td>
+            <td>Strafe Left</td>
+            <td>&larr;</td>
+            <td>A</td>
           </tr>
           <tr>
             <td>Move Backward</td>
+            <td>&darr;</td>
             <td>S</td>
           </tr>
+          <tr>
+            <td>Strafe Right</td>
+            <td>&rarr;</td>
+            <td>D</td>
+          </tr>
+          <tr>
+            <td colspan="2">Jump</td>
+            <td>space bar</td>
+          </tr>
+          <tr>
+            <td colspan="2">Move Camera</td>
+            <td>mouse point</td>
+          </tr>
+          <tr>
+            <td colspan="2">Record / Reverse Time</td>
+            <td>mouse click</td>
+          </tr>
         </table>
-        <br> The camera moves with mouse. The player moves with the canonical WASD keys.
+        <br>
+        <span class="hero-title">What happens if I get stuck?</span>
+        <br>Fear not! If you fall to your death or get stuck or can't figure out a door you can always jump to a level by pressing the 1-9 key on your keyboard.
       </p>
     </div>
     <br>
@@ -151,44 +177,60 @@
   <div class="layer2 minified">
     <div class="content2 hide">
       <div class="c_box b1 transparent">
-        <div class="c2 c2_1">
-          <h2>Level 1</h2>
-        </div>
+        <a href="#" onclick="level(1);">
+          <div class="c2 c2_1">
+            <h2>Level 1</h2>
+          </div>
+        </a>
       </div>
       <div class="c_box b2 transparent">
-        <div class="c2 c2_2">
-          <h2>Level 2</h2>
-        </div>
+        <a href="#" onclick="level(2);">
+          <div class="c2 c2_2">
+            <h2>Level 2</h2>
+          </div>
+        </a>
       </div>
       <div class="c_box b3 transparent">
-        <div class="c2 c2_3">
-          <h2>Level 3</h2>
-        </div>
+        <a href="#" onclick="level(3);">
+          <div class="c2 c2_3">
+            <h2>Level 3</h2>
+          </div>
+        </a>
       </div>
       <div class="c_box b4 transparent">
-        <div class="c2 c2_4">
-          <h2>Level 4</h2>
-        </div>
+        <a href="#" onclick="level(4);">
+          <div class="c2 c2_4">
+            <h2>Level 4</h2>
+          </div>
+        </a>
       </div>
       <div class="c_box b5 transparent">
-        <div class="c2 c2_5">
-          <h2>Level 5</h2>
-        </div>
+        <a href="#" onclick="level(5);">
+          <div class="c2 c2_5">
+            <h2>Level 5</h2>
+          </div>
+        </a>
       </div>
       <div class="c_box b6 transparent">
-        <div class="c2 c2_6">
-          <h2>Level 6</h2>
-        </div>
+        <a href="#" onclick="level(6);">
+          <div class="c2 c2_6">
+            <h2>Level 6</h2>
+          </div>
+        </a>
       </div>
       <div class="c_box b7 transparent">
-        <div class="c2 c2_7">
-          <h2>Level 7</h2>
-        </div>
+        <a href="#" onclick="level(7);">
+          <div class="c2 c2_7">
+            <h2>Level 7</h2>
+          </div>
+        </a>
       </div>
       <div class="c_box b8 transparent">
-        <div class="c2 c2_8">
-          <h2>Level 8</h2>
-        </div>
+        <a href="#" onclick="level(8);">
+          <div class="c2 c2_8">
+            <h2>Level 8</h2>
+          </div>
+        </a>
       </div>
     </div>
   </div>

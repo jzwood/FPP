@@ -3,6 +3,7 @@ levels = false,
 animating = false
 
 var l0, l1, l2, c_boxes
+var loaded = false
 
 window.onload = function() {
   body = document.body,
@@ -12,10 +13,12 @@ window.onload = function() {
   l2 = document.querySelector('.layer2'),
   c2 = document.querySelector('.content2'),
   c_boxes = document.querySelectorAll('.c_box')
+
+  loaded = true
 }
 
 function home(){
-  if(!animating){
+  if(!animating && loaded){
     if(levels) showLevels()
     if(instructions) howto()
   }
@@ -23,7 +26,7 @@ function home(){
 
 function howto() {
 
-  if(!animating){
+  if(!animating && loaded){
 
     if(levels) showLevels()
 
@@ -46,7 +49,7 @@ function howto() {
 
 function showLevels() {
 
-  if(!animating){
+  if(!animating && loaded){
 
     if(instructions) howto()
 

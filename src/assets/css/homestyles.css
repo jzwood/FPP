@@ -195,13 +195,14 @@ td{
 }
 
 .demo-btns{
-  padding: 10px 0 10px;
+  padding: 10px 15px;
 }
 
 .anims{
   display: flex;
   justify-content: space-around;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 @keyframes cf3FadeInOut {
