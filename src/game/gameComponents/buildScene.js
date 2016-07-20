@@ -75,6 +75,14 @@ FPP.BUILDSCENE = (function(window, document, undefined) {
 
 		//FPP.GEOMETRY.makeTunnel(5, 5, 40.5, new THREE.Vector3(0,-10.5,41), new THREE.Vector3(-Math.PI/2 + 0.25 , Math.PI/4,0))
 
+		// dopplerganger gif
+		var gifData = { 'specs':{ 'id': "PLACEHOLDER",'translate': new THREE.Vector3(0,-5,0),
+			'rx':-Math.PI/2,'ry':0,'rz':0,
+			'width':4,'height':8, 'image_path': './assets/images/test/walking.gif' },
+			'options' : { 'solid':false, 'stretch':true, 'side': 'd' } }
+
+		FPP.GEOMETRY.makeTile(gifData.specs, gifData.options)
+
 	}
 
 		return unit

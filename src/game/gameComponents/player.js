@@ -50,10 +50,6 @@ FPP.PLAYER = (function(window, document, undefined) {
 		// var geometry = new THREE.TorusGeometry( radius, 0.2, 16, 100 );
 		//var geometry = new THREE.SphereGeometry( radius, 7, 7 ),
 		material = new THREE.MeshPhongMaterial( {color: 0xffffff, transparent: true, opacity: 0.4, side: THREE.FrontSide} )
-		this.placeholder = new THREE.Mesh( geometry, material )
-		this.placeholder.visible = false
-		this.placeholder.edges = new THREE.EdgesHelper(this.placeholder, 0x000000)
-		FPP.LCS.scene.add(this.placeholder.edges)
 	}
 
 	player.formatTime = function(isGreen){
@@ -178,7 +174,16 @@ FPP.PLAYER = (function(window, document, undefined) {
 
 		player.controls = new PointerLockControls(FPP.LCS.camera, player.firstPerson, player.p2)
 		FPP.LCS.scene.add(player.controls.getObject())
-		FPP.LCS.scene.add( player.placeholder )
+
+		FPP.GEOMETRY.doorBodies.filter(function(door){
+			if(door.name === "PLACEHOLDER"){
+					player.placeholder = door
+					player.placeholder.visible = false
+					FPP.LCS.scene.add( player.placeholder )
+					return false
+			}
+		})
+
 	}
 
 	return player

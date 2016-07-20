@@ -6,6 +6,7 @@
 
     var velocityFactor = 0.2;
     var jumpVelocity = 20;
+    var dampFactor = 0.9;
     var scope = this;
 
     var pitchObject = new THREE.Object3D();
@@ -174,7 +175,8 @@
 
         //stops you in you from drifting when you let up on keys
         if(!moveRight && !moveLeft && !moveForward && !moveBackward && velocity.y !== 0){
-          velocity.x = 0; velocity.z = 0;//maybe divide by 10 or something?
+          velocity.x = velocity.x * dampFactor; velocity.z = velocity.z * dampFactor
+          // console.log(velocity.x, velocity.z)
         }
 				secondPerson.record(velocity.x + 2 * inputVelocity.x, velocity.y, velocity.z + 2 * inputVelocity.z);
 
