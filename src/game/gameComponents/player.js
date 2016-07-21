@@ -135,7 +135,7 @@ FPP.PLAYER = (function(window, document, undefined) {
 			player.time++
 			var doppleganger = player.placeholder
 			doppleganger.visible = true
-			doppleganger.edges.visible = true
+			// doppleganger.edges.visible = true
 			if(player.p2.timeLog.length){
 				player.formatTime()
 				player.p2.velocity.x = player.p2.timeLog.pop()
@@ -148,7 +148,7 @@ FPP.PLAYER = (function(window, document, undefined) {
 			}else{
 				console.log('done updating')
 				doppleganger.visible = false
-				doppleganger.edges.visible = false
+				// doppleganger.edges.visible = false
 				player.p2.position.y -= 100 //puts physical sphere far below scene so it can't interfere
 				player.p2.playback = false
 				player.p2.recording = false
@@ -156,6 +156,22 @@ FPP.PLAYER = (function(window, document, undefined) {
 				player.time = 0
 				player.timer = 0
 			}
+		}
+	}
+
+	//Extracts the dopple mesh(es)
+	player.initDopple = function(){
+		if(FPP.PLAYER.placeholder){
+			return false
+		}else{
+			setTimeout(function(){
+				FPP.GEOMETRY.doorMeshes.filter(function(door){
+					if(door.name === "PLACEHOLDER"){
+							FPP.PLAYER.placeholder = door
+							return false
+					}
+				})
+			}, 500)
 		}
 	}
 
@@ -175,16 +191,9 @@ FPP.PLAYER = (function(window, document, undefined) {
 		player.controls = new PointerLockControls(FPP.LCS.camera, player.firstPerson, player.p2)
 		FPP.LCS.scene.add(player.controls.getObject())
 
-		FPP.GEOMETRY.doorBodies.filter(function(door){
-			if(door.name === "PLACEHOLDER"){
-					player.placeholder = door
-					player.placeholder.visible = false
-					FPP.LCS.scene.add( player.placeholder )
-					return false
-			}
-		})
+		player.initDopple()
 
-	}
+		}
 
 	return player
 
