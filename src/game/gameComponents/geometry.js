@@ -11,6 +11,7 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 		this.buttonMeshes = []
 		this.doorMeshes = []
 		this.doorBodies = []
+		this.gifs = {}
 		this.sBtnCount = 0
 
 		this.timingEvents = {}
@@ -171,6 +172,12 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 						mesh.originalY = mesh.position.y
 						mesh.raise = specs.height
 						models.doorMeshes.push(mesh)
+					}
+
+					//keeping track of the gif frames
+					if(specs.gifId){
+						mesh.material.transparent = true
+						models.gifs[specs.gifId] = mesh
 					}
 
 				},

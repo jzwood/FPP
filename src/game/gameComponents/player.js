@@ -144,7 +144,7 @@ FPP.PLAYER = (function(window, document, undefined) {
 				player.p2.velocity.z = player.p2.timeLog.pop()
 				//player.p2.quaternion = new CANNON.Quaternion(0,0,0,1)
 				player.placeholder.position.copy(player.p2.position)
-				player.placeholder.quaternion.copy(player.p2.quaternion)
+				// player.placeholder.quaternion.copy(player.p2.quaternion)
 			}else{
 				console.log('done updating')
 				doppleganger.visible = false
@@ -159,21 +159,27 @@ FPP.PLAYER = (function(window, document, undefined) {
 		}
 	}
 
-	//Extracts the dopple mesh(es)
-	player.initDopple = function(){
-		if(FPP.PLAYER.placeholder){
-			return false
-		}else{
-			setTimeout(function(){
-				FPP.GEOMETRY.doorMeshes.filter(function(door){
-					if(door.name === "PLACEHOLDER"){
-							FPP.PLAYER.placeholder = door
-							return false
-					}
-				})
-			}, 500)
-		}
-	}
+	// //Extracts the dopple mesh(es) DO IT THE OTHER WAY FOR PETE'S SAKE
+	// player.initDopple = function(){
+	// 	if(FPP.PLAYER.placeholder){
+	// 		return false
+	// 	}else{
+	// 		setTimeout(function(){
+	// 			for(var door in FPP.GEOMETRY.doorMeshes)
+	// 			FPP.GEOMETRY.doorMeshes.filter(function(door){
+	// 				var doorName = String(door.name) || ''
+	// 				if(doorName.startsWith("PLACEHOLDER")){
+	// 					player.doppleGif[0][door.name] = door
+	// 					// FPP.PLAYER.placeholder = door
+	// 					// FPP.PLAYER.placeholder.material.transparent = true
+	// 				}
+	// 				console.log("aaaaah")
+	// 				// player.initDopple()
+	//
+	// 			})
+	// 		}, 500)
+	// 	}
+	// }
 
 	document.addEventListener('keydown', function(e){
 		//console.log(e.keyCode)
@@ -190,8 +196,6 @@ FPP.PLAYER = (function(window, document, undefined) {
 
 		player.controls = new PointerLockControls(FPP.LCS.camera, player.firstPerson, player.p2)
 		FPP.LCS.scene.add(player.controls.getObject())
-
-		player.initDopple()
 
 		}
 
