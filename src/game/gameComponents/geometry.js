@@ -16,7 +16,6 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 
 		this.timingEvents = {}
 
-
 		//group numbers are consecutive powers of 2
 		this.group = function(num) {
 			return Math.pow(2, num - 1)
@@ -178,6 +177,7 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 					if(specs.gifId){
 						mesh.material.transparent = true
 						models.gifs[specs.gifId] = mesh
+						// mesh.visible = false
 					}
 
 				},
@@ -197,7 +197,7 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 			if (dm[i].name && dm[i].name === id) {
 				var dmi = dm[i]//because of the intervals, need scoped temp var to prevent sync errors
 				if (up) {
-					console.log("door up",id)
+					// console.log("door up",id)
 					clearInterval(models.timingEvents[String(id)])
 					models.timingEvents[String(id)] = setInterval(function() {
 						if (dmi.position.y >= dmi.originalY + dmi.raise) {
@@ -211,7 +211,7 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 						})
 					}, 15)
 				} else {
-					console.log("door down",id)
+					// console.log("door down",id)
 					clearInterval(models.timingEvents[String(id)])
 					models.timingEvents[String(id)] = setInterval(function() {
 						if (dmi.position.y < dmi.originalY) {
@@ -255,7 +255,7 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 							bm[i].material.needsUpdate = true
 							if(bm[i].isSbutton){
 								models.sBtnCount++
-								console.log(models.sBtnCount)
+								// console.log(models.sBtnCount)
 								if(models.sBtnCount === 2)
 									models.updateDoors(bm[i].name, true) //open door
 							}else{
@@ -279,7 +279,7 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 
 								models.sBtnCount = Math.max(0, models.sBtnCount - 1)
 
-								console.log(models.sBtnCount)
+								// console.log(models.sBtnCount)
 							}else{
 								models.updateDoors(bm[i].name, false) //close door
 							}

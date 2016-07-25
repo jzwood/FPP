@@ -4,7 +4,7 @@ FPP.PLAYER = (function(window, document, undefined) {
 	level = (querystring.search(/level=[1-9]/) > -1) ? querystring.match(/[1-9]/)[0] : 1
 
 	var setLevel = {
-			1 : function(){return new THREE.Vector3(0,0,0)},
+			1 : function(){return new THREE.Vector3(0,-5,-10)},
 			2 : function(){return new THREE.Vector3(0,-10,70)},
 			3 : function(){return new THREE.Vector3(0,-10,140)},
 			4 : function(){return new THREE.Vector3(0,-10,210)},
@@ -45,11 +45,20 @@ FPP.PLAYER = (function(window, document, undefined) {
 		this.dt = 1/60.
 		this.clock = document.getElementById('clock')
 
+		//init
+		this.frame = 0
+		this.frameDelayCounter = 0
+		this.gifDir = false
+
+		//chosen rate
+		this.frameDelay = 4
+
 		//this is placeholder sphere for p2
 		var geometry = new THREE.IcosahedronGeometry(radius)
 		// var geometry = new THREE.TorusGeometry( radius, 0.2, 16, 100 );
 		//var geometry = new THREE.SphereGeometry( radius, 7, 7 ),
 		material = new THREE.MeshPhongMaterial( {color: 0xffffff, transparent: true, opacity: 0.4, side: THREE.FrontSide} )
+
 	}
 
 	player.formatTime = function(isGreen){
@@ -77,6 +86,7 @@ FPP.PLAYER = (function(window, document, undefined) {
 
 	//executed click
 	player.p2.startPlayback = function(){
+		player.frameDelayCounter = 0
 		//console.log('start playback')
 		player.timer = player.time
 		player.p2.recording = false
@@ -99,8 +109,11 @@ FPP.PLAYER = (function(window, document, undefined) {
 
 	//used by PointerLockControls.js
 	player.p2.record = function(vx, vy, vz) {
+		if(!player.placeholder){
+			player.placeholder = FPP.GEOMETRY.gifs[0]
+		}
 		if(player.p2.recording && player.controls.enabled){
-			console.log('recording')
+			// console.log('recording')
 			player.time++
 			player.formatTime()
 			player.p2.timeLog.push(vx, vy, vz)
@@ -133,8 +146,31 @@ FPP.PLAYER = (function(window, document, undefined) {
 		}else if(player.p2.playback){
 			//console.log('updating')
 			player.time++
-			var doppleganger = player.placeholder
+
+			//this chunk defines the pseudo-gif animation of your doppleganger
+			var numOfFrame = 7
+			if(player.frameDelayCounter++ % player.frameDelay === 0)
+				player.frame = (player.frame + 1) % (numOfFrame)
+			var gifs = FPP.GEOMETRY.gifs
+			for(var i=0; i<numOfFrame; i++){
+				gifs[i].visible = false
+			}
+			var doppleganger = gifs[player.frame]
 			doppleganger.visible = true
+
+			doppleganger.visible = true
+			player.placeholder = doppleganger
+			doppleganger.lookAt(player.firstPerson.position)
+
+			// if(Math.random() < 0.01){
+			// var d = new Date().getMilliseconds()
+			if(Math.random() < 0.01){
+				player.gifDir = !player.gifDir
+			}
+			if(player.gifDir){
+				player.placeholder.rotateY(Math.PI)
+			}
+
 			// doppleganger.edges.visible = true
 			if(player.p2.timeLog.length){
 				player.formatTime()
@@ -145,8 +181,9 @@ FPP.PLAYER = (function(window, document, undefined) {
 				//player.p2.quaternion = new CANNON.Quaternion(0,0,0,1)
 				player.placeholder.position.copy(player.p2.position)
 				// player.placeholder.quaternion.copy(player.p2.quaternion)
+
 			}else{
-				console.log('done updating')
+				// console.log('done updating')
 				doppleganger.visible = false
 				// doppleganger.edges.visible = false
 				player.p2.position.y -= 100 //puts physical sphere far below scene so it can't interfere
@@ -158,28 +195,6 @@ FPP.PLAYER = (function(window, document, undefined) {
 			}
 		}
 	}
-
-	// //Extracts the dopple mesh(es) DO IT THE OTHER WAY FOR PETE'S SAKE
-	// player.initDopple = function(){
-	// 	if(FPP.PLAYER.placeholder){
-	// 		return false
-	// 	}else{
-	// 		setTimeout(function(){
-	// 			for(var door in FPP.GEOMETRY.doorMeshes)
-	// 			FPP.GEOMETRY.doorMeshes.filter(function(door){
-	// 				var doorName = String(door.name) || ''
-	// 				if(doorName.startsWith("PLACEHOLDER")){
-	// 					player.doppleGif[0][door.name] = door
-	// 					// FPP.PLAYER.placeholder = door
-	// 					// FPP.PLAYER.placeholder.material.transparent = true
-	// 				}
-	// 				console.log("aaaaah")
-	// 				// player.initDopple()
-	//
-	// 			})
-	// 		}, 500)
-	// 	}
-	// }
 
 	document.addEventListener('keydown', function(e){
 		//console.log(e.keyCode)

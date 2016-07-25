@@ -75,17 +75,15 @@ FPP.BUILDSCENE = (function(window, document, undefined) {
 
 		//FPP.GEOMETRY.makeTunnel(5, 5, 40.5, new THREE.Vector3(0,-10.5,41), new THREE.Vector3(-Math.PI/2 + 0.25 , Math.PI/4,0))
 
-		// dopplerganger gif
-		var gifData = { 'specs':{ 'translate': new THREE.Vector3(0,-5,0),
-			'rx':-Math.PI/2,'ry':0,'rz':0,
-			'width': 2,'height': 4 },
-			'options' : { 'solid':false, 'stretch':true, 'side': 'd' } }
-
 	  for(var i=0; i<= 6; i++){
+			// dopplerganger gif
+			var gifData = { 'specs':{ 'translate': new THREE.Vector3(0,5,0),
+				'rx':-Math.PI/2,'ry':0,'rz':0,
+				'width': 2,'height': 4 },
+				'options' : { 'solid':false, 'stretch':true, 'side': 'd' } }
 			// for(var f=0; f < 4; f++){
 				gifData.specs.gifId = String(i) ; // + String(f)
-				gifData.specs['image_path'] = './assets/images/test/06.png'
-
+				gifData.specs['image_path'] = './assets/images/test/0' + i + '.png'
 				FPP.GEOMETRY.makeTile(gifData.specs, gifData.options)
 			// }
 		}
