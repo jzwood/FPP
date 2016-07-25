@@ -8,6 +8,10 @@ a{
   white-space: nowrap;
 }
 
+p {
+  color: black;
+}
+
 a:hover{
   cursor:pointer;
 }
