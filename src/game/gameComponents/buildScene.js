@@ -11,8 +11,14 @@ FPP.BUILDSCENE = (function(window, document, undefined) {
 		this.walls = []
 		this.btns = []
 
+		//LEVEL 6 - 7 BRIDGE
+		var bridge = { 'specs':{ 'translate': new THREE.Vector3(0,-15, 438), 'rx':0,'ry': Math.PI/2,'rz': 0, 'width': 40,'height': 10, 'mat': new THREE.MeshPhongMaterial( {
+			transparent: true, opacity: 0.2 , side: THREE.DoubleSide
+		})}, 'options' : { 'solid':true, 'side': 'd' } }
+		this.walls.push(bridge)
+
 		//LEVEL 5 - 6 BRIDGE
-		var bridge = { 'specs':{ 'translate': new THREE.Vector3(0,-15, 363-0.3), 'rx':0,'ry': Math.PI/2,'rz': 0, 'width': 5,'height': 10, 'image_path': './assets/images/floor1.jpg'}, 'options' : { 'solid':true, 'side': 'd' } }
+		bridge = { 'specs':{ 'translate': new THREE.Vector3(0,-15, 363-0.3), 'rx':0,'ry': Math.PI/2,'rz': 0, 'width': 5,'height': 10, 'image_path': './assets/images/floor1.jpg'}, 'options' : { 'solid':true, 'side': 'd' } }
 		this.walls.push(bridge)
 
 		//LEVEL 4 - 5 BRIDGE
@@ -75,17 +81,16 @@ FPP.BUILDSCENE = (function(window, document, undefined) {
 
 		//FPP.GEOMETRY.makeTunnel(5, 5, 40.5, new THREE.Vector3(0,-10.5,41), new THREE.Vector3(-Math.PI/2 + 0.25 , Math.PI/4,0))
 
+		// This is the GIF representation of your past self
 	  for(var i=0; i<= 6; i++){
 			// dopplerganger gif
 			var gifData = { 'specs':{ 'translate': new THREE.Vector3(0,5,0),
 				'rx':-Math.PI/2,'ry':0,'rz':0,
 				'width': 2,'height': 4 },
 				'options' : { 'solid':false, 'stretch':true, 'side': 'd' } }
-			// for(var f=0; f < 4; f++){
 				gifData.specs.gifId = String(i) ; // + String(f)
 				gifData.specs['image_path'] = './assets/images/test/0' + i + '.png'
 				FPP.GEOMETRY.makeTile(gifData.specs, gifData.options)
-			// }
 		}
 
 	}
