@@ -11,7 +11,8 @@ FPP.PLAYER = (function(window, document, undefined) {
 			5 : function(){return new THREE.Vector3(0,-10,280)},
 			6 : function(){return new THREE.Vector3(0,-10,308)},
 			7 : function(){return new THREE.Vector3(0,-10,382)},
-			8 : function(){return new THREE.Vector3(0,0,465)}
+			8 : function(){return new THREE.Vector3(0,0,465)},
+			9 : function(){return new THREE.Vector3(0,0,520)}
 		}
 
 	var player = new function(){
@@ -198,8 +199,14 @@ FPP.PLAYER = (function(window, document, undefined) {
 
 	document.addEventListener('keydown', function(e){
 		//console.log(e.keyCode)
-		if(e.keyCode === 69){ FPP.PLAYER.firstPerson.position.y += 5 }
-		else if(e.keyCode >= 49 && e.keyCode <= 56){
+		if(e.keyCode === 69){
+			FPP.PLAYER.firstPerson.position.y += 5
+			
+		}
+
+
+
+		else if(e.keyCode >= 49 && e.keyCode <= 57){
 			FPP.PLAYER.firstPerson.position.copy(setLevel[e.keyCode - 48]())
 		}
 	})

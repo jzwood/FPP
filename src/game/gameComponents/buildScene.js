@@ -12,8 +12,8 @@ FPP.BUILDSCENE = (function(window, document, undefined) {
 		this.btns = []
 
 		//LEVEL 6 - 7 BRIDGE
-		var bridge = { 'specs':{ 'translate': new THREE.Vector3(0,-15, 438), 'rx':0,'ry': Math.PI/2,'rz': 0, 'width': 40,'height': 10, 'mat': new THREE.MeshPhongMaterial( {
-			transparent: true, opacity: 0.2 , side: THREE.DoubleSide
+		var bridge = { 'specs':{ 'translate': new THREE.Vector3(0,-20, 430), 'rx':0,'ry': Math.PI/2,'rz': 0, 'width': 40,'height': 10, 'mat': new THREE.MeshPhongMaterial( {
+			transparent: true, opacity: 0 , side: THREE.DoubleSide
 		})}, 'options' : { 'solid':true, 'side': 'd' } }
 		this.walls.push(bridge)
 
@@ -69,7 +69,7 @@ FPP.BUILDSCENE = (function(window, document, undefined) {
 		for(var w in unit.walls){ makeT(unit.walls[w]); }
 		for(var b in unit.btns){ makeB(unit.btns[b]); }
 
-		var lastRoomNum = 7
+		var lastRoomNum = 8
 		for(var i=1; i<=lastRoomNum; i++){
 			var rn = "ROOM" + i,
 			rw = FPP[rn].walls, rb = FPP[rn].btns

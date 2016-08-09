@@ -24,7 +24,7 @@ FPP.SKYBOX = (function(window, document, undefined) {
 		var earth_texture = './assets/images/skybox/earth.png'
 		FPP.GEOMETRY.loader.load(earth_texture, function(img) {
 
-			var geometry = new THREE.SphereGeometry( 25, 32, 32 )
+			var geometry = new THREE.SphereGeometry( 25, 32, 32)
 			material = new THREE.MeshPhongMaterial({
 				map: img,
 				side: THREE.DoubleSide
@@ -42,11 +42,20 @@ FPP.SKYBOX = (function(window, document, undefined) {
 	}
 
 	var makeElevator = function(){
-		var geometry = new THREE.ConeGeometry( 0.5, 500, 3 )
-		var material = new THREE.MeshBasicMaterial( {color: 0x000000} )
+		var geometry = new THREE.ConeGeometry( 10.5, 500, 4, 15, true  )
+		var material = new THREE.MeshBasicMaterial( {
+			transparent: true,
+			opacity: 0.5,
+			side: THREE.DoubleSide
+		} )
 		sky.elevator = new THREE.Mesh( geometry, material )
-		sky.elevator.position.set(0,250,500)
+		sky.elevator.position.set(0,230,517.5)
+		sky.elevator.rotation.y = Math.PI/4
+		sky.elevator.updated = false
 		FPP.LCS.scene.add( sky.elevator )
+
+		var edges = new THREE.WireframeHelper(sky.elevator, 0xffffff)
+		FPP.LCS.scene.add(edges)
 	}
 
 	sky.makeBox = function(){
@@ -81,12 +90,13 @@ FPP.SKYBOX = (function(window, document, undefined) {
 		if(sky.earth){
 			// sky.earth.rotateX(0.001)
 			// sky.earth.rotateY(0.0007)
-			sky.earth.position.y = 500 + FPP.PLAYER.firstPerson.position.y
+			// sky.earth.position.y = 500 + FPP.PLAYER.firstPerson.position.y
 
-			if(sky.elevator){
+			if(sky.elevator && !sky.elevator.updated){
 				// keeps the elevator pointing towards earth even as it moves
-				sky.elevator.geometry.vertices[0].copy(sky.earth.position)
+				sky.elevator.geometry.vertices[0].y = sky.earth.position.y
 				sky.elevator.geometry.verticesNeedUpdate = true
+				sky.elevator.updated = true
 			}
 		}
 	}

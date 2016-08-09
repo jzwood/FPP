@@ -13,5 +13,5 @@ function twitter(){
 }
 
 function level(num){
-  window.location.href = 'http://jzwood.github.io/FPP/src/fpp.html?level=' + num
+  window.location.href = './fpp.html?level=' + num
 }
