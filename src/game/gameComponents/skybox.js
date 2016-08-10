@@ -42,20 +42,20 @@ FPP.SKYBOX = (function(window, document, undefined) {
 	}
 
 	var makeElevator = function(){
-		var geometry = new THREE.ConeGeometry( 10.5, 500, 4, 15, true  )
+		var geometry = new THREE.ConeGeometry( 10.5, 500, 4, 15, false  )
 		var material = new THREE.MeshBasicMaterial( {
 			transparent: true,
 			opacity: 0.5,
 			side: THREE.DoubleSide
 		} )
 		sky.elevator = new THREE.Mesh( geometry, material )
-		sky.elevator.position.set(0,230,517.5)
+		sky.elevator.position.set(0,230.1,517.5)
 		sky.elevator.rotation.y = Math.PI/4
 		sky.elevator.updated = false
 		FPP.LCS.scene.add( sky.elevator )
 
-		var edges = new THREE.WireframeHelper(sky.elevator, 0xffffff)
-		FPP.LCS.scene.add(edges)
+		sky.edges = new THREE.WireframeHelper(sky.elevator, 0xffffff)
+		FPP.LCS.scene.add(sky.edges)
 	}
 
 	sky.makeBox = function(){
@@ -90,7 +90,7 @@ FPP.SKYBOX = (function(window, document, undefined) {
 		if(sky.earth){
 			// sky.earth.rotateX(0.001)
 			// sky.earth.rotateY(0.0007)
-			// sky.earth.position.y = 500 + FPP.PLAYER.firstPerson.position.y
+			sky.earth.position.y = 500 + FPP.PLAYER.firstPerson.position.y
 
 			if(sky.elevator && !sky.elevator.updated){
 				// keeps the elevator pointing towards earth even as it moves
@@ -99,6 +99,15 @@ FPP.SKYBOX = (function(window, document, undefined) {
 				sky.elevator.updated = true
 			}
 		}
+
+	//end game condition
+	if(FPP.PLAYER.firstPerson.position.z >= 512){
+		FPP.SKYBOX.elevator.material.opacity += 0.001
+		var winner = window.setTimeout(function(){
+			document.getElementById('endgame').style.display = 'flex'
+		}, 9500)
+	}
+
 	}
 
 	sky.init = function() {

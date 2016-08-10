@@ -142,7 +142,10 @@ FPP.PLAYER = (function(window, document, undefined) {
 
 	//AKA the Playback.	used by animate.js
 	player.p2.update = function(){
-		if(player.firstPerson.rewinding){
+		if(player.firstPerson.position.y < -100){
+			//fallen to death
+			player.firstPerson.position.copy(setLevel[1]())
+		}else	if(player.firstPerson.rewinding){
 			player.rewind()
 		}else if(player.p2.playback){
 			//console.log('updating')
@@ -199,14 +202,7 @@ FPP.PLAYER = (function(window, document, undefined) {
 
 	document.addEventListener('keydown', function(e){
 		//console.log(e.keyCode)
-		if(e.keyCode === 69){
-			FPP.PLAYER.firstPerson.position.y += 5
-			
-		}
-
-
-
-		else if(e.keyCode >= 49 && e.keyCode <= 57){
+		if(e.keyCode >= 49 && e.keyCode <= 56){
 			FPP.PLAYER.firstPerson.position.copy(setLevel[e.keyCode - 48]())
 		}
 	})

@@ -11,14 +11,15 @@
 
 <body>
 	<div id="clock" class="clock">0:0</div>
+	<div id="endgame"><p>YOU WIN</p></div>
 	<!--Essential libraries-->
 	<script src="game/libs/Three.min.js"></script>
 	<script src="game/libs/cannon.min.js"></script>
 	<script src="game/libs/PointerLockControls.js"></script>
-
 	<div id="blocker">
 		<div id="instructions">
-			<span style="font-size:50px; color: white"></span>
+			<span class="paused">click to resume</span>
+			<span class="paused" onclick="window.location.href = '../';">click for main menu</span>
 		</div>
 	</div>
 	<div id="rewind">&bull;</div>

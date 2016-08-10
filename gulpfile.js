@@ -25,9 +25,15 @@ gulp.task('prefix', function () {
         .pipe(gulp.dest('src/assets/css/build'))
 })
 
+gulp.task('watch', function() {
+    gulp.watch('src/assets/css/*.css', ['prefix'])
+})
+
 gulp.task('connect', function() {
   connect.server({
     port: 4000,
     root: 'src'
   })
 })
+
+gulp.task('default',['prefix','watch','connect'])
