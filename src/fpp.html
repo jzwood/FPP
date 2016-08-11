@@ -5,17 +5,11 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>FFP</title>
-	<link rel="stylesheet" type="text/css" href="assets/css/build/gamestyles-build.css">
-	<link rel="icon" href="./assets/images/favicon.ico">
 </head>
 
 <body>
 	<div id="clock" class="clock">0:0</div>
 	<div id="endgame"><p>YOU WIN</p></div>
-	<!--Essential libraries-->
-	<script src="game/libs/Three.min.js"></script>
-	<script src="game/libs/cannon.min.js"></script>
-	<script src="game/libs/PointerLockControls.js"></script>
 	<div id="blocker">
 		<div id="instructions">
 			<span class="paused">click to resume</span>
@@ -23,26 +17,35 @@
 		</div>
 	</div>
 	<div id="rewind">&bull;</div>
-	<!-- custom -->
-	<script src="game/gameComponents/lightsCameraScene.js"></script>
-	<script src="game/gameComponents/geometry.js"></script>
-	<script src="game/gameComponents/pointerlock.js"></script>
 
-	<script src="game/gameComponents/rooms/room1.js"></script>
-	<script src="game/gameComponents/rooms/room2.js"></script>
-	<script src="game/gameComponents/rooms/room3.js"></script>
-	<script src="game/gameComponents/rooms/room4.js"></script>
-	<script src="game/gameComponents/rooms/room5.js"></script>
-	<script src="game/gameComponents/rooms/room6.js"></script>
-	<script src="game/gameComponents/rooms/room7.js"></script>
-	<script src="game/gameComponents/rooms/guardRoom.js"></script>
-
-	<script src="game/gameComponents/buildScene.js"></script>
-	<script src="game/gameComponents/skybox.js"></script>
-	<!-- <script src="game/gameComponents/spaceshipBox.js"></script> -->
-	<script src="game/gameComponents/player.js"></script>
-	<script src="game/gameComponents/animate.js"></script>
-	<script src="game/main.js"></script>
 </body>
+<link rel="stylesheet" type="text/css" href="assets/css/build/gamestyles-build.css">
+<link rel="icon" href="./assets/images/favicon.ico">
+
+<!--Essential libraries-->
+<script src="game/libs/Three.min.js"></script>
+<script src="game/libs/cannon.min.js"></script>
+<script src="game/libs/PointerLockControls.js"></script>
+
+<!-- custom -->
+<script src="game/gameComponents/lightsCameraScene.js"></script>
+<script src="game/gameComponents/geometry.js"></script>
+<script src="game/gameComponents/pointerlock.js"></script>
+
+<script src="game/gameComponents/rooms/room1.js"></script>
+<script src="game/gameComponents/rooms/room2.js"></script>
+<script src="game/gameComponents/rooms/room3.js"></script>
+<script src="game/gameComponents/rooms/room4.js"></script>
+<script src="game/gameComponents/rooms/room5.js"></script>
+<script src="game/gameComponents/rooms/room6.js"></script>
+<script src="game/gameComponents/rooms/room7.js"></script>
+<script src="game/gameComponents/rooms/guardRoom.js"></script>
+
+<script src="game/gameComponents/buildScene.js"></script>
+<script src="game/gameComponents/skybox.js"></script>
+<!-- <script src="game/gameComponents/spaceshipBox.js"></script> -->
+<script src="game/gameComponents/player.js"></script>
+<script src="game/gameComponents/animate.js"></script>
+<script src="game/main.js"></script>
 
 </html>
