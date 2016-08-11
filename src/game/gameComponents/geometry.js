@@ -15,6 +15,7 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 		this.sBtnCount = 0
 
 		this.timingEvents = {}
+		this.imageCache = {}
 
 		//group numbers are consecutive powers of 2
 		this.group = function(num) {
@@ -140,55 +141,89 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 				mesh.position.set(p.x, p.y, p.z)
 				FPP.LCS.scene.add(mesh)
 			}else{
-				// geom.applyMatrix(new THREE.Matrix4().makeRotationFromQuaternion(new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 0, 1), specs.normal)))
-				models.loader.load(specs.image_path, function(img) {
-					if (options.stretch !== true) {
-						var wrap_w = options.wrap_w || 1,
-						wrap_h = options.wrap_h || 1
-						img.wrapS = THREE.RepeatWrapping
-						img.wrapT = THREE.RepeatWrapping
-						img.anisotropy = 16
-						img.magFilter = THREE.LinearFilter
-						img.repeat.set(wrap_w, wrap_h)
-					}
-					var tSide = {'default': THREE.FrontSide, 'b': THREE.BackSide, 'd': THREE.DoubleSide},
-					material = new THREE.MeshPhongMaterial({
-						map: img,
-						side: tSide[options.side] || THREE.FrontSide
+
+				// simple caching mechanism
+				if(!models.imageCache[specs.image_path]){
+					//case 1: first time we see this image. step 1: mark as seen
+					models.imageCache[specs.image_path] = {'img':false, 'todo': [] }
+					// start asyn loading
+					models.loader.load(specs.image_path, function(img){
+						// img loaded. save it to cache
+						models.imageCache[specs.image_path]['img'] = img
+						// use img to render textured geometry
+						applyImageToGeometry(specs,options,geom,img)
+						// wi == waitingImages.
+						var wi = models.imageCache[specs.image_path]['todo']
+						// now we render all subsequent loading calls for this img
+						for(var i=0, n=wi.length; i<n; i++){
+							var copiedImg = img.clone()
+							copiedImg.needsUpdate = true
+							applyImageToGeometry(wi[i]['s'],wi[i]['o'],wi[i]['g'],copiedImg)
+							console.log("used cache")
+						}
+					},
+					function(xhr) { // Function called when download progresses
+						// console.log((xhr.loaded / xhr.total * 100) + '% loaded')
+					},
+					function(xhr) { // Function called when download errors
+						console.log(xhr, 'Texture Load Error Occurred')
 					})
-
-					var mesh = new THREE.Mesh(geom, material)
-
-					mesh.castShadow = true
-					mesh.receiveShadow = true
-
-					mesh.position.set(p.x, p.y, p.z)
-					FPP.LCS.scene.add(mesh)
-
-					//we want to keep track of doors
-					if (specs.id) {
-						mesh.name = specs.id
-						mesh.originalY = mesh.position.y
-						mesh.raise = specs.height
-						models.doorMeshes.push(mesh)
-					}
-
-					//keeping track of the gif frames
-					if(specs.gifId){
-						mesh.material.transparent = true
-						models.gifs[specs.gifId] = mesh
-						// mesh.visible = false
-					}
-
-				},
-				function(xhr) { // Function called when download progresses
-					console.log((xhr.loaded / xhr.total * 100) + '% loaded')
-				},
-				function(xhr) { // Function called when download errors
-					console.log(xhr, 'Texture Load Error Occurred')
-				})
+				}
+				// the img has been previous called to load but hasn't finished. put img in queue
+				else if(!models.imageCache[specs.image_path]['img']){
+					var params = {'s':specs,'o':options,'g':geom}
+					models.imageCache[specs.image_path]['todo'].push(params)
+				}else{
+					// img is fullly defined in cache, we can directly render texture
+					console.log("used cache!")
+					var cachedImage = models.imageCache[specs.image_path]['img'].clone()
+					applyImageToGeometry(specs,options,geom,cachedImage)
+				}
 			}
 		}
+
+	function applyImageToGeometry(specs,options,geom,img){
+			var p = specs.translate
+
+			if (options.stretch !== true) {
+				var wrap_w = options.wrap_w || 1,
+				wrap_h = options.wrap_h || 1
+				img.wrapS = THREE.RepeatWrapping
+				img.wrapT = THREE.RepeatWrapping
+				img.anisotropy = 16
+				img.magFilter = THREE.LinearFilter
+				img.repeat.set(wrap_w, wrap_h)
+			}
+			var tSide = {'default': THREE.FrontSide, 'b': THREE.BackSide, 'd': THREE.DoubleSide},
+			material = new THREE.MeshPhongMaterial({
+				map: img,
+				side: tSide[options.side] || THREE.FrontSide
+			})
+
+			var mesh = new THREE.Mesh(geom, material)
+
+			mesh.castShadow = true
+			mesh.receiveShadow = true
+
+			mesh.position.set(p.x, p.y, p.z)
+			FPP.LCS.scene.add(mesh)
+
+			//we want to keep track of doors
+			if (specs.id) {
+				mesh.name = specs.id
+				mesh.originalY = mesh.position.y
+				mesh.raise = specs.height
+				models.doorMeshes.push(mesh)
+			}
+
+			//keeping track of the gif frames
+			if(specs.gifId){
+				mesh.material.transparent = true
+				models.gifs[specs.gifId] = mesh
+				// mesh.visible = false
+			}
+
+	}
 
 	//moves door up when you stand on button, down when you walk off
 	models.updateDoors = function(id, up) {
