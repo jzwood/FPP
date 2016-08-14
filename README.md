@@ -1,10 +1,12 @@
-## First Person Puzzle
+## **Causality Paradox**
+In this first person puzzle (FPP) game, you must escape and progress through a series of locked rooms surrounded by the serentity of space in a low-security space prison.
 
-Under development.
+[![  level one  ](../../assets/images/demo/lev6.png)][lev1]
 
+[lev1]: http://jzwood.github.io/FPP/build/home
 
-@TODO
+To escape you must reverse time and collobarate with your past self to push buttons, make daring leaps, and occasionally sacrifice your past self.
 
-- sync buttons will open their door if one of their buttons plus any other sync button is pressed. clearly only the two IDed sync buttons should open their door.
+Welcome to the implausible physics of **[Causality Paradox][fpp]**.
 
-- Add green dot for replay to accompany red for record.
+[fpp]: www.google.com

@@ -19,7 +19,6 @@ FPP.PLAYER = (function(window, document, undefined) {
 
 		var mass = 5, radius = 2,
 		sphereShape = new CANNON.Sphere(radius),
-
 		group = FPP.GEOMETRY.group
 
 		this.firstPerson = new CANNON.Body({ mass: mass, material: FPP.GEOMETRY.groundMaterial })
