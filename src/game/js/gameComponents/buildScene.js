@@ -2,12 +2,6 @@ FPP.BUILDSCENE = (function(window, document, undefined) {
 
 	var unit = new function() {
 
-		//helper, origin indicator
-		var geometry = new THREE.SphereGeometry( 1000, 32, 32 )
-		var material = new THREE.MeshLambertMaterial( {color: 0xffffff} )
-		var sphere = new THREE.Mesh( geometry, material )
-		FPP.LCS.scene.add( sphere )
-
 		this.walls = []
 		this.btns = []
 
@@ -18,7 +12,7 @@ FPP.BUILDSCENE = (function(window, document, undefined) {
 		this.walls.push(bridge)
 
 		//LEVEL 5 - 6 BRIDGE
-		bridge = { 'specs':{ 'translate': new THREE.Vector3(0,-15, 363-0.3), 'rx':0,'ry': Math.PI/2,'rz': 0, 'width': 5,'height': 10, 'image_path': './assets/images/floor1.jpg'}, 'options' : { 'solid':true, 'side': 'd' } }
+		bridge = { 'specs':{ 'translate': new THREE.Vector3(0,-15, 363-0.3), 'rx':0,'ry': Math.PI/2,'rz': 0, 'width': 5,'height': 10, 'image_path': '../../assets/images/floor1.jpg'}, 'options' : { 'solid':true, 'side': 'd' } }
 		this.walls.push(bridge)
 
 		//LEVEL 4 - 5 BRIDGE
@@ -27,13 +21,13 @@ FPP.BUILDSCENE = (function(window, document, undefined) {
 		})}, 'options' : { 'solid':true, 'side': 'd'} }
 		this.walls.push(bridge)
 
-		var door = { 'specs':{ 'id': 'bridge3-4', 'translate': new THREE.Vector3(0,-12+0.01,290), 'rx':Math.PI/2,'ry':0,'rz':0,'width':10,'height': 6, 'image_path': './assets/images/door.jpg' }, 'options' : { 'solid':true, 'stretch':true , 'side': 'd'} }
+		var door = { 'specs':{ 'id': 'bridge3-4', 'translate': new THREE.Vector3(0,-12+0.01,290), 'rx':Math.PI/2,'ry':0,'rz':0,'width':10,'height': 6, 'image_path': '../../assets/images/door.jpg' }, 'options' : { 'solid':true, 'stretch':true , 'side': 'd'} }
 		this.walls.push(door)
 
-		var btn1 = {'specs': { 'id': 'bridge3-4', 'translate' : new THREE.Vector3(0,-40,270), 'path' : './assets/images/btn2.png' , 'isSbutton': true}}
+		var btn1 = {'specs': { 'id': 'bridge3-4', 'translate' : new THREE.Vector3(0,-40,270), 'path' : '../../assets/images/btn2.png' , 'isSbutton': true}}
 		this.btns.push(btn1)
 
-		var btn2 = {'specs': { 'id': 'bridge3-4', 'translate' : new THREE.Vector3(0,-15+0.01,270), 'path' : './assets/images/btn2.png' , 'isSbutton': true}}
+		var btn2 = {'specs': { 'id': 'bridge3-4', 'translate' : new THREE.Vector3(0,-15+0.01,270), 'path' : '../../assets/images/btn2.png' , 'isSbutton': true}}
 		this.btns.push(btn2)
 
 		//LEVEL 3 - 4 BRIDGE
@@ -58,8 +52,8 @@ FPP.BUILDSCENE = (function(window, document, undefined) {
 
 
 	unit.build = function() {
-		var axisHelper = new THREE.AxisHelper( 50 )
-		FPP.LCS.scene.add( axisHelper )
+		// var axisHelper = new THREE.AxisHelper( 50 )
+		// FPP.LCS.scene.add( axisHelper )
 		FPP.GEOMETRY.world.gravity.set(0,-20,0)
 
 		var makeT = function(name){ FPP.GEOMETRY.makeTile(name.specs, name.options); }
@@ -89,7 +83,7 @@ FPP.BUILDSCENE = (function(window, document, undefined) {
 				'width': 2,'height': 4 },
 				'options' : { 'solid':false, 'stretch':true, 'side': 'd' } }
 				gifData.specs.gifId = String(i) ; // + String(f)
-				gifData.specs['image_path'] = './assets/images/test/0' + i + '.png'
+				gifData.specs['image_path'] = '../../assets/images/test/0' + i + '.png'
 				FPP.GEOMETRY.makeTile(gifData.specs, gifData.options)
 		}
 

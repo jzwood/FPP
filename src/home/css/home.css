@@ -26,7 +26,7 @@ body{
 
 .wrapper{
   min-height: 100vh;
-  background: url("../../images/test/title2.png");
+  background: url("../../assets/images/test/title2.png");
 }
 
 img{
@@ -272,14 +272,14 @@ td{
   justify-content: center;
 }
 
-.c2_1 { background-image: url("../../images/demo/lev1.png");}
-.c2_2 { background-image: url("../../images/demo/lev2.png");}
-.c2_3 { background-image: url("../../images/demo/lev3.png");}
-.c2_4 { background-image: url("../../images/demo/lev4.png");}
-.c2_5 { background-image: url("../../images/demo/lev5.png");}
-.c2_6 { background-image: url("../../images/demo/lev6.png");}
-.c2_7 { background-image: url("../../images/demo/lev7.png");}
-.c2_8 { background-image: url("../../images/demo/lev8.png");}
+.c2_1 { background-image: url("../../assets/images/demo/lev1.png");}
+.c2_2 { background-image: url("../../assets/images/demo/lev2.png");}
+.c2_3 { background-image: url("../../assets/images/demo/lev3.png");}
+.c2_4 { background-image: url("../../assets/images/demo/lev4.png");}
+.c2_5 { background-image: url("../../assets/images/demo/lev5.png");}
+.c2_6 { background-image: url("../../assets/images/demo/lev6.png");}
+.c2_7 { background-image: url("../../assets/images/demo/lev7.png");}
+.c2_8 { background-image: url("../../assets/images/demo/lev8.png");}
 
 .b1{ transition: opacity 1s ease-in 0s; }
 .b2{ transition: opacity 1s ease-in 0.2s; }

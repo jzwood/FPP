@@ -21,7 +21,7 @@ FPP.SKYBOX = (function(window, document, undefined) {
 	}
 
 	var makeEarth = function() {
-		var earth_texture = './assets/images/skybox/earth.png'
+		var earth_texture = '../../assets/images/skybox/earth.png'
 		FPP.GEOMETRY.loader.load(earth_texture, function(img) {
 
 			var geometry = new THREE.SphereGeometry( 25, 32, 32)
@@ -64,7 +64,7 @@ FPP.SKYBOX = (function(window, document, undefined) {
 		makeElevator()
 		// makeCables() ; // do more with this later (?)
 
-		sky.cubeLoader.setPath( './assets/images/skybox/sky1/' )
+		sky.cubeLoader.setPath( '../../assets/images/skybox/sky1/' )
 
 		var cubemap = sky.cubeLoader.load([
 			'map_04.jpg', 'map_06.jpg',

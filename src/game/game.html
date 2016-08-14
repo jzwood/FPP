@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>FFP</title>
+	<link rel="stylesheet" type="text/css" href="styles.min.css" media="screen">
+	<link rel="icon" href="../../assets/images/favicon.ico">
+</head>
+
+<body>
+	<div id="clock" class="clock">0:0</div>
+	<div class="toPause">esc to pause</div>
+	<div id="endgame"><p>YOU WIN</p></div>
+	<!--Essential libraries-->
+
+	<div id="blocker">
+		<div id="instructions">
+			<span class="paused">click to resume</span>
+			<span class="paused" onclick="window.location.href = '../home';">click for main menu</span>
+		</div>
+	</div>
+	<div id="rewind">&bull;</div>
+</body>
+
+<script src="Three.min.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r79/three.min.js"></script> -->
+<script src="scripts.min.js"></script>
+
+</html>

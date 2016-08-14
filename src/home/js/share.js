@@ -1,5 +1,3 @@
-
-
 function fb(){
   // encodeURIComponent("http://jzwood.github.io/FPP/src/index.html")
   window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(location.href), 'share-facebook', 'width=626,height=436')
@@ -13,5 +11,5 @@ function twitter(){
 }
 
 function level(num){
-  window.location.href = './fpp.html?level=' + num
+  window.location.href = '../game/index.html?level=' + num
 }
