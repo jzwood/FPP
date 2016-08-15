@@ -2,7 +2,7 @@ FPP.SHIPBOX = (function(window, document, undefined) {
 
 	var shipbox = new function(){
 		this.geo = new THREE.SphereGeometry(500, 20, 20)
-		this.path = '../../assets/images/skybox/grid.png'
+		this.path = '../assets/images/skybox/grid.png'
 	}
 
 	shipbox.update = function(){

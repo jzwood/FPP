@@ -6,8 +6,8 @@ concat = require('gulp-concat'),
 rename = require('gulp-rename'),
 uglify = require('gulp-uglify'),
 cleanCSS = require('gulp-clean-css'),
-htmlmin = require('gulp-htmlmin')
-
+htmlmin = require('gulp-htmlmin'),
+imagemin = require('gulp-imagemin')
 
 var path = {
   'html' : 'src/**/*.html',
@@ -35,6 +35,12 @@ var game = {
   animate : 'gameComponents/animate.js',
   main : 'main.js'
 }
+
+gulp.task('image-min', () =>
+    gulp.src('src/assets/**')
+        .pipe(imagemin())
+        .pipe(gulp.dest('build/assets'))
+)
 
 gulp.task('html', function() {
   return gulp.src(path.html)
