@@ -96,7 +96,7 @@ gulp.task('watch', function() {
     gulp.watch(path.html, ['html'])
     gulp.watch(path.css, ['css'])
     gulp.watch(game.alljs, ['game-js'])
-    gulp.watch(path.homeJs, ['homeJs'])
+    gulp.watch(path.homeJs, ['home-js'])
 })
 
 gulp.task('connect', function() {

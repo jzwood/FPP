@@ -11,5 +11,5 @@ function twitter(){
 }
 
 function level(num){
-  window.location.href = '../game/index.html?level=' + num
+  window.location.href = '../game/?level=' + num
 }

@@ -16,6 +16,7 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 
 		this.timingEvents = {}
 		this.imageCache = {}
+		this.loadedImgCount = 0
 
 		//group numbers are consecutive powers of 2
 		this.group = function(num) {
@@ -26,6 +27,20 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 		this.world.solver = split ? new CANNON.SplitSolver(this.solver) : this.solver
 
 	}
+
+	var decramentImageCounter = function(){
+		models.loadedImgCount--
+		if(models.loadedImgCount === 0){
+			var loading = document.querySelector(".loading"),
+			spinner = document.querySelector(".spinner")
+			spinner.classList.toggle('hide',true)
+			loading.classList.toggle('fadeout',true)
+			// setTimeout(function(){
+			// 	loading.classList.toggle('hide',true)
+			// },3000)
+		}
+	}
+
 
 	models.makeTunnel = function(rTop, rBottom, height, position, rotate){
 		var geometry = new THREE.CylinderGeometry( rTop, rBottom, height, 4, 64, true),
@@ -142,6 +157,7 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 				FPP.LCS.scene.add(mesh)
 			}else{
 
+				models.loadedImgCount++
 				// simple caching mechanism
 				if(!models.imageCache[specs.image_path]){
 					//case 1: first time we see this image. step 1: mark as seen
@@ -151,11 +167,13 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 						// img loaded. save it to cache
 						models.imageCache[specs.image_path]['img'] = img
 						// use img to render textured geometry
+						decramentImageCounter()
 						applyImageToGeometry(specs,options,geom,img)
 						// wi == waitingImages.
 						var wi = models.imageCache[specs.image_path]['todo']
 						// now we render all subsequent loading calls for this img
 						for(var i=0, n=wi.length; i<n; i++){
+							decramentImageCounter()
 							var copiedImg = img.clone()
 							copiedImg.needsUpdate = true
 							applyImageToGeometry(wi[i]['s'],wi[i]['o'],wi[i]['g'],copiedImg)
@@ -174,11 +192,13 @@ FPP.GEOMETRY = (function(window, document, undefined) {
 					var params = {'s':specs,'o':options,'g':geom}
 					models.imageCache[specs.image_path]['todo'].push(params)
 				}else{
+					decramentImageCounter()
 					// img is fullly defined in cache, we can directly render texture
 					console.log("used cache!")
 					var cachedImage = models.imageCache[specs.image_path]['img'].clone()
 					applyImageToGeometry(specs,options,geom,cachedImage)
 				}
+
 			}
 		}
 
