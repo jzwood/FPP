@@ -6,7 +6,7 @@ function fb(){
 
 
 function twitter(){
-  window.open('http://twitter.com/share?url=http://jzwood.github.io/FPP/src/fpp.html&text=Escape space prison in this 4D, first person, cosmic, physics puzzle.&via=14CodeMonkeys', 'facebook-share-dialog', 'width=500,height=310')
+  window.open('http://twitter.com/share?url=http://jzwood.github.io/FPP/build/home&text=Escape space prison in this 4D, first person, cosmic, physics puzzle.&via=14CodeMonkeys', 'facebook-share-dialog', 'width=500,height=310')
   return false
 }
 
