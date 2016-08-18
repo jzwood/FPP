@@ -8,3 +8,6 @@ To escape you must reverse time and collobarate with your past self to push butt
 Welcome to the implausible physics of **[Causality Paradox][fpp]**.
 
 [fpp]: http://jzwood.github.io/FPP/build/home
+
+**Caveats**
+Safari doesn't support pointer lock and the physics are a little screwy on Fire Fox. It is recommended that this game be played on Chrome or Opera.
