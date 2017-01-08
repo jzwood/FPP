@@ -22,6 +22,11 @@ FPP.ROOM6 = (function(window, document, undefined) {
     }, 'options' : { 'solid':true, 'stretch':true , 'side': 'd'} }
     this.walls.push(left_div_wall)
 
+    var left_div_wall2 = { 'specs':{ 'translate': new THREE.Vector3(7, -5.5, -5), 'rx':0,'ry':Math.PI/2,'rz':Math.PI/2,'width':10,'height': 9,
+    'mat': new THREE.MeshPhongMaterial( { transparent: true, opacity: 0.5, side: THREE.DoubleSide })
+    }, 'options' : { 'solid':true, 'stretch':true , 'side': 'd'} }
+    this.walls.push(left_div_wall2)
+
     var right_div_wall = { 'specs':{ 'translate': new THREE.Vector3(-9, -5.5, -15), 'rx':0,'ry':Math.PI/2,'rz':Math.PI/2,'width':10,'height': 9,
     'mat': new THREE.MeshPhongMaterial( { transparent: true, opacity: 0.5, side: THREE.DoubleSide })
     }, 'options' : { 'solid':true, 'stretch':true , 'side': 'd'} }
