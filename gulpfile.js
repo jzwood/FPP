@@ -78,6 +78,12 @@ gulp.task('game-js', function() {
   for (var i = 0, len = scripts.length; i < len; i++) {
     scripts[i] = game.root + scripts[i]
   }
+  // var scripts = [ game.three, game.cannon, game.pointerCTRL,
+  //                 game.lcs, game.geo, game.pointer,
+  //                 game.rooms, game.build, game.sky,
+  //                 game.player, game.animate, game.main ].map(function(path){
+  //                    return game.root + path
+  //                 })
   return gulp.src(scripts.slice(1))
     .pipe(concat('scripts.min.js'))
     .pipe(uglify())

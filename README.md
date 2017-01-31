@@ -1,7 +1,7 @@
 ## **Causality Paradox**
 In this first person puzzle (FPP) game, you must escape and progress through a series of locked rooms surrounded by the serentity of space in a low-security space prison.
 
-[![  Landing page  ](build/assets/images/demo/lev7.png)][fpp]
+[<img src="build/assets/images/demo/lev4.png" width="400">][fpp]
 
 To escape you must reverse time and collobarate with your past self to push buttons, make daring leaps, and occasionally sacrifice your past self.
 
